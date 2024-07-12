@@ -1,0 +1,64 @@
+version: "3.9"
+
+volumes:
+  db-data:
+  cache:
+
+services:
+  db:
+    image: postgres:12.8
+    container_name: webscraper-postgres
+    restart: always
+    ports:
+      - "5434:5432"
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST: $WEBSCRAPER_DB_HOST
+      POSTGRES_DB: $WEBSCRAPER_DB_NAME
+      POSTGRES_USER: $WEBSCRAPER_DB_USER
+      POSTGRES_PASSWORD: $WEBSCRAPER_DB_PASSWORD
+
+  webscraper:
+    volumes:
+      - ./media:/web_app/amazon/media/
+      - ./static:/web_app/amazon/static/
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8000"
+    env_file:
+      - .env
+
+  celery:
+    image: webscraper
+    command: "celery -A amazon.webscraper.celery worker --loglevel=info"
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+
+  celerybeat:
+    image: webscraper
+    command: "celery -A amazon.webscraper.celery beat --loglevel=info"
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - cache:/data
+    ports:
+      - "6380:6379"

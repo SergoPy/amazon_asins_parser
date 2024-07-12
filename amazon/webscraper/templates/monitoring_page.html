@@ -1,0 +1,472 @@
+<!--{% load static %}-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Amazon · ASINs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+    </style>
+    <style>
+        .checkout-custom {
+            margin-left: auto;
+            margin-right: auto
+        }
+
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container">
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Menu</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary " aria-current="page" href="/controlpanel">Tables
+                                manager</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/controlpanel">ASINs scraper</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring">ASINs monitoring</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring">Advertising monitoring</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring">Term report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="py-5 text-center">
+            <h2>Amazon scraper workspace</h2>
+            <p class="lead">Scaling Peak</p>
+            <p class="lead">Create a semantic core and control performance</p>
+
+        </div>
+        <form action="{% url 'monitoring' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-6 order-md-last">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-primary">Advertising monitoring</span>
+                        <!--                        <span class="badge bg-primary rounded-pill">tables</span>-->
+                    </h4>
+
+                    <div class="row g-3"> <!--  row g-3-->
+                        <div class="row gy-4">
+                            <div class="col-md-5">
+                                <label for="account_name_adv" class="form-label">Account Name</label>
+                                <input type="text" class="form-control" id="account_name_adv"
+                                       name="account_name_adv"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Price filterv
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="product_name_adv" class="form-label">Product name</label>
+                                <input type="text" class="form-control" id="product_name_adv"
+                                       name="product_name_adv"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Review filter required
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10">
+                            <label for="asins_adv" class="form-label">ASINs</label>
+                            <textarea class="form-control" id="asins_adv" name="asins_adv"
+                                      rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+
+                        <div class="row gy-2">
+                            <div class="col-md-5">
+                                <label for="target_acos_adv" class="form-label">Target AcOS</label>
+                                <input type="number" class="form-control" id="target_acos_adv"
+                                       name="target_acos_adv"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Price filterv
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="entity_id_adv" class="form-label">Entity Id</label>
+                                <input type="text" class="form-control" id="entity_id_adv"
+                                       name="entity_id_adv"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Review filter required
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row gy-2">
+                            <div class="col-md-5">
+                                <label for="login_adv" class="form-label">Login</label>
+                                <input type="text" class="form-control" id="login_adv"
+                                       name="login_adv"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Price filterv
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="password_adv" class="form-label">Password</label>
+                                <input type="text" class="form-control" id="password_adv"
+                                       name="password_adv">
+                                <div class="invalid-feedback">
+                                    Review filter required
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-10">
+                            <label for="asins_google_sheet_link_adv" class="form-label">Link for save results<span
+                                    class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="asins_google_sheet_link_adv"
+                                   name="asins_google_sheet_link_adv"
+                                   placeholder="https://docs.google.com/spreadsheets/sometable">
+                            <div class="invalid-feedback">
+                                Google sheets table is required.
+                            </div>
+                        </div>
+
+                        <div class="col-10">
+                            <label for="category_adv" class="form-label">Category<span
+                                    class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="category_adv"
+                                   name="category_adv">
+                        </div>
+
+                        <h4 class="mb-3">Set up date</h4>
+                        <div class="row gy-2">
+                            <div class="col-md-5">
+                                <label for="start_date_adv" class="form-label">Start date</label>
+                                <input type="date" class="form-control" id="start_date_adv"
+                                       name="start_date_adv"
+                                       placeholder="">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="end_date_adv" class="form-label">End date</label>
+                                <input type="date" class="form-control" id="end_date_adv"
+                                       name="end_date_adv"
+                                       placeholder="">
+                            </div>
+
+                        </div>
+
+
+                        <h4 class="mb-3">Monitoring frequency</h4>
+
+                        <div class="col-md-4">
+                            <input type="number" value="5" class="form-control" id="quality_search_adv"
+                                   name="quality_search_adv"
+                                   placeholder="">
+                            <div class="invalid-feedback">
+                                Page quantity required.
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="form-select" id="adv_monitoring_country" name="adv_monitoring_country">
+                                <option>US</option>
+                                <option>UK</option>
+                                <option>CA</option>
+                                <option>DE</option>
+                                <option>FR</option>
+                                <option>ES</option>
+                                <option>IT</option>
+
+
+                            </select>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="col-sm-10">
+                        <hr class="my-4">
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">Advertising monitoring settings
+                        </button>
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                             aria-labelledby="offcanvasRightLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Advertising</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+
+
+                            </div>
+                        </div>
+                        <hr class="my-4">
+
+                        <!--                        <div class="mb-3" id="status_adv">Process: {{status}}</div>-->
+
+
+                        <!--                        <hr class="my-4">-->
+                        <button type="submit" class="w-100 btn-lg btn-primary">Run monitoring
+                        </button>
+                        <hr class="my-4">
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-7 col-lg-6">
+                    <h4 class="mb-3">ASINs Monitoring </h4>
+                    <div class="row g-3">
+
+                        <div class="row gy-4">
+                            <div class="col-md-5">
+                                <label for="seller_name" class="form-label">Account Name</label>
+                                <input type="text" class="form-control" id="seller_name"
+                                       name="seller_name"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Price filterv
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="product_name" class="form-label">Product name</label>
+                                <input type="text" class="form-control" id="product_name"
+                                       name="product_name"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Review filter required
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-10">
+                            <label for="personal_asin" class="form-label">Personal Asin</label>
+                            <textarea class="form-control" id="personal_asin" name="personal_asin" rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="competitor_asins" class="form-label">Competitor ASINs</label>
+                            <textarea class="form-control" id="competitor_asins" name="competitor_asins"
+                                      rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-md-10">
+                            <label for="keywords" class="form-label">Keywords</label>
+                            <textarea class="form-control" id="keywords" name="keywords"
+                                      rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-10">
+                            <label for="asins_google_sheet_link" class="form-label">Link for save results<span
+                                    class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="asins_google_sheet_link"
+                                   name="asins_google_sheet_link"
+                                   placeholder="https://docs.google.com/spreadsheets/sometable">
+                            <div class="invalid-feedback">
+                                Google sheets table is required.
+                            </div>
+                        </div>
+
+
+                        <h4 class="mb-3">Monitoring frequency</h4>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+                                <input type="number" value="5" class="form-control" id="frequency"
+                                       name="frequency"
+                                       placeholder="">
+                                <div class="invalid-feedback">
+                                    Page quantity required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <select class="form-select" id="monitoring_country" name="monitoring_country">
+                                    <option>US</option>
+                                    <option>UK</option>
+                                    <option>CA</option>
+                                    <option>DE</option>
+                                    <option>FR</option>
+                                    <option>ES</option>
+                                    <option>IT</option>
+
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-10">
+                        <hr class="my-4">
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            Asins monitoring settings
+                        </button>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title">Asins</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+
+
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+
+                        <!--                        <div class="mb-3" id="status">Process: {{status}}</div>-->
+
+
+                        <!--                        <hr class="my-4">-->
+                        <button type="submit" class="w-100 btn-lg btn-dark">Run monitoring
+                        </button>
+                        <hr class="my-4">
+                        <h4 class="mb-3"> Search Term Report</h4>
+
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="file1" class="form-label">Report File 1</label>
+                                    <input class="form-control" type="file" id="file1" name="file1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="file2" class="form-label">Report File 2</label>
+                                    <input class="form-control" type="file" id="file2" name="file2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gy-4">
+
+                            <div class="col-sm-6">
+                                <label for="report_campaign_1" class="form-label">Report campaign 1</label>
+                                <textarea class="form-control" id="report_campaign_1" name="report_campaign_1"
+                                          rows="1"></textarea>
+
+                                <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="report_campaign_2" class="form-label">Report campaign 2</label>
+                                <textarea class="form-control" id="report_campaign_2" name="report_campaign_2"
+                                          rows="1"></textarea>
+
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr class="my-4">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="all_products_status"
+                                   name="all_products_status" checked>
+                            <label class="form-check-label" for="all_products_status">
+                                Analise all products
+                            </label>
+                        </div>
+                        <hr class="my-4">
+                        <button type="submit" class="w-100 btn-lg btn-secondary">Run monitoring
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2022 Amazon scraper</p>
+    </footer>
+</div>
+
+{% for name in filenames %}
+<iframe id="{{ name }}" style="display:none;"></iframe>
+{% endfor %}
+<script>
+    {%
+        for name in filenames %}
+    document.getElementById('{{ name }}').src = '{{ MEDIA_URL }}' + '{{ name }}';
+    {%
+        endfor %
+    }
+
+
+</script>
+
+
+</body>
+</html>

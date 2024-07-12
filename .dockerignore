@@ -1,0 +1,15 @@
+.DS_Store
+.gitignore
+.idea/
+.vscode/
+**/venv/
+**/.venv/
+**/logs/
+**/media/
+**/static/
+**/__pycache__/
+**/*.pid
+**/dbs/
+**/*.out
+**/*.log
+

@@ -1,0 +1,14 @@
+.DS_Store
+.idea/
+venv/
+__pycache__/
+*.pid
+dbs/
+text1.txt
+text2.txt
+logs/
+media/
+static/
+nohup.out
+*.log
+.env

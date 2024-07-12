@@ -1,0 +1,924 @@
+<!--{% load static %}-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Amazon · ASINs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+    </style>
+    <style>
+        .upload_btn {
+            position: relative;
+            top: 10px;
+            font-family: fantasy;
+
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 5px;
+            height: 45px;
+            width: 150px;
+            border: 2px solid #BBB;
+            cursor: pointer;
+            text-align: center;
+            background-color: #DDD;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container">
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Menu</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary " aria-current="page" href="/controlpanel">Tables
+                                manager</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/controlpanel">ASINs scraper</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring/">ASINs monitoring</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring">Advertising monitoring</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary" href="/monitoring">Term report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="py-5 text-center">
+            <h2>Amazon scraper workspace</h2>
+            <p class="lead">Scaling Peak</p>
+            <p class="lead">Create a semantic core and control performance</p>
+
+        </div>
+        <form action="{% url 'scraper_interface' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-5 order-md-last">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-primary">Create clusters or bulk</span>
+                        <span class="badge bg-primary rounded-pill">tables</span>
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="clusters_google_sheet_link" class="form-label">Google sheet table source<span
+                                    class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="clusters_google_sheet_link"
+                                   name="clusters_google_sheet_link"
+                                   placeholder="https://docs.google.com/spreadsheets/sometable">
+                            <div class="invalid-feedback">
+                                Google sheets table is required.
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="clusters_create_clusters"
+                                           name="clusters_create_clusters">
+                                    <label class="form-check-label" for="clusters_create_clusters">create
+                                        Clusters</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary col-md-5" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                Clusters: SKU & Bids
+                            </button>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="clusters_create_bulk"
+                                           name="clusters_create_bulk">
+                                    <label class="form-check-label" for="clusters_create_bulk">create Sponsored
+                                        Products</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="create_sponsored"
+                                           name="create_sponsored">
+                                    <label class="form-check-label" for="create_sponsored">create Sponsored
+                                        Brands</label>
+
+                                </div>
+                                <div class="form-check checkout-custom">
+                                    <input type="checkbox" class="form-check-input" id="create_sponsored_video"
+                                           name="create_sponsored_video">
+                                    <label class="form-check-label" for="create_sponsored_video">create Sponsored
+                                        Brands
+                                        Video</label>
+                                </div>
+                            </div>
+                            <button class="col-md-5 btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight">SB|SBV Settings
+                            </button>
+                        </div>
+
+
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <div class="form-check ">
+                                    <input type="checkbox" class="form-check-input" id="create_sponsored_display"
+                                           name="create_sponsored_display">
+                                    <label class="form-check-label" for="create_sponsored_display">create Sponsored
+                                        Display</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="optimization_type" class="form-label">
+                                    <select class="form-select" id="optimization_type" name="optimization_type">
+                                        <option>Optimization type</option>
+                                        <option>Optimize for page visits</option>
+                                        <option>Optimize for conversions</option>
+                                        <option>Optimize for viewable impressions</option>
+
+
+                                    </select>
+                                </label>
+                            </div>
+
+                        </div>
+                        <h4 class="mb-3">Upload campaign</h4>
+
+
+                        <div class="row g-3">
+
+                            <div class="col-6">
+                                <!--                            <label for="country" class="form-label">Upload mode</label>-->
+                                <select class="form-select" id="upload_campaign_mode" name="upload_campaign_mode">
+                                    <option></option>
+                                    <option>SB</option>
+                                    <option>SBV</option>
+                                    <option>SB and SBV</option>
+
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-5">
+                                <select class="form-select" id="sb_country" name="sb_country">
+                                    <option>US</option>
+                                    <option>UK</option>
+                                    <option>CA</option>
+                                    <option>DE</option>
+                                    <option>FR</option>
+                                    <option>ES</option>
+                                    <option>IT</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                             aria-labelledby="offcanvasExampleLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title">Clusters: SKU & Bids</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class="col-md-12">
+                                    <label class="form-label">TPK</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="tpk_scu" name="tpk_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="tpk_bid"
+                                               name="tpk_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">STR Top</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="str_top_scu" name="str_top_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="str_top_bid"
+                                               name="str_top_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">STR Low</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="str_low_scu" name="str_low_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="str_low_bid"
+                                               name="str_low_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Variation</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="variation_scu" name="variation_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="variation_bid"
+                                               name="variation_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Exact TOP</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="exact_top_scu" name="exact_top_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="exact_top_bid"
+                                               name="exact_top_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Exact</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="exact_scu" name="exact_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="exact_bid"
+                                               name="exact_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Exact LOW</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="exact_low_scu" name="exact_low_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="exact_low_bid"
+                                               name="exact_low_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Broad</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="broad_scu" name="broad_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="broad_bid"
+                                               name="broad_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Brands</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="brands_scu" name="brands_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="brands_bid"
+                                               name="brands_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">PAT</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="pat_scu" name="pat_scu"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+
+
+                                <div class="col-md-12">
+                                    <label class="form-label">PAT Company</label>
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="row gy-4">
+                                    <div class="col-md-4">
+                                        <label class="form-label">TPA Bid</label>
+                                        <input type="text" step="0.01" class="form-control" id="tpa_bid"
+                                               name="tpa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">TCA Bid</label>
+                                        <input type="text" class="form-control" id="tca_bid" name="tca_bid"
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">LSA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="lsa_bid"
+                                               name="lsa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">CA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="ca_bid" name="ca_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">LPA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="lpa_bid"
+                                               name="lpa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">RA Bid</label>
+                                        <input type="text" step="0.01" class="form-control" id="ra_bid" name="ra_bid"
+                                               placeholder="">
+                                    </div>
+
+
+                                </div>
+                                <hr class="my-4">
+
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Auto</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="auto_scu" name="auto_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="auto_bid"
+                                               name="auto_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Auto Negatives</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="auto_negatives_scu"
+                                               name="auto_negatives_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="auto_negatives_bid"
+                                               name="auto_negatives_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Category</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="category_scu" name="category_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="category_bid"
+                                               name="category_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+
+
+                            </div>
+                        </div>
+                        <!--                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"-->
+                        <!--                                data-bs-target="#offcanvasRight"-->
+                        <!--                                aria-controls="offcanvasRight">Sponsored params-->
+                        <!--                        </button>-->
+
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                             aria-labelledby="offcanvasRightLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Sponsored</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class="col-md-12">
+                                    <label class="form-label">Upload campaigns</label>
+                                </div>
+                                <hr class="my-4">
+                                <div class="col-md-9">
+                                    <label for="login" class="form-label">Login:</label>
+                                    <input type="text" class="form-control" id="login" name="login"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-9">
+                                    <label for="password" class="form-label">Password:</label>
+                                    <input type="text" class="form-control" id="password" name="password"
+                                           placeholder="">
+
+                                </div>
+                                <div class="row g-2">
+                                    <div class="upload_btn col-md-5" id="sb_logo_label" onclick="get_file('sb_logo')">
+                                        Upload logo file
+                                    </div>
+                                    <div style='height: 0px;width:0px; overflow:hidden;'>
+                                        <input id="sb_logo" type="file" name='sb_logo' value="upload"
+                                               onchange="output_filename('sb_logo')"/>
+                                    </div>
+
+                                    <div class="upload_btn col-md-5" id="sb_media_label"
+                                         onclick="get_file('sb_media')">Upload SB image
+                                    </div>
+                                    <div style='height: 0px;width:0px; overflow:hidden;'>
+                                        <input id="sb_media" type="file" name='sb_media' value="upload"
+                                               onchange="output_filename('sb_media')"/>
+                                    </div>
+
+                                    <div class="upload_btn col-md-5" id="sbv_media_label"
+                                         onclick="get_file('sbv_media')">
+                                        Upload SB video
+                                    </div>
+                                    <div style='height: 0px;width:0px; overflow:hidden;'>
+                                        <input id="sbv_media" type="file" name='sbv_media' value="upload"
+                                               onchange="output_filename('sbv_media')"/>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Sponsored Brands</label>
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="col-md-9">
+                                    <label for="creative_asins" class="form-label">Creative ASINs + video (1st ASIN):</label>
+                                    <input type="text" class="form-control" id="creative_asins" name="creative_asins"
+                                           placeholder="">
+
+                                </div>
+
+
+                                <div class="col-md-9">
+                                    <label for="brand_entity_id" class="form-label">Brand Entity Id:</label>
+                                    <input type="text" class="form-control" id="brand_entity_id" name="brand_entity_id"
+                                           placeholder="">
+
+                                </div>
+
+                                <div class="col-md-9">
+                                    <label for="brand_name" class="form-label">Brand Name:</label>
+                                    <input type="text" class="form-control" id="brand_name" name="brand_name"
+                                           placeholder="">
+
+                                </div>
+
+                                <div class="col-md-9" style="opacity: 0; display: none">
+                                    <label for="brand_logo_id" class="form-label">Brand Logo Asset Id:</label>
+                                    <input type="text" class="form-control" id="brand_logo_id" name="brand_logo_id"
+                                           placeholder="">
+
+                                </div>
+
+                                <div class="col-md-9">
+                                    <label for="headline" class="form-label">Headline:</label>
+                                    <input type="text" class="form-control" id="headline" name="headline"
+                                           maxlength="50" placeholder="">
+
+                                </div>
+
+                                <div class="col-md-9">
+                                    <label for="bids" class="form-label">Multiplier for Bids:</label>
+                                    <input type="text" class="form-control" id="bids" name="bids"
+                                           placeholder="">
+
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="col-md-12" style="opacity: 0;display: none">
+                                    <label class="form-label">Sponsored Brands Video</label>
+                                </div>
+                                <hr class="my-4" style="opacity: 0;display: none">
+
+                                <div class="col-md-9" style="opacity: 0;display: none">
+                                    <label for="media_ids" class="form-label">Video Media Ids:</label>
+                                    <input type="text" class="form-control" id="media_ids" name="media_ids"
+                                           placeholder="" value="">
+
+                                </div>
+                                <div class="col-md-9" style="opacity: 0;display: none">
+                                    <label for="creative_asins_video" class="form-label">Creative ASINs:</label>
+                                    <input type="hidden" class="form-control" id="creative_asins_video"
+                                           name="creative_asins_video"
+                                           placeholder="" value="">
+
+                                </div>
+
+
+                                <div class="col-md-9" style="opacity: 0;display: none">
+                                    <label for="brand_entity_id_video" class="form-label">Brand Entity Id:</label>
+                                    <input type="hidden" class="form-control" id="brand_entity_id_video"
+                                           name="brand_entity_id_video"
+                                           placeholder="" value="">
+
+                                </div>
+
+                                <div class="col-md-9" style="opacity: 0;display: none">
+                                    <label for="brand_name_video" class="form-label">Brand Name:</label>
+                                    <input type="hidden" class="form-control" id="brand_name_video"
+                                           name="brand_name_video"
+                                           placeholder="" value="">
+
+                                </div>
+                                <hr class="my-4">
+                                <div class="col-md-12">
+                                    <label class="form-label">SD Settings</label>
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="row gy-4">
+                                    <div class="col-md-4">
+                                        <label class="form-label">TPA Bid</label>
+                                        <input type="text" step="0.01" class="form-control" id="sb_tpa_bid"
+                                               name="sb_tpa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">TCA Bid</label>
+                                        <input type="text" class="form-control" id="sb_tca_bid" name="sb_tca_bid"
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">LSA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="sb_lsa_bid"
+                                               name="sb_lsa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">CA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="sb_ca_bid"
+                                               name="sb_ca_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">LPA Bid</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="sb_lpa_bid"
+                                               name="sb_lpa_bid"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">RA Bid</label>
+                                        <input type="text" step="0.01" class="form-control" id="sb_ra_bid"
+                                               name="sb_ra_bid"
+                                               placeholder="">
+                                    </div>
+
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-10">
+                                        <label class="form-label">Category</label>
+
+                                        <input type="text" step="0.01" class="form-control" id="sb_category_bid"
+                                               name="sb_category_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <hr class="my-4">
+                        <a class="btn btn-outline-primary" href="{{ MEDIA_URL }}statistic.html"
+                           role="button">History</a>
+                        <hr class="my-4">
+                        <hr class="my-4">
+                        <button type="submit" class="w-100 btn-lg btn-primary">Create tables
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-7 col-lg-7">
+                    <h4 class="mb-3">Run ASINs scraper </h4>
+                    <div class="row g-3">
+                        <div class="col-sm-9">
+                            <label for="search_links" class="form-label">Seed Keywords</label>
+                            <textarea class="form-control" id="search_links" name="search_links" rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <label for="keywords" class="form-label">RA Phrases (Negatives)</label>
+                            <textarea class="form-control" id="keywords" name="keywords" rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            <label for="asins" class="form-label">Our brand ASINs</label>
+                            <textarea class="form-control" id="asins" name="asins" rows="1"></textarea>
+
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-9">
+                            <label for="asins_google_sheet_link" class="form-label">Link for save results<span
+                                    class="text-muted"></span></label>
+                            <input type="text" class="form-control" id="asins_google_sheet_link"
+                                   name="asins_google_sheet_link"
+                                   placeholder="https://docs.google.com/spreadsheets/sometable">
+                            <div class="invalid-feedback">
+                                Google sheets table is required.
+                            </div>
+                        </div>
+
+
+                        <h4 class="mb-3">Link for saving results</h4>
+                        <div class="col-md-5">
+                            <label for="country" class="form-label">Country</label>
+                            <select class="form-select" id="country" name="country">
+                                <option>US</option>
+                                <option>UK</option>
+                                <option>CA</option>
+                                <option>DE</option>
+                                <option>FR</option>
+                                <option>ES</option>
+                                <option>IT</option>
+
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Search country is required.
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <label for="quality_search" class="form-label">Page quantity search:</label>
+                            <input type="number" value="5" class="form-control" id="quality_search"
+                                   name="quality_search"
+                                   placeholder="">
+                            <div class="invalid-feedback">
+                                Page quantity required.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row gy-4">
+                        <div class="col-md-3">
+                            <label for="price_filter" class="form-label">Low price</label>
+                            <input type="number" value="9.99" step="0.01" class="form-control" id="price_filter"
+                                   name="price_filter"
+                                   placeholder="">
+                            <div class="invalid-feedback">
+                                Price filter
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="review_filter" class="form-label">Top reviews</label>
+                            <input type="number" value="1000" step="10" class="form-control" id="review_filter"
+                                   name="review_filter"
+                                   placeholder="">
+                            <div class="invalid-feedback">
+                                Review filter required
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="rating_filter" class="form-label">Low rating</label>
+                            <input type="number" step="0.1" value="4.2" class="form-control" id="rating_filter"
+                                   name="rating_filter"
+                                   placeholder="">
+                            <div class="invalid-feedback">
+                                Rating filter required
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-9">
+                        <hr class="my-4">
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="asins_create_bulk"
+                                   name="asins_create_bulk">
+                            <label class="form-check-label" for="asins_create_bulk">Create bulk</label>
+                        </div>
+                        <hr class="my-4">
+                        <div class="mb-3" id="status">Process: {{status}}</div>
+
+
+                        <hr class="my-4">
+                        <button type="submit" class="w-100 btn-lg btn-dark">Run scraper
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2022 Amazon scraper</p>
+    </footer>
+</div>
+
+
+<script>
+    function get_label_id(file_field_id) {
+        const label = '_label';
+        return file_field_id + label;
+    };
+
+    function get_file(file_input) {
+        document.getElementById(file_input).click();
+    };
+
+    function output_filename(id) {
+        var label_id = get_label_id(id);
+        document.getElementById(label_id).innerHTML = 'Change selected file';
+    };
+</script>
+
+
+<script>
+    const company_names = ['str_top_scu', 'str_low_scu', 'variation_scu', 'exact_top_scu', 'exact_scu', 'exact_low_scu',
+        'broad_scu', 'brands_scu', 'pat_scu', 'auto_scu', 'auto_negatives_scu', 'category_scu'];
+
+    const base_scu = document.getElementById('tpk_scu');
+    base_scu.addEventListener('input', () => {
+        for (const name of company_names) {
+            document.getElementById(name).value = base_scu.value;
+        }
+    });
+</script>
+
+
+<script>
+    'use strict';
+    const sb_bid_values = {
+        'sb_category_bid': 0.5, 'sb_tca_bid': 0.9,
+        'sb_lpa_bid': 0.7, 'sb_lsa_bid': 0.9, 'sb_ra_bid': 0.6, 'sb_ca_bid': 0.8
+    };
+    const sb_base_bid = document.getElementById('sb_tpa_bid');
+
+    sb_base_bid.addEventListener('input', () => {
+        for (const [bid, value] of Object.entries(sb_bid_values)) {
+            document.getElementById(bid).value = (sb_base_bid.value * value).toFixed(2);
+        }
+    });
+
+
+</script>
+
+
+<script>
+    'use strict';
+    const bid_values = {
+        'str_top_bid': 1, 'str_low_bid': 0.9, 'variation_bid': 0.8, 'exact_top_bid': 0.9,
+        'exact_bid': 0.8, 'exact_low_bid': 0.7, 'broad_bid': 0.66, 'brands_bid': 0.66,
+        'auto_bid': 0.33, 'auto_negatives_bid': 0.55, 'category_bid': 0.33, 'tca_bid': 0.66,
+        'tpa_bid': 0.66, 'lpa_bid': 0.48, 'lsa_bid': 0.66, 'ra_bid': 0.44, 'ca_bid': 0.55
+    };
+    const base_bid = document.getElementById('tpk_bid');
+
+    base_bid.addEventListener('input', () => {
+        for (const [bid, value] of Object.entries(bid_values)) {
+            document.getElementById(bid).value = (base_bid.value * value).toFixed(2);
+        }
+    });
+</script>
+
+
+{% for name in filenames %}
+<iframe id="{{ name }}" style="display:none;"></iframe>
+{% endfor %}
+
+<script>
+    {%
+        for name in filenames %}
+    document.getElementById('{{ name }}').src = '{{ MEDIA_URL }}' + '{{ name }}';
+    {%
+        endfor %
+    }
+</script>
+
+
+<script>
+    const asins_status = '{{asins_status}}'
+    const tables_status = '{{tables_status}}'
+    if (asins_status) {
+        document.getElementById('info').value = 'Run asins scraper';
+    }
+    ;
+    if (tables_status) {
+        document.getElementById('info').value = 'Create tables';
+    }
+    ;
+</script>
+
+<script>
+    const base_entity_id = document.getElementById('brand_entity_id');
+    base_entity_id.addEventListener('input', () => {
+        document.getElementById('brand_entity_id_video').value = base_entity_id.value;
+    });
+
+
+    const base_brand_name = document.getElementById('brand_name');
+    base_brand_name.addEventListener('input', () => {
+        document.getElementById('brand_name_video').value = base_brand_name.value;
+    });
+</script>
+</body>
+</html>
