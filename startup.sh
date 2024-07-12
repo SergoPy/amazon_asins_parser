@@ -1,3 +1,6 @@
+env/Scripts/activate
+echo "Virtual env activated!"
+
 cd amazon || exit
 
 echo "Starting migrations..."

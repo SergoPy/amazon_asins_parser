@@ -3,7 +3,7 @@ Django==4.1.2
 environs==9.5.0
 google-api-python-client==2.63.0
 gunicorn
-gspread==5.5.0
+gspread==5.10.0
 gspread_dataframe
 httplib2==0.20.4
 itemadapter~=0.7.0

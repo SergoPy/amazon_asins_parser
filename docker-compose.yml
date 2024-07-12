@@ -25,6 +25,7 @@ services:
     volumes:
       - ./media:/web_app/amazon/media/
       - ./static:/web_app/amazon/static/
+      - ./amazon/clusters:/web_app/amazon/clusters/
     build:
       context: .
       dockerfile: Dockerfile
