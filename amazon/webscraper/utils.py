@@ -35,6 +35,7 @@ def get_company_values(data: dict) -> dict:
     company_types = ['tpk', 'str_low', 'str_top', 'variation', 'exact_top', 'exact', 'exact_low',
                      'broad', 'brands', 'tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra', 'auto',
                      'auto_negatives', 'category']
+    
 
     pats = ['tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra']
 
@@ -48,6 +49,7 @@ def get_company_values(data: dict) -> dict:
             scu = data[scu_key]
         bid = data[bid_key]
         company_values[company] = {'scu': scu, 'bid': bid}
+
 
     return company_values
 

@@ -40,6 +40,7 @@ def login_view(request):
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def scrape_view(request):
+    print("scrape_view")
     if request.method == 'GET':
         ip = get_client_ip(request)
         if ip not in VERIFY:
@@ -52,6 +53,7 @@ def scrape_view(request):
     else:
         data = request.POST
         files = request.FILES
+        print(f"tut data^ {data}")
         if campaign_upload_validator(data, files):
             run_campaign_upload(data, files)
         asins_scraper_manager(data, scrapyd)

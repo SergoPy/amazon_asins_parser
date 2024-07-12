@@ -149,6 +149,8 @@ def remove_duplicates(spreadsheet_id, range_name):
 
         keywords_total.append(tuple(res[1:]))
 
+    print(f"keywords_total: {keywords_total}")
+
     qq = pd.DataFrame([[(' '.join(k), i) for i, k in enumerate(keywords)], keywords_total]).T
     qq.columns = ['initial', 'normalized']
     

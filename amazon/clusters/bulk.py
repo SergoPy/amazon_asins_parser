@@ -29,11 +29,12 @@ def get_data_frame(key, spreadsheet_id, range_name):
     discovery_url = ('https://sheets.googleapis.com/$discovery/rest?'
                      'version=v4')
     service = discovery.build(
-        'sheets',
-        'v4',
-        http=httplib2.Http(),
-        discoveryServiceUrl=discovery_url,
-        developerKey=key)
+            'sheets',
+            'v4',
+            http=httplib2.Http(),
+            discoveryServiceUrl=discovery_url,
+            developerKey=key
+        )
 
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id, range=range_name).execute()
@@ -247,6 +248,7 @@ def make_exact_all(exact_total_data, remove_campaign):
 
     exact_words_parts = []
     while True:
+        # print(f"tut_exact_words {exact_words}")
         exact_words_parts.append(exact_words[:300])
         exact_words = exact_words[300:]
         if len(exact_words) == 0:
@@ -284,6 +286,7 @@ def make_pat_all(exact_total_data, remove_campaign):
 
     exact_words_parts = []
     while True:
+        # print(f"tut exact_words_parts {exact_words}")
         exact_words_parts.append(exact_words[:300])
         exact_words = exact_words[300:]
         if len(exact_words) == 0:
@@ -420,6 +423,7 @@ def sort_pats(pats_array):
         counter = 0
         while True:
             if len(pat_body):
+                # print(f"tut {pat_body}")
                 pats = pat_body[:300]
                 pat_body = pat_body[300:]
 
@@ -527,7 +531,7 @@ def google_sheets_bulk(table_link):
     if any(broad_total_data[4:]):
         broad_all = make_broad_all(broad_total_data, keyword_negatives, phrases_negatives)
         table_create_params.append(broad_all)
-
+ 
     auto_close_neg_all = make_auto_neg_all(auto_close_neg_total_data, keyword_negatives, phrases_negatives)
     auto_close_all = make_auto_all(auto_close_total_data)
 
