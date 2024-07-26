@@ -35,11 +35,11 @@ def get_company_values(data: dict) -> dict:
     company_types = ['tpk', 'str_low', 'str_top', 'variation', 'exact_top', 'exact', 'exact_low',
                      'broad', 'brands', 'tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra', 'auto',
                      'auto_negatives', 'category']
-    
 
     pats = ['tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra']
 
-    company_values = {company: {'scu': '', 'bid': ''} for company in company_types}
+    company_values = {company: {'scu': '', 'bid': ''}
+                      for company in company_types}
     for company in company_types:
         scu_key = f'{company}_scu'
         bid_key = f'{company}_bid'
@@ -49,8 +49,7 @@ def get_company_values(data: dict) -> dict:
             scu = data[scu_key]
         bid = data[bid_key]
         company_values[company] = {'scu': scu, 'bid': bid}
-
-
+    company_values['mkpc_key'] = data['mkpc_key']
     return company_values
 
 
@@ -59,8 +58,10 @@ def _get_url(keyword: str, country: str) -> str:
 
 
 def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple:
-    negative_words = ' '.join([keyword for keyword in negative_words.split('\r\n')])
-    links_to_serp = ' '.join([_get_url(keyword, country) for keyword in keywords.split('\r\n')])
+    negative_words = ' '.join(
+        [keyword for keyword in negative_words.split('\r\n')])
+    links_to_serp = ' '.join([_get_url(keyword, country)
+                             for keyword in keywords.split('\r\n')])
     return links_to_serp, negative_words
 
 
@@ -122,7 +123,8 @@ def create_tables_manager(data: dict) -> list:
 
     filenames_asins = None
     if asins_create_bulk and asins_google_sheet_link:
-        filenames_asins = _create_tables(asins_google_sheet_link, True, True, True, True, True, data)
+        filenames_asins = _create_tables(
+            asins_google_sheet_link, True, True, True, True, True, data)
     filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
                                        sponsored_status, sponsored_video_status, sponsored_display_status,
                                        data)
@@ -145,7 +147,8 @@ def asins_scraper_manager(data: dict, scrapyd):
         scrapyd_settings = {
             'unique_id': unique_id,
         }
-        links_to_serp, negative_words = format_parse_args(search_links, keywords, country)
+        links_to_serp, negative_words = format_parse_args(
+            search_links, keywords, country)
         cookie = COUNTRY_COOKIES[country]
         sp_asins = ' '.join(asins.split('\r\n'))
         task = scrapyd.schedule('default', 'amazon', settings=scrapyd_settings, price_filter=price_filter,
@@ -153,6 +156,7 @@ def asins_scraper_manager(data: dict, scrapyd):
                                 keywords=negative_words, table_link=asins_google_sheet_link,
                                 limit=quality_search, urls=links_to_serp, sp_def_asins=sp_asins,
                                 apikey_file_path=settings.APIKEY_FILEPATH, cookie=cookie)
+
 
 def search_term_report_manager(data: dict, files: dict) -> str:
     file1, file2 = files['file1'].read(), files['file2'].read()
@@ -163,7 +167,8 @@ def search_term_report_manager(data: dict, files: dict) -> str:
     if products1 and products2:
         products1 = products1.split('\r\n')
         products2 = products2.split('\r\n')
-        products = {products1[elem]: products2[elem] for elem in range(len(products1))}
+        products = {products1[elem]: products2[elem]
+                    for elem in range(len(products1))}
     if file1 and file2:
         create_term_report(file1, file2, products, all_products)
         return settings.TERM_REPORT_FILENAME
@@ -192,7 +197,9 @@ def run_asins_monitoring(data: dict, scrapyd) -> None:
     scrapyd_settings = {
         'unique_id': unique_id,
     }
-    scrapyd.schedule('default', 'asins_monitoring', settings=scrapyd_settings, **monitoring_params)
+    scrapyd.schedule('default', 'asins_monitoring',
+                     settings=scrapyd_settings, **monitoring_params)
+
 
 @app.task
 def run_advertising_monitoring(data: dict, scrapyd) -> None:
@@ -220,7 +227,8 @@ def run_advertising_monitoring(data: dict, scrapyd) -> None:
     scrapyd_settings = {
         'unique_id': unique_id,
     }
-    scrapyd.schedule('default', 'advertising_monitoring', settings=scrapyd_settings, **monitoring_params)
+    scrapyd.schedule('default', 'advertising_monitoring',
+                     settings=scrapyd_settings, **monitoring_params)
 
 
 def save_monitoring(monitoring_model, data: dict) -> None:
