@@ -18,17 +18,24 @@ class GoogleSheetsApi:
         return self.worksheet.cell(row, col)
 
     def get_coords(self, col):
+        # print(f"tut col: {col}")
         row = len(self.worksheet.col_values(col)) + 1
+        # print(f"tut row: {row}")
         return [row, col]
 
     def update_cell(self, row, col, value):
         self.worksheet.update_cell(row, col, value)
 
     def update(self, diapason, value_list):
-        self.worksheet.update(diapason, value_list, value_input_option='USER_ENTERED')
+        self.worksheet.update(diapason, value_list,
+                              value_input_option='USER_ENTERED')
 
     def find_cell(self, value):
-        return self.worksheet.find(value)
+        cells = self.worksheet.get_all_cells()
+        for cell in cells:
+            if value in str(cell.value):
+                return cell
+        return None
 
     def get_cord_by_name(self, value):
         return self.get_coords(self.find_cell(value).col)

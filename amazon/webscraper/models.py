@@ -30,3 +30,11 @@ class AdvertisingMonitoring(Monitoring):
     entity_id = CharField(max_length=32)
     login = CharField(max_length=64)
     password = CharField(max_length=64)
+
+
+class Campaign(Model):
+    name = CharField(max_length=255, unique=True)
+    created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

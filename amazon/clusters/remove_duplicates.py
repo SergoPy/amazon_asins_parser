@@ -1,5 +1,6 @@
 
 import httplib2
+import inflect
 import pandas as pd
 import gspread
 
@@ -13,7 +14,7 @@ SPREADSHEET_RULE_ID = '10IrWEmWfshmP74K2SYKi0QZbiWhEFgCW9m0TNzePetM'
 
 def get_data_frame(key, spreadsheet_id, range_name):
     discovery_url = ('https://sheets.googleapis.com/$discovery/rest?'
-                    'version=v4')
+                     'version=v4')
     service = discovery.build(
         'sheets',
         'v4',
@@ -39,27 +40,35 @@ def update_column(worksheet, column_name, data):
     len_column = len(worksheet.col_values(col))
     while len(values_list) != len_column:
         values_list.append([''])
-    worksheet.update(f'{indexes_to_a1(row, col)}:{indexes_to_a1(row + len_column, col)}', values_list)
+    worksheet.update(
+        f'{indexes_to_a1(row, col)}:{indexes_to_a1(row + len_column, col)}', values_list)
 
 
 def remove_duplicates(spreadsheet_id, range_name):
     data = get_data_frame(API_KEY, spreadsheet_id, range_name)
+    inflect_engine = inflect.engine()
     keywords = []
 
     for k in data.T.values:
-        if k[0].lower() == 'tpk':
-            k = [k[0]] + [normalize_text(keyword) for keyword in k[1:] if keyword]
-            keywords.extend([tuple(['tpk:'] + x.split(' ')) for x in k[1:] if x is not None and x != ''])
+        if k[0].lower() == 'seed':
+            k = [k[0]] + [normalize_text(keyword)
+                          for keyword in k[1:] if keyword]
+            keywords.extend([tuple(['seed:'] + x.split(' '))
+                            for x in k[1:] if x is not None and x != ''])
 
     for k in data.T.values:
         if 'str' in k[0].lower():
-            k = [k[0]] + [normalize_text(keyword) for keyword in k[1:] if keyword]
-            keywords.extend([tuple([k[0].lower() + ':'] + x.split(' ')) for x in k[1:] if x is not None and x != ''])
+            k = [k[0]] + [normalize_text(keyword)
+                          for keyword in k[1:] if keyword]
+            keywords.extend([tuple([k[0].lower() + ':'] + x.split(' '))
+                            for x in k[1:] if x is not None and x != ''])
 
     for k in data.T.values:
         if k[0].lower() == 'keywords':
-            k = [k[0]] + [normalize_text(keyword) for keyword in k[1:] if keyword]
-            keywords.extend([tuple(['keyword:'] + x.split(' ')) for x in k[1:] if x is not None and x != ''])
+            k = [k[0]] + [normalize_text(keyword)
+                          for keyword in k[1:] if keyword]
+            keywords.extend([tuple(['keyword:'] + x.split(' '))
+                            for x in k[1:] if x is not None and x != ''])
 
     prep_df = get_rule_df('Prepositions')
     preps = list(prep_df[0])
@@ -67,7 +76,7 @@ def remove_duplicates(spreadsheet_id, range_name):
     keywords_ignore_preps = []
 
     for k in keywords:
-        res = []
+        res = []                 
         for t in k:
             if t in preps:
                 continue
@@ -92,13 +101,13 @@ def remove_duplicates(spreadsheet_id, range_name):
                 res.append(t)
 
         keywords_regular_verbs.append(res)
-        
+
     plural_nouns_dict = dict()
     plural_nouns_df = get_rule_df('Plural Nouns')
 
     for k in plural_nouns_df.values:
         plural_nouns_dict[k[1].lower()] = k[0].lower()
-        
+
     keywords_no_plurals = []
 
     for k in keywords_regular_verbs:
@@ -117,14 +126,14 @@ def remove_duplicates(spreadsheet_id, range_name):
                 res.append(t)
 
         keywords_no_plurals.append(res)
-        
+
     ing_dict = dict()
     ing_df = get_rule_df('Ing')
 
     for k in ing_df.values:
         ing_dict[k[1].lower()] = k[0].lower()
         ing_dict[k[2].lower()] = k[0].lower()
-        
+
     keywords_no_ing = []
 
     for k in keywords_no_plurals:
@@ -133,13 +142,13 @@ def remove_duplicates(spreadsheet_id, range_name):
             res.append(t)
 
         keywords_no_ing.append(res)
-        
+
     other_dict = dict()
     other_df = get_rule_df('Other')
 
     for k in other_df.values:
         other_dict[k[1].lower()] = k[0].lower()
-        
+
     keywords_total = []
 
     for k in keywords_no_ing:
@@ -149,21 +158,25 @@ def remove_duplicates(spreadsheet_id, range_name):
 
         keywords_total.append(tuple(res[1:]))
 
-    print(f"keywords_total: {keywords_total}")
 
-    qq = pd.DataFrame([[(' '.join(k), i) for i, k in enumerate(keywords)], keywords_total]).T
+    qq = pd.DataFrame([[(' '.join(k), i) for i, k in enumerate(keywords)], [
+                      ' '.join(kw) for kw in keywords_total]]).T
     qq.columns = ['initial', 'normalized']
-    
+
     qq_grouped = qq.groupby('normalized')['initial'].apply(list).reset_index()
-    qq_grouped['first'] = qq_grouped.initial.apply(lambda x: x[0])
-    qq_grouped['index'] = qq_grouped['first'].apply(lambda x: x[1])
-    qq_grouped['keyword'] = qq_grouped['first'].apply(lambda x: x[0].split(': ')[1])
-    qq_grouped['category'] = qq_grouped['first'].apply(lambda x: x[0].split(': ')[0])
-    
+    qq_grouped['initial'] = qq_grouped.initial.apply(lambda x: x[0])
+    qq_grouped['normalized'] = qq_grouped.normalized.apply(lambda x: x)
+
+    qq_grouped['index'] = qq_grouped['initial'].apply(lambda x: x[1])
+    qq_grouped['keyword'] = qq_grouped['normalized'].apply(
+        lambda x: x)
+    qq_grouped['category'] = qq_grouped['initial'].apply(
+        lambda x: x[0].split(': ')[0])
+
     total_res = qq_grouped.sort_values('index')[['category', 'keyword']]
 
     keywords = list(total_res[total_res.category == 'keyword'].keyword)
-    tpk = list(total_res[total_res.category == 'tpk'].keyword)
+    seed = list(total_res[total_res.category == 'seed'].keyword)
     str_top = list(total_res[total_res.category == 'str top'].keyword)
     str_low = list(total_res[total_res.category == 'str low'].keyword)
 
@@ -172,6 +185,6 @@ def remove_duplicates(spreadsheet_id, range_name):
     worksheet = sht1.worksheet(range_name)
 
     update_column(worksheet, 'KEYWORDS', keywords)
-    update_column(worksheet, 'TPK', tpk)
+    update_column(worksheet, 'SEED', seed)
     update_column(worksheet, 'STR Low', str_low)
     update_column(worksheet, 'STR Top', str_top)

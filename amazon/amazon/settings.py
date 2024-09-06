@@ -1,3 +1,4 @@
+import django
 import os
 import sys
 
@@ -6,7 +7,6 @@ sys.path.append(os.path.dirname(os.path.abspath('.')))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'webscraper.settings'
 
 # This is required only if Django Version > 1.8
-import django
 
 django.setup()
 BOT_NAME = 'amazon'
@@ -20,25 +20,25 @@ NEWSPIDER_MODULE = 'amazon.spiders'
 
 ROTATING_PROXY_CLOSE_SPIDER = False
 
-#ROTATING_PROXY_LIST_PATH = '../proxies/proxies.txt'
+# ROTATING_PROXY_LIST_PATH = '../proxies/proxies.txt'
 ROTATING_PROXY_LIST = [
-    'http://user137997:yklevn@23.26.126.22:5948',
-    'http://user137997:yklevn@102.129.151.13:5948',
-    'http://user137997:yklevn@166.0.173.231:5948',
-    'http://user137997:yklevn@104.193.227.74:5948',
-    'http://user137997:yklevn@23.26.126.157:5948',
-    'http://user137997:yklevn@154.16.242.204:5948',
-    'http://user137997:yklevn@166.0.173.75:5948',
-    'http://user137997:yklevn@166.0.173.77:5948',
-    'http://user137997:yklevn@166.0.173.144:5948',
-    'http://user137997:yklevn@23.26.126.35:5948',
-    'http://user137997:yklevn@102.129.221.150:5948',
-    'http://user137997:yklevn@166.0.173.228:5948',
-    'http://user137997:yklevn@102.129.221.158:5948',
-    'http://user137997:yklevn@154.16.242.5:5948',
-    'http://user137997:yklevn@108.165.197.228:5948',
+    'http://user137997:yklevn@181.215.71.179:5516',
+    'http://user137997:yklevn@181.215.71.173:5516',
+    'http://user137997:yklevn@181.215.152.158:5516',
+    'http://user137997:yklevn@77.83.195.232:5516',
+    'http://user137997:yklevn@77.83.195.102:5516',
+    'http://user137997:yklevn@77.83.195.37:5516',
+    'http://user137997:yklevn@77.83.195.106:5516',
+    'http://user137997:yklevn@77.83.195.71:5516',
+    'http://user137997:yklevn@181.214.117.27:5516',
+    'http://user137997:yklevn@181.215.71.138:5516',
+    'http://user137997:yklevn@77.83.195.4:5516',
+    'http://user137997:yklevn@77.83.195.112:5516',
+    'http://user137997:yklevn@77.83.195.86:5516',
+    'http://user137997:yklevn@77.83.195.174:5516',
+    'http://user137997:yklevn@102.129.221.171:5516',
 ]
-#ROTATING_PROXY_LIST_PATH = '../proxies/proxies.txt'
+# ROTATING_PROXY_LIST_PATH = '../proxies/proxies.txt'
 ROTATING_PROXY_BACKOFF_BASE = 60
 ROTATING_PROXY_BACKOFF_CAP = 180
 ROTATING_PROXY_PAGE_RETRY_TIMES = 2

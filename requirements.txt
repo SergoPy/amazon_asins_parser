@@ -21,3 +21,5 @@ selenium==4.6.1
 sqlparse==0.4.3
 webdriver-manager==3.8.5
 xlsxwriter==3.0.3
+nltk==3.8.1
+inflect==7.3.1

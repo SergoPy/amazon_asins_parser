@@ -88,7 +88,7 @@
             <p class="lead">Create a semantic core and control performance</p>
 
         </div>
-        <form action="{% url 'scraper_interface' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'scraper_interface' %}" method="POST" enctype="multipart/form-data" id="dynamic-form">
             {% csrf_token %}
             <div class="row g-5">
                 <div class="col-md-5 col-lg-5 order-md-last">
@@ -130,6 +130,10 @@
                                         Products</label>
                                 </div>
                             </div>
+                            <button class="btn btn-primary col-md-5" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasCampType" aria-controls="offcanvasCampType">
+                                Choose campaign type
+                            </button>
                             <div class="col-md-5">
 
                             </div>
@@ -163,8 +167,7 @@
                                 <div class="form-check ">
                                     <input type="checkbox" class="form-check-input" id="create_sponsored_display"
                                            name="create_sponsored_display">
-                                    <label class="form-check-label" for="create_sponsored_display">create Sponsored
-                                        Display</label>
+                                    <label class="form-check-label" for="create_sponsored_display">create Sponsored Display</label>
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -211,10 +214,40 @@
                             </div>
 
                         </div>
+                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCampType"
+                             aria-labelledby="offcanvasCampType">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title">Campaign List</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <button type="button" id="uncheck-all-btn" class="col-md-5 btn btn-secondary">Uncheck All</button>
+                                <button type="submit" id="update-column-campg" class="col-md-5 btn btn-primary">Update columns</button>
+                                <hr class="my-4">
+                                {% for key, value in campaign_names.items %}
+                                    <div class="col-md-7">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="campaign_{{ key }}" name="campaign_{{ key }}" checked>
+                                            <label class="form-check-label" for="campaign_{{ key }}">{{ value }}</label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
                         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
                              aria-labelledby="offcanvasExampleLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title">: SKU & Bids</h5>
+                                <h5 class="offcanvas-title">Clusters: SKU & Bids</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                         aria-label="Close"></button>
                             </div>
@@ -235,16 +268,16 @@
                                 <hr class="my-4">
 
                                 <div class="col-md-12">
-                                    <label class="form-label">TPK</label>
+                                    <label class="form-label">SEED</label>
                                 </div>
                                 <div class="row gy-4">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="tpk_scu" name="tpk_scu"
+                                        <input type="text" class="form-control" id="seed_scu" name="seed_scu"
                                                placeholder="">
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" step="0.01" class="form-control" id="tpk_bid"
-                                               name="tpk_bid"
+                                        <input type="text" step="0.01" class="form-control" id="seed_bid"
+                                               name="seed_bid"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -357,6 +390,21 @@
                                 </div>
 
                                 <div class="col-md-12">
+                                    <label class="form-label">Words</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="words_scu" name="words_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="words_bid"
+                                               name="words_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
                                     <label class="form-label">Brands</label>
                                 </div>
                                 <div class="row gy-4">
@@ -380,6 +428,36 @@
                                                placeholder="">
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Advertised ASIN</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="adv_asin_scu" name="adv_asin_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="adv_asin_bid"
+                                               name="adv_asin_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label">Brand Defense</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="brand_def_bid"
+                                               name="brand_def_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+
+                                
+
                                 <hr class="my-4">
 
 
@@ -717,9 +795,18 @@
                                 Valid last name is required.
                             </div>
                         </div>
+
+
                         <div class="col-sm-9">
-                            <label for="asins" class="form-label">Our brand ASINs</label>
-                            <textarea class="form-control" id="asins" name="asins" rows="1"></textarea>
+                            <label for="asins" class="form-label">Our brand ASINs</label><br>
+
+                                <button type="button" id="add-prod-btn" class="btn btn-success mb-3">Add product +</button>
+                                <div id="blocks-container-product"> </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <label for="our_adv_asins" class="form-label">Our Advertised ASIN</label>
+                            <textarea class="form-control" id="our_adv_asins" name="our_adv_asins" rows="1"></textarea>
 
                             <div class="invalid-feedback">
                                 Valid last name is required.
@@ -771,7 +858,7 @@
 
 
                     <div class="row gy-4">
-                        <div class="col-md-3">
+                        {% comment %} <div class="col-md-3">
                             <label for="price_filter" class="form-label">Low price</label>
                             <input type="number" value="9.99" step="0.01" class="form-control" id="price_filter"
                                    name="price_filter"
@@ -799,9 +886,14 @@
                             <div class="invalid-feedback">
                                 Rating filter required
                             </div>
-                        </div>
+                        </div> {% endcomment %}
 
-
+                            <div class="container mt-5">
+                                <label for="asins" class="form-label">Our criterions</label><br>
+                                <button type="button" id="add-block-btn" class="btn btn-success mb-3">Add criterion +</button>
+                                <div id="blocks-container">
+                                </div>
+                            </div>
                     </div>
                     <div class="col-sm-9">
                         <hr class="my-4">
@@ -829,6 +921,125 @@
     </footer>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Функція для збереження блоків в localStorage
+        function saveBlocks() {
+            const blocks = [];
+            $('#blocks-container .block').each(function () {
+                const block = {
+                    param: $(this).find('.param-select').val(),
+                    from: $(this).find('.from-input').val(),
+                    to: $(this).find('.to-input').val()
+                };
+                blocks.push(block);
+            });
+            localStorage.setItem('blocks', JSON.stringify(blocks));
+        }
+
+        // Функція для додавання блоку
+        function addBlock(param = '', from = '', to = '') {
+            const blockHtml = `
+                <div class="block mb-3 d-flex align-items-center" >
+                    <select class="form-select param-select me-2" style="width: 150px;" name="type_selection">
+                        <option value="reviews" ${param === 'reviews' ? 'selected' : ''}>Reviews</option>
+                        <option value="price" ${param === 'price' ? 'selected' : ''}>Price</option>
+                        <option value="rating" ${param === 'rating' ? 'selected' : ''}>Rating</option>
+                    </select>
+                    <span class="me-2">From</span>
+                    <input type="number" step="0.1" class="from-input form-control me-2" style="width: 100px;" name="from_range" value="${from}">
+                    <span class="me-2">To</span>
+                    <input type="number" step="0.1" class="to-input form-control me-5" style="width: 100px;" name="to_range" value="${to}">
+                    <button class="btn btn-danger remove-block-btn">🗑</button>
+                </div>
+                </div>`;
+            $('#blocks-container').append(blockHtml);
+        }
+
+        // Завантаження блоків з localStorage
+        const savedBlocks = JSON.parse(localStorage.getItem('blocks')) || [];
+        savedBlocks.forEach(block => addBlock(block.param, block.from, block.to));
+
+        // Обробник події для додавання нового блоку
+        $('#add-block-btn').click(function () {
+            addBlock();
+            saveBlocks();
+        });
+
+        // Обробник події для видалення блоку
+        $('#blocks-container').on('click', '.remove-block-btn', function () {
+            $(this).closest('.block').remove();
+            saveBlocks();
+        });
+
+        // Збереження блоків при зміні значень
+        $('#blocks-container').on('change', '.param-select, .from-input, .to-input', function () {
+            saveBlocks();
+        });
+
+        $('#dynamic-form').submit(function () {
+            saveBlocks();
+        });
+    });
+</script>
+                        
+<script>
+    $(document).ready(function () {
+        // Функція для збереження блоків в localStorage
+        function saveBlocks() {
+            const blocks_product = [];
+            $('#blocks-container-product .block').each(function () {
+                const block_prod = {
+                    from: $(this).find('.asin-input').val(),
+                    to: $(this).find('.sku-input').val()
+                };
+                blocks_product.push(block_prod);
+            });
+            localStorage.setItem('blocks-product', JSON.stringify(blocks_product));
+        }
+
+        // Функція для додавання блоку
+        function addBlock(asin_product = '', sku_product = '') {
+            const blockHtml = `
+                <div class="block mb-3 d-flex align-items-center" >
+                    <span class="me-2">ASIN</span>
+                    <input type="text" class="asin-input form-control me-2" style="width: 185px;" name="asin_product" value="${asin_product}">
+                    <span class="me-2">SKU</span>
+                    <input type="text"  class="sku-input form-control me-5" style="width: 185px;" name="sku_product" value="${sku_product}">
+                    <button class="btn btn-danger remove-product-btn">🗑</button>
+                </div>
+                </div>`;
+            $('#blocks-container-product').append(blockHtml);
+        }
+
+        // Завантаження блоків з localStorage
+        const savedBlocks = JSON.parse(localStorage.getItem('blocks-product')) || [];
+        savedBlocks.forEach(block_prod => addBlock(block_prod.asin_product, block_prod.sku_product));
+
+        // Обробник події для додавання нового блоку
+        $('#add-prod-btn').click(function () {
+            addBlock();
+            saveBlocks();
+        });
+
+        // Обробник події для видалення блоку
+        $('#blocks-container-product').on('click', '.remove-product-btn', function () {
+            $(this).closest('.block').remove();
+            saveBlocks();
+        });
+
+        // Збереження блоків при зміні значень
+        $('#blocks-container-product').on('change', '.asin-product, .sku-product', function () {
+            saveBlocks();
+        });
+
+        $('#dynamic-form').submit(function () {
+            saveBlocks();
+        });
+    });
+</script>
 
 <script>
     function get_label_id(file_field_id) {
@@ -849,9 +1060,9 @@
 
 <script>
     const company_names = ['str_top_scu', 'str_low_scu', 'variation_scu', 'exact_top_scu', 'exact_scu', 'exact_low_scu',
-        'broad_scu', 'brands_scu', 'pat_scu', 'auto_scu', 'auto_negatives_scu', 'category_scu'];
+        'broad_scu', 'brands_scu', 'pat_scu', 'auto_scu', 'auto_negatives_scu', 'category_scu', 'words_scu', 'adv_asin_scu'];
 
-    const base_scu = document.getElementById('tpk_scu');
+    const base_scu = document.getElementById('seed_scu');
     base_scu.addEventListener('input', () => {
         for (const name of company_names) {
             document.getElementById(name).value = base_scu.value;
@@ -884,14 +1095,24 @@
         'str_top_bid': 1, 'str_low_bid': 0.9, 'variation_bid': 0.8, 'exact_top_bid': 0.9,
         'exact_bid': 0.8, 'exact_low_bid': 0.7, 'broad_bid': 0.66, 'brands_bid': 0.66,
         'auto_bid': 0.33, 'auto_negatives_bid': 0.55, 'category_bid': 0.33, 'tca_bid': 0.66,
-        'tpa_bid': 0.66, 'lpa_bid': 0.48, 'lsa_bid': 0.66, 'ra_bid': 0.44, 'ca_bid': 0.55
+        'tpa_bid': 0.66, 'lpa_bid': 0.48, 'lsa_bid': 0.66, 'ra_bid': 0.44, 'ca_bid': 0.55,
+        'words_bid': 0.2, 'brand_def_bid': 1, 'adv_asin_bid': 1
     };
-    const base_bid = document.getElementById('tpk_bid');
+    const base_bid = document.getElementById('seed_bid');
 
     base_bid.addEventListener('input', () => {
         for (const [bid, value] of Object.entries(bid_values)) {
             document.getElementById(bid).value = (base_bid.value * value).toFixed(2);
         }
+    });
+</script>
+
+<script>
+    document.getElementById('uncheck-all-btn').addEventListener('click', function() {
+        const checkboxes = document.querySelectorAll('.form-check-input');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;
+        });
     });
 </script>
 

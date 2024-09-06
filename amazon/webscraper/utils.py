@@ -1,4 +1,8 @@
 from datetime import datetime
+from datetime import timedelta
+import json
+import re
+from django.utils import timezone
 from uuid import uuid4
 
 from clusters.bulk import google_sheets_bulk
@@ -11,7 +15,7 @@ from uploaders.sponsor_products import run_amazon_media_uploader
 
 from .celery import app
 from .constants import COUNTRY_URLS, SEARCH_PATH, COUNTRY_COOKIES
-from .models import AsinsMonitoring, AdvertisingMonitoring
+from .models import AsinsMonitoring, AdvertisingMonitoring, Campaign
 from .settings import MEDIA_ROOT
 
 
@@ -32,9 +36,9 @@ def get_company_sponsored_values(data: dict) -> dict:
 
 
 def get_company_values(data: dict) -> dict:
-    company_types = ['tpk', 'str_low', 'str_top', 'variation', 'exact_top', 'exact', 'exact_low',
+    company_types = ['seed', 'str_low', 'str_top', 'variation', 'exact_top', 'exact', 'exact_low',
                      'broad', 'brands', 'tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra', 'auto',
-                     'auto_negatives', 'category']
+                     'auto_negatives', 'category', 'words', 'brand_def', 'adv_asin']
 
     pats = ['tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra']
 
@@ -44,10 +48,10 @@ def get_company_values(data: dict) -> dict:
         scu_key = f'{company}_scu'
         bid_key = f'{company}_bid'
         if company in pats:
-            scu = data['pat_scu']
+            scu = data.get('pat_scu', "")
         else:
-            scu = data[scu_key]
-        bid = data[bid_key]
+            scu = data.get(scu_key, "")
+        bid = data.get(bid_key, "")
         company_values[company] = {'scu': scu, 'bid': bid}
     company_values['mkpc_key'] = data['mkpc_key']
     return company_values
@@ -69,10 +73,14 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
                    sponsored_video_status: bool, sponsored_display_status: bool, data: dict) -> list:
     filenames = []
     if cluster_status:
+        print(f"data: {data}")
         clusters_values = get_company_values(data)
-        google_sheets_clusters(table, clusters_values)
+        google_sheets_clusters(table, clusters_values) # еге
     if bulk_status:
-        bulk_file = google_sheets_bulk(table)
+
+        campaign_data = [key.replace('campaign_', '') for key, value in data.items(
+        ) if key.startswith('campaign_') and value == 'on']
+        bulk_file = google_sheets_bulk(table, campaign_data)
         filenames.append(bulk_file)
     if sponsored_status:
         sponsored_file = create_sponsored(table, data)
@@ -132,15 +140,26 @@ def create_tables_manager(data: dict) -> list:
 
 
 def asins_scraper_manager(data: dict, scrapyd):
+    # print(f"data dict: {data}")
     asins_google_sheet_link = data['asins_google_sheet_link']
     search_links = data['search_links']
     keywords = data['keywords']
     country = data['country']
-    asins = data['asins']
+
+    dv_asins = data['our_adv_asins']
     quality_search = data['quality_search']
-    price_filter = data['price_filter']
-    review_filter = data['review_filter']
-    rating_filter = data['rating_filter']
+
+    type_selection = data.getlist('type_selection')
+    from_range = data.getlist('from_range')
+    to_range = data.getlist('to_range')
+    our_product_asins = data.getlist('asin_product')
+    our_product_skus = data.getlist('sku_product')
+
+    print(
+        f"our_product_asins: {our_product_asins}, our_product_skus: {our_product_skus}")
+
+    read_creterians = create_range_dict(
+        type_selection, from_range, to_range)
 
     if search_links and asins_google_sheet_link and country and quality_search:
         unique_id = str(uuid4())
@@ -150,12 +169,30 @@ def asins_scraper_manager(data: dict, scrapyd):
         links_to_serp, negative_words = format_parse_args(
             search_links, keywords, country)
         cookie = COUNTRY_COOKIES[country]
-        sp_asins = ' '.join(asins.split('\r\n'))
-        task = scrapyd.schedule('default', 'amazon', settings=scrapyd_settings, price_filter=price_filter,
-                                review_filter=review_filter, rating_filter=rating_filter,
-                                keywords=negative_words, table_link=asins_google_sheet_link,
-                                limit=quality_search, urls=links_to_serp, sp_def_asins=sp_asins,
+        sp_asins = ' '.join(our_product_asins)
+        sp_skus = ' '.join(our_product_skus)
+        adv_asins = ' '.join(dv_asins.split('\r\n'))
+        task = scrapyd.schedule('default', 'amazon', settings=scrapyd_settings,
+                                keywords=negative_words, sp_def_skus = sp_skus, 
+                                table_link=asins_google_sheet_link, limit=quality_search, 
+                                urls=links_to_serp, sp_def_asins=sp_asins,
+                                adv_variations_asins=adv_asins, creterians=json.dumps(
+                                    read_creterians),
                                 apikey_file_path=settings.APIKEY_FILEPATH, cookie=cookie)
+
+
+def create_range_dict(type_selection, from_range, to_range):
+    result = {}
+
+    for i, key in enumerate(type_selection):
+        from_value = from_range[i] if i < len(
+            from_range) and from_range[i] != '' else None
+        to_value = to_range[i] if i < len(
+            to_range) and to_range[i] != '' else None
+
+        result[key] = [from_value, to_value]
+
+    return result
 
 
 def search_term_report_manager(data: dict, files: dict) -> str:
@@ -265,3 +302,41 @@ def run_campaign_upload(data: dict, files: dict):
     }
     upload_mode = data['upload_campaign_mode']
     run_amazon_media_uploader(upload_kwargs, upload_mode)
+
+
+def to_snake_case(name):
+    new_name = name.lower()
+    new_name = re.sub(r'\s+', '_', new_name)
+    new_name = new_name.strip('_')
+    print(f"name before: {name} <-> name after: {new_name}")
+    return new_name
+
+
+def extract_text(input_string):
+    match = re.search(r'\(([^)]+)\)', input_string)
+    if match:
+        return match.group(1) + input_string.split(')')[1]
+    return None
+
+
+def get_campaigns() -> list:
+    default_company_types = {'seed', 'str low', 'str top', 'variation', 'exact top', 'exact', 'exact low',
+                             'broad', 'brands', 'tpa bid', 'tca bid', 'lsa bid', 'lpa bid', 'ca bid', 'ra bid ', 'auto',
+                             'auto_negatives', 'category'}
+    current_time = timezone.now()
+    campaigns = Campaign.objects.all()
+    if campaigns.exists():
+        first_campaign = campaigns.first()
+
+        time_difference = current_time - first_campaign.created_at
+
+        if time_difference < timedelta(days=3):
+            result = {to_snake_case(campaign.name): campaign.name for campaign in campaigns}
+        else:
+            result = {to_snake_case(
+                default_campaign): default_campaign for default_campaign in default_company_types}
+    else:
+        result = {to_snake_case(
+            default_campaign): default_campaign for default_campaign in default_company_types}
+
+    return result
