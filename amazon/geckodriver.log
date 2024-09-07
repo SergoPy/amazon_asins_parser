@@ -1,0 +1,1031 @@
+1670970738959	geckodriver	INFO	Listening on 127.0.0.1:53493
+1670970739469	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "36465" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileCgAnwN"
+[GFX1-]: glxtest: libEGL missing
+1670970740251	Marionette	INFO	Marionette enabled
+1670970740257	Marionette	INFO	Listening on port 33695
+Read port: 33695
+WebDriver BiDi listening on ws://127.0.0.1:36465
+1670970740470	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileCgAnwN/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:36465/devtools/browser/fee84722-9d84-448a-a36f-81ca53b4ba34
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.vrfWx0YbOZdt8ZfH2zsCb0HxeUX1BwcQnc3URdTB511sjxV85WGFZA.zP2420Acw0Rov6dK.NmTVsTY0-H6XAoK6zGXG5sTpqYs6tKpCgeNaSufAOIRrd1GiWJegUrIs1mLiddlBk2CFZ5woOFu1_cZkKduSie8Cdj6zX0galzULbOqk0nXemKwdH6SIDcpn-9OWgGiLi-avBR8zN0KieGWyzRDAF-bNA-BBssaK1TSYU4n0NZV2IXpXnC9LoBM9OoK5bvPIB0qgVxDd0mk.ObSVUDdhJV1pZOIL1VC2xw line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=627b8cfc-0255-44fd-b039-f8c626d1c9d7&mfa.arb.value=627b8cfc-0255-44fd-b039-f8c626d1c9d7&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670971740297	geckodriver	INFO	Listening on 127.0.0.1:55677
+1670971740805	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "37621" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMlMXDS"
+[GFX1-]: glxtest: libEGL missing
+1670971741588	Marionette	INFO	Marionette enabled
+1670971741595	Marionette	INFO	Listening on port 35965
+Read port: 35965
+WebDriver BiDi listening on ws://127.0.0.1:37621
+1670971741813	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMlMXDS/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:37621/devtools/browser/3dea2850-7edb-4934-b512-bf783adcaf42
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.KFOgxwGzTp4nZbnaT8a6fkkrX2hjVKTB9NiaykIrDVEPcWHHTbGRJg.tSJxWeGhwjwuAyWr.NwEO3tEbVT7ZP1gEr8peGXregQUHDxsl5bFR7wgfdd9g-UItAguE-q5iD7prXDi0ijySoG3I-NEq0J6VgzREOnhvSQw7i0LxsUNyAHwBfxC3Irj0OjPyGXUVPDhmzbFM-osfdpJ6-I77g3EsxNFbIrKKKJiPl6xQELUJfdhILBK4-YMAJfXkMk5FDkcbFWa6t76kPOw27GLc.JjXRKZNcMxPe0WYHPFrWSA line 920 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=10d39d5c-1e71-4dbd-9fb0-3ff335f3b780&mfa.arb.value=10d39d5c-1e71-4dbd-9fb0-3ff335f3b780&mfa.arb.key=arb line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 721 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 584 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670971796619	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 584 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670971886988	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 584 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670971978604	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 584 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670972075163	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 727 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 584 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670972166088	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1670972727567	geckodriver	INFO	Listening on 127.0.0.1:48119
+1670972727574	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "35115" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile3jQEpM"
+[GFX1-]: glxtest: libEGL missing
+1670972728238	Marionette	INFO	Marionette enabled
+1670972728243	Marionette	INFO	Listening on port 46569
+Read port: 46569
+WebDriver BiDi listening on ws://127.0.0.1:35115
+1670972728392	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile3jQEpM/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:35115/devtools/browser/930e26a4-ecb7-46d1-9d78-0f50c281d29b
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.6MlijM-DT46kvr320i6jgmcesi7wZ6itVIKzm3eJBih5NsZwdtQJXw.XpI6N4nv2Jr7fPeA._y0rHy8YgkGnubI2dHybTcHOvufpljUbllYCCqWFfiMN27q01JUeGWtEFWMvbjcTF8ERx1UtUutwyj5QQNdc1hzGpkCqK5_LkZZx57gmedM9soaEtz5f9v5905L0GZiDfB93AD4hKI-YiF-tkiOx4Y-SbSL2iOcYP8bP2e-ildLKoAl7wUZFFBCtINaG9U5WE6uW5MtB7Q.aVg0VmNxvGlZb_c8rg6iJg line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=efd8b51b-014a-4433-bb0d-fc3adeecf271&mfa.arb.value=efd8b51b-014a-4433-bb0d-fc3adeecf271&mfa.arb.key=arb line 605 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 724 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670972777838	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+Gdk-Message: 23:07:20.515: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :4.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1670972840567	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1670973747222	geckodriver	INFO	Listening on 127.0.0.1:60453
+1670973747230	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "55927" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileUdCk6T"
+[GFX1-]: glxtest: libEGL missing
+1670973747935	Marionette	INFO	Marionette enabled
+1670973747940	Marionette	INFO	Listening on port 44345
+Read port: 44345
+WebDriver BiDi listening on ws://127.0.0.1:55927
+1670973748105	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileUdCk6T/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55927/devtools/browser/2075a91a-f219-4cfc-bf26-3c7b907c5b46
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.fQbF6za45OBuNM6J-pEV_YGW67b5r1RPUk-dOe5UsF1TmvHIQe5unA._5F7XuvmRFaElTnV.ueOFuULNeVSs08guVSe62SiUb53QD_-kcWT-S5N7QI79wNqKLrrdk2VI2VregLqUtvXTzgnDcaPmbbumxuPP204gOnFBNNpfEQp-Ac51CjRRSnZ5jw4ljxtq0o36v_LvdPBNe2LQcHWk6cf8TomCKcJjzhxmtRXrzrWEHP2IhDW2wT0yr9zFiFB2lYpTp7FHsdk4o0vdKg.0Av8iqvYmD94dT4ky55HqQ line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=e5cabfe1-6598-49f5-9a96-6a738375c2bc&mfa.arb.value=e5cabfe1-6598-49f5-9a96-6a738375c2bc&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670973799712	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 16791, MediaDecoderStateMachine #1] WARNING: Decoder=7f50cf1b4900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 16791, MediaDecoderStateMachine #1] WARNING: Decoder=7f50cf1b4900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 23:26:57.679: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :4.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1670974017736	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1670974613187	geckodriver	INFO	Listening on 127.0.0.1:45963
+1670974613696	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "60601" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileQJ8uIE"
+[GFX1-]: glxtest: libEGL missing
+1670974614539	Marionette	INFO	Marionette enabled
+1670974614544	Marionette	INFO	Listening on port 45591
+Read port: 45591
+WebDriver BiDi listening on ws://127.0.0.1:60601
+1670974614735	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileQJ8uIE/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:60601/devtools/browser/10afdc28-8791-4f79-a40d-cc4a4898b485
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.V6Shp5AHi5Mx-KUpH3s9MUgLaqs7T2KkJlhdjmtQESra2kIGrrDqJQ.zGhf4Te_83VJ3jM1.uaMGMD1pCs5Yg32alQRIhH0rep0HUmCn5-vMRC0v2LNEtNwiJDKAjanqwZU7_2KbDFgMYlrsQIAPW30PSQeZ8tvDGsFNty4nGgU8ZGhyyCzig-M9W20Ss03f1LWsTyrb73s3C-3itZnDLB1vCfTeEimUu9q4Sa4KRhkUy6k-q1meodsjQCUOszLRyaYTe_Scd4XZwgI8tHY.yMt1qKtQRn5Ty3vs6e6xpQ line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=76b7e7b8-6147-4380-8755-594a347acd2c&mfa.arb.value=76b7e7b8-6147-4380-8755-594a347acd2c&mfa.arb.key=arb line 604 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 726 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670974640780	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670974660162	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1670974663931	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 19634, MediaDecoderStateMachine #1] WARNING: Decoder=7f1926052b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 19634, MediaDecoderStateMachine #1] WARNING: Decoder=7f1926052b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 23:43:01.346: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :4.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1670974981443	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1670977569785	geckodriver	INFO	Listening on 127.0.0.1:40745
+1670977570295	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "36953" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileL296QJ"
+[GFX1-]: glxtest: libEGL missing
+1670977570988	Marionette	INFO	Marionette enabled
+1670977570994	Marionette	INFO	Listening on port 35087
+Read port: 35087
+WebDriver BiDi listening on ws://127.0.0.1:36953
+1670977571147	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileL296QJ/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:36953/devtools/browser/fd7d836b-486a-4324-bc3d-78c480276dbe
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.r80fcwZaVeuM-d6d3DUVRdXdgKGQdtNlL4rF1S1DcEAD6OzGgUvheA.64JK_CCpr9u6NOnx.qO_kNrP4UBh_F0dTAfAubgQKqgdW2QKvTe4LnA0ellhzSH81eijPH5yncRNQ-zOPcl4hqMV7UZcvs4dvCG24Q87FjrUBEPvxutxx6uUwldsYNbx9ccg0IFCAwcDokWpcp-Zpfd87CNOD-Dmk335ySAs-shhZpppL4JI193X3pQMHPbxjfYVCr9d5sUdz-VxYaV5w0jLMqz-i.x_RmN4JeYojIpRAxVVCWyw line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=5b118406-2d28-4356-a0da-bbfe304bd5e9&mfa.arb.value=5b118406-2d28-4356-a0da-bbfe304bd5e9&mfa.arb.key=arb line 604 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 726 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670977616338	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1670977619905	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 30649, MediaDecoderStateMachine #1] WARNING: Decoder=7f3b3f5de400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 30649, MediaDecoderStateMachine #1] WARNING: Decoder=7f3b3f5de400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 00:32:16.237: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :4.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1670977936359	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1670980765519	geckodriver	INFO	Listening on 127.0.0.1:52041
+1670980765532	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "35187" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofiledEawBT"
+[GFX1-]: glxtest: libEGL missing
+1670980766325	Marionette	INFO	Marionette enabled
+1670980766332	Marionette	INFO	Listening on port 39995
+Read port: 39995
+WebDriver BiDi listening on ws://127.0.0.1:35187
+1670980766523	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofiledEawBT/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:35187/devtools/browser/a0c1d16e-26b9-44ce-9759-8c0e353a67c7
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.2NbDeT0WYY1JdIZgTV6SvLAilp5H4RM44i6hZKPhbiF-f7W6Ncx2qw.SGKLS8I_cN2hgpMo.PnrgYX1-YndBHlwBJOJDFw7iu1P8cSD53CEzVzpHxNndcWNBpWXzqItAzOiGG92Vp3o31w8UN0kNj2qTtRPescWXadfmD7Y2ECq2D_WdM3wNsvFzRNUM21pZoH9gPb1eieAaAXAjUWupOUTNp24rm4lg5Ta_nmSx6zYl09Ckde2J7b8Z9fszw08Cjs8XBBRDH_atLNuu.I2s7icixy7ceNDTTWwtaaQ line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=3d3f8d9e-18fa-46dc-9384-25bf29ab2d8c&mfa.arb.value=3d3f8d9e-18fa-46dc-9384-25bf29ab2d8c&mfa.arb.key=arb line 604 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 724 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 723 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670980821628	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1eb9ee4b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1eb9ee4b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 716 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670980986197	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1670980989373	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1670981004167	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1ebc37d800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1ebc37d800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 723 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1670981158031	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1670981161474	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1ebc304000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 6973, MediaDecoderStateMachine #1] WARNING: Decoder=7f1ebc304000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671028858480	geckodriver	INFO	Listening on 127.0.0.1:37393
+1671028858990	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "55865" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileOLOB3t"
+[GFX1-]: glxtest: libEGL missing
+1671028859962	Marionette	INFO	Marionette enabled
+1671028859970	Marionette	INFO	Listening on port 35393
+Read port: 35393
+WebDriver BiDi listening on ws://127.0.0.1:55865
+1671028860183	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileOLOB3t/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55865/devtools/browser/2c584088-74bc-4b63-a6b7-25b994fd4848
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.Hj8nd56UvDHRKzTV5kgOXm3fjW6oMFs0ySWRt1OsooaeaCb0_LMqig.ujAvwUS6tq9ZxR8C.gJJB53DW76qahGDKBO__mHwATmbc4q859mDpuunyIiuMi6pPY6k6wM7pLUaiBCTUKRReiglIkatAfOoBMnQvcCp_g01wSZYheJoyTDt2XILMnanNvzXuENkVCVvcP6aY9nwnlX6kf0AiNTreIcFxBIV5iOTMlmOzv4LKqaMExM3Q1QwdMkJFISgawBmVzb_LLmUglC7ub9c.-gvZUbYFxtzGcbEo2aqRKw line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=3b7cadfd-6c16-462e-a478-30bda3898a21&mfa.arb.value=3b7cadfd-6c16-462e-a478-30bda3898a21&mfa.arb.key=arb line 605 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 726 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671028887687	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671028917928	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f4eaed400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f4eaed400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029100558	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671029104931	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671029126591	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47dd1b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47dd1b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029267481	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029298084	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671029313742	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f46e41900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f46e41900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029478855	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671029483129	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f473c4d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f473c4d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029630950	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029665055	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f49018800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f49018800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671029839477	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f462ac200 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f462ac200 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030072214	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030077553	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f2b272a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f2b272a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030253011	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030257302	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f466a4a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f466a4a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030463441	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030468216	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030504939	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f318ee900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f318ee900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030636106	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030667120	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030670856	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030696412	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47b9ec00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47b9ec00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671030856389	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671030860215	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f27e60a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f27e60a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031041601	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f39a96400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f39a96400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031246565	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031250484	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f3c28f600 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f3c28f600 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031439976	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031446737	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031452025	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031491288	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f31830700 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f31830700 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031662880	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031666721	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031670357	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f442ceb00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f442ceb00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031819245	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671031856098	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671031859635	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f46e41c00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f46e41c00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671032037926	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032041644	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47363b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47363b00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671032212827	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032217071	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032222017	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032234202	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f2ef44a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f2ef44a00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671032389167	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032392732	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47b9d700 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 14962, MediaDecoderStateMachine #1] WARNING: Decoder=7f1f47b9d700 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671032831020	geckodriver	INFO	Listening on 127.0.0.1:53889
+1671032831029	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "52749" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile2U035V"
+[GFX1-]: glxtest: libEGL missing
+1671032831950	Marionette	INFO	Marionette enabled
+1671032831957	Marionette	INFO	Listening on port 44197
+Read port: 44197
+WebDriver BiDi listening on ws://127.0.0.1:52749
+1671032832165	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile2U035V/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:52749/devtools/browser/8603dae6-e4e7-4b60-bfe6-1a072a69446c
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.nzfBQPhByRHstSxth3j2nNX_8_OmqFXNZ74_61N_QPe7YbNqiL6DBw.GEgdMviHTGMAHnNb.ZWsl80hyNbKkm9w49xpsX-kFuv2wxqVG91-0T-xnhGTjBsWAffcmVglO9mQl61jAzJtu8Iz9Vu5wtJ0hDsPjtDUdPjuRBhK-AyiA-kmOqF5X1ocPTmaxK3J6jtMsVM_T8kyryqmuotr1SUnhoPYsYMtlIDYJcxltvC58ZZibMbCjXjrzGCYiapwCaGRqz-wDX-JYoiFHvTA.aJmRD2wlXiRoRKljlFnq6Q line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=8b25ef61-0f99-4d12-879d-da2d8dc4172e&mfa.arb.value=8b25ef61-0f99-4d12-879d-da2d8dc4172e&mfa.arb.key=arb line 605 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 719 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671032865577	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671032894752	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671032899440	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff9522400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff9522400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671033088824	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671034218819	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671034248491	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff34a5d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff34a5d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671034416863	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 718 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671035534778	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671035538365	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff0ba6f00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 28661, MediaDecoderStateMachine #1] WARNING: Decoder=7f5ff0ba6f00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671057116027	geckodriver	INFO	Listening on 127.0.0.1:42547
+1671057116535	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "45785" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileVf3evw"
+[GFX1-]: glxtest: libEGL missing
+1671057117226	Marionette	INFO	Marionette enabled
+1671057117231	Marionette	INFO	Listening on port 36009
+Read port: 36009
+WebDriver BiDi listening on ws://127.0.0.1:45785
+1671057117427	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileVf3evw/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:45785/devtools/browser/c4727b1f-522a-46de-a0dc-8116bf4eb8d9
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.RFRuJ8wOV9trTln_Vp3C3WXEaLB-54EKeAcDADbzBPdQE10UFoxoCw.vTEfJVBZ7OqpxVd9.B0_K8dWmKl4mzA-B0Ca4kk8Ht9CoC3Kwy6kMkSyTEw3jKq3_ADQBhG1vL9O-cxV65hvtmjc-wBeBrC8K3b_TnQU6cQmCjTgFqkgdEp8ZODKfQCezioXnhNVYlScBtvCIhj1hVCm-_NedG68-k1O-eFMwBWkYRzYltdj3WZ88Lop28L5d1Jz3EyG6SWXHB9OHCU-1eiRI56k.GTZz_t2CesC5Fi6q489BLA line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=cfdad569-d159-4514-98de-ff3cc29b918a&mfa.arb.value=cfdad569-d159-4514-98de-ff3cc29b918a&mfa.arb.key=arb line 605 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 726 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+Gdk-Message: 22:32:18.504: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :5.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671057138573	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1671057346901	geckodriver	INFO	Listening on 127.0.0.1:50511
+1671057347410	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "57093" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileMjrN9Q"
+[GFX1-]: glxtest: libEGL missing
+1671057348161	Marionette	INFO	Marionette enabled
+1671057348167	Marionette	INFO	Listening on port 42967
+Read port: 42967
+WebDriver BiDi listening on ws://127.0.0.1:57093
+1671057348335	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMjrN9Q/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:57093/devtools/browser/42dc28ea-35f7-4dde-aa4c-7270c90427aa
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.3mITUBo9f7y8avXsnF1Utr129SgkjU1oQaPArJEyW0_Y6tn5WYF2hg.Y6BmPe_eFPLLa6pz.MiNLAL1dxOQIJhFrF5nheyGiC4nXLos7mhDyU1i6I0QUsGVYYNIBo23_5rqyKielPWLkgtmVuSQ-bctFujLLo7IjjMfGasaNcNleo5SpfV48UIqz3LNTL1OJg2ajkq1oeJaowA4UuUqAabKDnBp8icNePzdXPVQ0HIpFMk6CkbhjlgT0UsUH6B9_DcJ70JD3pHCgtMf2q2Y.ELfpgIHxK2ZYIk-taHYhoA line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=365d0e07-1fe6-4e1b-afda-b030a0fc1837&mfa.arb.value=365d0e07-1fe6-4e1b-afda-b030a0fc1837&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671057397396	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671057401150	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 22761, MediaDecoderStateMachine #1] WARNING: Decoder=7fb8e3cfa500 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 22761, MediaDecoderStateMachine #1] WARNING: Decoder=7fb8e3cfa500 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 22:37:00.952: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :5.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671057421029	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1671057936050	geckodriver	INFO	Listening on 127.0.0.1:51843
+1671057936562	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "42703" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileHi4xG3"
+[GFX1-]: glxtest: libEGL missing
+1671057937308	Marionette	INFO	Marionette enabled
+1671057937314	Marionette	INFO	Listening on port 40783
+Read port: 40783
+WebDriver BiDi listening on ws://127.0.0.1:42703
+1671057937488	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileHi4xG3/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:42703/devtools/browser/cb798302-ccf3-49d1-be36-fd38871e91e5
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.k4S6GtcbOJ2yP-zV69ow5isbRmw3Rs1cNuoBY_iX2jKCROmYmbyK2A.k60BPsC7DZt5yVyJ.reVcu7DBQFzOZZxWg7mSx09RpJZLRMjHkrzEvGzOmn4g9zKkPNmR_XZgxhpoGxzznebZ43uAETUgChzgYY7u092K2Kmm6LYWuQzYPbkZca0hLd4hV1TsobwN29Li2BJF1TRbs9dVKlRuMeHnergWkWN_Am4BchcvTtc0_4crOasozI7CNzOGZXbn-Xgx-bZVmhbcDKFoFxM.gm8SWzMoiozc9lzSRKozuQ line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=b487da3b-a6f5-4504-a4e7-dce28037e49b&mfa.arb.value=b487da3b-a6f5-4504-a4e7-dce28037e49b&mfa.arb.key=arb line 604 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 724 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671057985605	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671057989639	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 29368, MediaDecoderStateMachine #1] WARNING: Decoder=7f852b590900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 29368, MediaDecoderStateMachine #1] WARNING: Decoder=7f852b590900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 22:46:47.865: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :5.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671058007937	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1671059022719	geckodriver	INFO	Listening on 127.0.0.1:34039
+1671059023228	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "43767" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilefZJ7jv"
+[GFX1-]: glxtest: libEGL missing
+1671059023931	Marionette	INFO	Marionette enabled
+1671059023937	Marionette	INFO	Listening on port 38371
+Read port: 38371
+WebDriver BiDi listening on ws://127.0.0.1:43767
+1671059024106	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilefZJ7jv/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:43767/devtools/browser/8b92c96f-a2b1-48a0-b519-b6d4e25b79ee
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.-Gjj6uQiDTIQ0IArVLH3XJZxc-Y0HJ3SHKq5wYRABnwpR7xsWQJvLw.bywKYB0cH6AdxXAs.CEoit0T5_rZfa3QySyc49rWQQXPwO109BQ2m4iZ9TjFpG2JFAFWvxkPeuEFG2DX-3hdVXchUrAXhXccvO_iieitdmOoT_p5_5tBpPlSMXo87UiNI1ca8SJnPWoKH8-sj5XnMVUnxZJJGiY5Cgd3IvcXzQ2ZHJIc-wtheBwfqPn-KThBP5dTVzbqJ9vOBY4cE3vucXbAZbg.nyEOQ73MBkXvciw9zDUkAQ line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=a055c25e-8829-46e4-ac73-94ec01ab67bf&mfa.arb.value=a055c25e-8829-46e4-ac73-94ec01ab67bf&mfa.arb.key=arb line 604 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 719 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 609 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 582 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671059072457	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671059076326	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 4432, MediaDecoderStateMachine #1] WARNING: Decoder=7f24ee6d5d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 4432, MediaDecoderStateMachine #1] WARNING: Decoder=7f24ee6d5d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671059740333	geckodriver	INFO	Listening on 127.0.0.1:44911
+1671059740841	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "46251" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile8IRsp0"
+[GFX1-]: glxtest: libEGL missing
+1671059741595	Marionette	INFO	Marionette enabled
+1671059741601	Marionette	INFO	Listening on port 36269
+Read port: 36269
+WebDriver BiDi listening on ws://127.0.0.1:46251
+1671059741762	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile8IRsp0/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:46251/devtools/browser/02e65890-f456-46d1-bf2f-769977140c22
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.xEaFvWXAwmfpcKpZHNkqcoW9oHOTXVi35W1JLyj5dsLidgCiNAQpcQ.7AEEH3m57OUeerS4.UO5l0fBuIWjAhapCHvQvRZakeSQaCHOPdfMy7J7FLfIMPvtnLRmRJtlS2ZBkGDXi0c79JiJf-eFUOLsU6TDxBvGZqbD9Eq5oaWyHSw4xS8SskU6BGhUafCVJ6N3gohXoqivGvS3W17mdl-aeuMIpRoeLZ4MQJnIdAMK2dPWbWVxIcEYzxE1BhQKHZacpCUMzTztZOq74EFLs.KcipxuiqqnrLM_4zP91JSg line 924 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=faac8aae-8fb3-4890-9b48-671ca4647157&mfa.arb.value=faac8aae-8fb3-4890-9b48-671ca4647157&mfa.arb.key=arb line 611 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 725 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 615 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671059767579	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 588 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671059790461	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671059793518	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 9145, MediaDecoderStateMachine #1] WARNING: Decoder=7f03c85a1f00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 9145, MediaDecoderStateMachine #1] WARNING: Decoder=7f03c85a1f00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Gdk-Message: 23:28:00.648: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :5.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671060480739	geckodriver::marionette	ERROR	Failed to close browser connection: Socket not connected (os error 107)
+1671061210998	geckodriver	INFO	Listening on 127.0.0.1:59955
+1671061211507	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "53777" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileAec69n"
+[GFX1-]: glxtest: libEGL missing
+1671061212313	Marionette	INFO	Marionette enabled
+1671061212319	Marionette	INFO	Listening on port 41549
+Read port: 41549
+WebDriver BiDi listening on ws://127.0.0.1:53777
+1671061212485	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileAec69n/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:53777/devtools/browser/73a93534-2d19-4bdd-aee4-f0e34ea5f3b3
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.vd3TtXctEZ9-H1mkbLh6inNq6v5hpIHM9Lv9Waquit3oXLTj2Guk5A.TtmyReISpdaRZV6g.pqIpNr01neW26NkMpf1Edi3ZHyainPDybuOuj8wyVZrBuO7LiPsAk1Cfd3-yjjZiqBVyhk4qmOUokJ-yQ0qswwCO-H8oyna1IZN4vSGTIKs_Ys_b8H1WgHWeqEqaUziBNCI9H63Qx1eZWfP5UzCoUjbVVAaIqRuxyXbd5GG8gwia_An9YFQkuk-dSphZ2OfhPFX4MdpbaA.h1dnXpOdI7Aa0m1HUZQV3g line 918 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=a5f69164-7ee0-49f2-99e9-c235d7901a28&mfa.arb.value=a5f69164-7ee0-49f2-99e9-c235d7901a28&mfa.arb.key=arb line 605 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 717 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cb?entityId=ENTITYP8GBXDR4XR7N line 607 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 580 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671061263448	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 18099, MediaDecoderStateMachine #1] WARNING: Decoder=7f95613e9900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 18099, MediaDecoderStateMachine #1] WARNING: Decoder=7f95613e9900 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671062550978	geckodriver	INFO	Listening on 127.0.0.1:52025
+1671062550985	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "--remote-debugging-port" "47571" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileeU4CrE"
+*** You are running in headless mode.
+[GFX1-]: glxtest: libEGL missing
+1671062551370	Marionette	INFO	Marionette enabled
+1671062551376	Marionette	INFO	Listening on port 33033
+Read port: 33033
+WebDriver BiDi listening on ws://127.0.0.1:47571
+1671062551508	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileeU4CrE/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:47571/devtools/browser/6160ad99-b4cf-4cbc-b6dc-a8ed85664026
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.jfBwKMqhsw9X5HrArz2JbJy1u5OlGxwNNfv5alflFMZm-oe0IpY6SA.bvCb-dOq39NLR_-f.fPb0jv67Dm9m4zEOnwgTagM6BjjGZT7-ZjgEesbWp13A9Mcf8sZD4MNKfTRuur3bgFuJZHLUWZusw2B6LAU5AmoMoXvwNzu8jGXskExKftrSXGso_7qhfWmNPY-AWfsG4-3ZxYtEf0CrQMo2RDnIAxJhdaX4PzT4byMubITFfog5Ru_USsn9IPS_9Jss58JkEkQRhzJFbA.jJcrTPJ1o6UHZjqvFxWhlw line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=32d41e4f-e2b1-4589-ab34-6111c75a5a3c&mfa.arb.value=32d41e4f-e2b1-4589-ab34-6111c75a5a3c&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+1671062574556	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671062597919	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 24688, MediaDecoderStateMachine #1] WARNING: Decoder=7fdd68b62100 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 24688, MediaDecoderStateMachine #1] WARNING: Decoder=7fdd68b62100 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671062748201	Marionette	INFO	Stopped listening on port 33033
+1671063227648	geckodriver	INFO	Listening on 127.0.0.1:33393
+1671063228157	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "--remote-debugging-port" "57055" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilejHeFre"
+*** You are running in headless mode.
+[GFX1-]: glxtest: libEGL missing
+1671063228551	Marionette	INFO	Marionette enabled
+1671063228557	Marionette	INFO	Listening on port 44633
+Read port: 44633
+WebDriver BiDi listening on ws://127.0.0.1:57055
+1671063228721	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilejHeFre/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:57055/devtools/browser/e0e3b21b-d658-4f00-bf4c-636f918b22c0
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.Aw91sssvpyt2CvBB1ggkQioW_O4siCWxaCW7wuyjOn2W3-SEQft4jA.vcDPS4PDmg7IesFH.6tu6TSl2aK76WX9h0k97ezhKzgjclmaxTr_rCp-iMoyo3e_ARnZZWvCaoGTCgHbpJm5fym8MTgDrW-YpsQmGvGhvMb3k--sXbY_GyNZJcAhQIlvzEJJ9Mh1Fk8BOLZqjLR8T2w14Pju7FYTEFZxzHnvCdyG-xQpNNQ8E3fPVp6uHMkFvcAeo-ZU-nfzqfZ4oWzSR-SQBsv4.VFeiKvqLJMff-qqmzAHpbA line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=7ea96d7d-1d44-47c4-b514-8624a6fb4051&mfa.arb.value=7ea96d7d-1d44-47c4-b514-8624a6fb4051&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671063273671	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671063277503	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 28547, MediaDecoderStateMachine #1] WARNING: Decoder=7f7c2743c600 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 28547, MediaDecoderStateMachine #1] WARNING: Decoder=7f7c2743c600 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1671063556983	geckodriver	INFO	Listening on 127.0.0.1:34547
+1671063557491	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "--remote-debugging-port" "58137" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileWoWifP"
+*** You are running in headless mode.
+[GFX1-]: glxtest: libEGL missing
+1671063557907	Marionette	INFO	Marionette enabled
+1671063557914	Marionette	INFO	Listening on port 38183
+Read port: 38183
+WebDriver BiDi listening on ws://127.0.0.1:58137
+1671063558072	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileWoWifP/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:58137/devtools/browser/c3ba769a-0fc0-4b9f-9e82-5417f5a0a88c
+JavaScript error: resource://gre/modules/URIFixup.sys.mjs, line 304: NS_ERROR_FAILURE: Should pass a non-null uri
+JavaScript warning: https://www.amazon.com/ap/signin?openid.pape.max_auth_age=28800&openid.return_to=https%3A%2F%2Fadvertising.amazon.com%2Fcm%2Fcampaigns%3FentityId%3DENTITYP8GBXDR4XR7N&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_bt_desktop_us&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&ssoResponse=eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.zRTymBHPSoCI-XcLmVO81t68ly8gSPSA13Qpxz3TqSJmCnwTO4pgXQ.9fgAM-EwtNW_6_zO.C-SPDGvfmqUH5ohJDgOtjFLjpJIH-SOTA20XbIr_YZO9JErT7cKU0_jWfQRc2fxx2i54bqQkxQmHpHPHMyzgnPDfGqn0EYP12F1KJD2-tzYkd0owY3GfFR57dvgIkix-Xx95NllPzlOf2fPtL6W3gtg7p5z_ELep0NL7fxb66JjFO26IwKt6_9atT-U7YGDoFymqlbQr7mk.wBgMULwSiVTXu1CB2k0Fwg line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://images-na.ssl-images-amazon.com/images/I/819PzLyzJVL.js?AUIClients/FWCIMAssets, line 289: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.amazon.com."
+JavaScript warning: https://www.amazon.com/ap/mfa?ie=UTF8&arb=14c53c13-5f67-429c-a36c-543b3f0343f0&mfa.arb.value=14c53c13-5f67-429c-a36c-543b3f0343f0&mfa.arb.key=arb line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://prod.embed.takt.a2z.com/analytics.js, line 11: TypeError: ue.markers is null
+JavaScript warning: https://advertising.amazon.com/cm/campaigns?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://m.media-amazon.com/images/I/61zfHdznEpL.js?packageName=SSPACampaignBuilderAssets&chunk=app.chunk.js, line 1: TypeError: e is undefined
+JavaScript warning: https://advertising.amazon.com/cb/sb?entityId=ENTITYP8GBXDR4XR7N line 7 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1671063602832	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+1671063606189	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.sys.mjs:220:24
+TimedPromise@chrome://remote/content/marionette/sync.sys.mjs:205:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.sys.mjs:425:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:173:31
+[Child 30129, MediaDecoderStateMachine #1] WARNING: Decoder=7f39da4f8d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for video/avc: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+[Child 30129, MediaDecoderStateMachine #1] WARNING: Decoder=7f39da4f8d00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - Error no decoder found for audio/mp4a-latm: file /build/firefox-Gxg1o7/firefox-107.0+build2/dom/media/MediaDecoderStateMachineBase.cpp:151
+1671063755387	Marionette	INFO	Stopped listening on port 38183
