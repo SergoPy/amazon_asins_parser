@@ -15,4 +15,4 @@ rm /web_app/amazon/twistd.pid || true
 scrapyd &
 
 echo "Starting gunicorn"
-python3 -m gunicorn webscraper.wsgi --bind 0.0.0.0:8000 --workers 2 --timeout 3600
+python3 -m gunicorn webscraper.wsgi --bind 0.0.0.0:8009 --workers 2 --timeout 3600

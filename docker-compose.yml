@@ -1,4 +1,4 @@
-version: "3.9"
+# version: "3.9"
 
 volumes:
   db-data:
@@ -10,7 +10,7 @@ services:
     container_name: webscraper-postgres
     restart: always
     ports:
-      - "5434:5432"
+      - "5431:5429"
     env_file:
       - .env
     volumes:
@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8008:8000"
+      - "8016:8009"
     env_file:
       - .env
 
@@ -62,4 +62,4 @@ services:
     volumes:
       - cache:/data
     ports:
-      - "6380:6379"
+      - "6382:6380"

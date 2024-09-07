@@ -485,20 +485,20 @@ def make_pat_all(exact_total_data, remove_campaign, target_asin):
     for p, part in enumerate(exact_words_parts):
         if len(exact_words_parts) == 1:
             w, cur_df = make_pat_part(
-                exact_data, part, remove_campaign=remove_campaign, target_asin= target_asin)
+                exact_data, part, target_asin, remove_campaign=remove_campaign)
         elif p > 0:
             w, cur_df = make_pat_part(
-                exact_data, part, str(p + 1), remove_campaign=3, target_asin= target_asin)
+                exact_data, part, target_asin, str(p + 1), remove_campaign=3)
         else:
-            w, cur_df = make_pat_part(exact_data, part, str(
-                p + 1), remove_campaign=remove_campaign, target_asin= target_asin)
+            w, cur_df = make_pat_part(exact_data, part, target_asin, str(
+                p + 1), remove_campaign=remove_campaign)
         all_exact_dfs.append(cur_df)
         pat_words += pat_words
 
     return pat_words, pd.concat(all_exact_dfs).reset_index().drop('index', axis=1)
 
 
-def make_pat_part(pat_data, part, number='', remove_campaign=0, target_asin=''):
+def make_pat_part(pat_data, part, target_asin, number='', remove_campaign=0):
     pat_items = [x.strip() for x in pat_data[2].split(',')]
     pat_words = ['asin="' + x + '"' for x in part if x is not None and x != '']
     total_pat_len = 4 + len(pat_items) + len(pat_words)
@@ -542,7 +542,7 @@ def make_pat_part(pat_data, part, number='', remove_campaign=0, target_asin=''):
     ]).T, columns=COLUMNS)[remove_campaign:]
 
 
-def make_pat_all_list(pat_total_data, first_group=True, target_asin=''):
+def make_pat_all_list(pat_total_data, target_asin, first_group=True):
     pat_data_sorted = sorted([tuple(x) for x in pat_total_data])
     all_pat_lists_dfs = []
     all_pat_words = []

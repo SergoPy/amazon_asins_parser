@@ -23,10 +23,10 @@ from django.views.decorators.csrf import csrf_exempt
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', csrf_exempt(views.login_view), name='login_page'),
-    path('controlpanel/', csrf_exempt(views.scrape_view), name='scraper_interface'),
-    path('monitoring/', csrf_exempt(views.monitoring_view), name='monitoring')
+    path('v2/admin/', admin.site.urls),
+    path('v2/', csrf_exempt(views.login_view), name='login_page'),
+    path('v2/controlpanel/', csrf_exempt(views.scrape_view), name='scraper_interface'),
+    path('v2/monitoring/', csrf_exempt(views.monitoring_view), name='monitoring')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
