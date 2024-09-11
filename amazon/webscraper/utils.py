@@ -73,14 +73,14 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
                    sponsored_video_status: bool, sponsored_display_status: bool, data: dict) -> list:
     filenames = []
     if cluster_status:
-        print(f"data: {data}")
         clusters_values = get_company_values(data)
         google_sheets_clusters(table, clusters_values) # еге
     if bulk_status:
-
+        # print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
         ) if key.startswith('campaign_') and value == 'on']
-        bulk_file = google_sheets_bulk(table, campaign_data)
+        cmp_ending = data.get("cmp_ending", "SP")
+        bulk_file = google_sheets_bulk(table, campaign_data, cmp_ending)
         filenames.append(bulk_file)
     if sponsored_status:
         sponsored_file = create_sponsored(table, data)
@@ -155,8 +155,8 @@ def asins_scraper_manager(data: dict, scrapyd):
     our_product_asins = data.getlist('asin_product')
     our_product_skus = data.getlist('sku_product')
 
-    print(
-        f"our_product_asins: {our_product_asins}, our_product_skus: {our_product_skus}")
+    # print(
+    #     f"our_product_asins: {our_product_asins}, our_product_skus: {our_product_skus}")
 
     read_creterians = create_range_dict(
         type_selection, from_range, to_range)
@@ -308,7 +308,7 @@ def to_snake_case(name):
     new_name = name.lower()
     new_name = re.sub(r'\s+', '_', new_name)
     new_name = new_name.strip('_')
-    print(f"name before: {name} <-> name after: {new_name}")
+    # print(f"name before: {name} <-> name after: {new_name}")
     return new_name
 
 

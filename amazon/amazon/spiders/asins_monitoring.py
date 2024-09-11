@@ -15,13 +15,13 @@ class MonitoringAsins:
         self.asins = []
         self.keywords = keywords
         self.statistic = {}
-
+        
     def append_asins(self, asins: list, brand_name: str) -> None:
         for i in range(len(self.asins)):
             if self.asins[i]['brand_name'] == brand_name:
                 self.asins[i]['asins'] += asins
                 return
-
+        
         self.asins.append({
             'asins': asins,
             'brand_name': brand_name
@@ -43,15 +43,15 @@ class MonitoringAsins:
         for j in (2, 3):
             self.statistic[keyword][brand_name][j] = self.statistic[keyword][brand_name][j] or data[j][1]
 
-    def create_statistic(self):
+    def create_statistic(self):                      
         brand_data = [[0, 0], [0, 0], False, False]
         keyword_data = {asins_data['brand_name']: deepcopy(brand_data) for asins_data in self.asins}
         statistic = {keyword: deepcopy(keyword_data) for keyword in self.keywords}
         self.statistic = statistic
 
-    def get_brands(self):
+    def get_brands(self):           
         return [asins_data['brand_name'] for asins_data in self.asins]
-
+       
     @staticmethod
     def check_sb_value(status: bool) -> str:
         return 'yes' if status else 'no'
@@ -216,7 +216,7 @@ class AsinsScannerSpider(scrapy.Spider):
             worksheet.merge_cells(f'{indexes_to_a1(row, col)}:{indexes_to_a1(row, col + 7)}')
             time.sleep(1)
             return row, col + 9
-
+             
     @staticmethod
     def get_paint_row_params(bg_color: dict, text_color: dict, font_size) -> dict:
         return {
@@ -228,7 +228,7 @@ class AsinsScannerSpider(scrapy.Spider):
                 "bold": False
             }
         }
-
+                                                       
     def format_worksheet(self, worksheet, coords: tuple, text_color: dict, bg_color: dict, font_size=10) -> None:
         x1, x2 = coords
         a1, b1 = x1
@@ -243,7 +243,7 @@ class AsinsScannerSpider(scrapy.Spider):
         keywords_color = {"red": 0.43, "green": 0.62, "blue": 0.92}
         competitor_color = {"red": 0.64, "green": 0.75, "blue": 0.95}
         personal_color = {"red": 0.71, "green": 0.83, "blue": 0.65}
-
+         
         write_result_row, write_result_col = write_result_point
         last_row, last_column = write_result_row + size[0] - 1, write_result_col + size[1] - 1
 
@@ -257,24 +257,24 @@ class AsinsScannerSpider(scrapy.Spider):
                     text_color, keywords_color
             )
             counter += 3
-            time.sleep(0.5)
-
+            time.sleep(0.5)                   
+    
         self.format_worksheet(
             worksheet,
             ((write_result_row, write_result_col + 1), (write_result_row, last_column)),
             text_color, headers_color, 14
         )
         
-        time.sleep(1)
+        time.sleep(1)      
         self.format_worksheet(
             worksheet,
             ((write_result_row + 1, write_result_col + 2), (last_row, last_column)),
             text_color, competitor_color
         )
-        time.sleep(1)
+        time.sleep(1)          
 
         middle_column = write_result_col + (last_column - write_result_col) // 2 + 1
-
+        
         self.format_worksheet(
             worksheet,
             ((write_result_row + 1, write_result_col + 1), (last_row, write_result_col + 1)),
@@ -440,7 +440,7 @@ class AsinsScannerSpider(scrapy.Spider):
         if page_index != counter:
             url = response.request.url
             page_index += 1
-            print(f'PAGE_INDEX: {page_index}')
+            # print(f'PAGE_INDEX: {page_index}')
             next_url = self.get_next_url(url, page_index)
             time.sleep(5)
             yield scrapy.Request(

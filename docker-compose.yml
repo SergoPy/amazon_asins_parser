@@ -1,31 +1,37 @@
-# version: "3.9"
+version: "3.9"
 
 volumes:
-  db-data:
-  cache:
+  db-data-v2:
+  cache-v2:
+
+networks:
+  webscraper-net-v2:
 
 services:
   db:
-    image: postgres:12.8
-    container_name: webscraper-postgres
+    image: postgres:15.8
+    container_name: webscraper-v2-postgres
     restart: always
     ports:
-      - "5431:5429"
+      - "5434:5432"
     env_file:
       - .env
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data-v2:/var/lib/postgresql/data
     environment:
       POSTGRES_HOST: $WEBSCRAPER_DB_HOST
       POSTGRES_DB: $WEBSCRAPER_DB_NAME
       POSTGRES_USER: $WEBSCRAPER_DB_USER
       POSTGRES_PASSWORD: $WEBSCRAPER_DB_PASSWORD
+    networks:
+      - webscraper-net-v2
 
   webscraper:
+    restart: always
+    container_name: webscraper-v2
     volumes:
-      - ./media:/web_app/amazon/media/
-      - ./static:/web_app/amazon/static/
-      - ./amazon/clusters:/web_app/amazon/clusters/
+      - ./media:/web_app_v2/amazon/media/
+      - ./static:/web_app_v2/amazon/static/
     build:
       context: .
       dockerfile: Dockerfile
@@ -33,10 +39,13 @@ services:
       - "8016:8009"
     env_file:
       - .env
+    networks:
+      - webscraper-net-v2
 
   celery:
-    image: webscraper
+    image: webscraper-v2
     command: "celery -A amazon.webscraper.celery worker --loglevel=info"
+    restart: always
     depends_on:
       - redis
     build:
@@ -44,9 +53,12 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    networks:
+      - webscraper-net-v2
 
   celerybeat:
-    image: webscraper
+    image: webscraper-v2
+    restart: always
     command: "celery -A amazon.webscraper.celery beat --loglevel=info"
     depends_on:
       - redis
@@ -55,11 +67,16 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    networks:
+      - webscraper-net-v2
 
   redis:
     image: redis
+    container_name: webscraper-v2-redis
     restart: always
     volumes:
-      - cache:/data
+      - cache-v2:/data
     ports:
       - "6382:6380"
+    networks:
+      - webscraper-net-v2

@@ -41,7 +41,7 @@ def login_view(request):
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def scrape_view(request):
-    print("scrape_view")
+    # print("scrape_view")
     if request.method == 'GET':
         ip = get_client_ip(request)
         if ip not in VERIFY:

@@ -106,30 +106,34 @@ def get_data_frame(key, spreadsheet_id, range_name):
 def split_and_append(list_name, phrase, keyword, values_dict, category_list, count, prefix=None):
     iteration = 1
     campaign_name = phrase + \
-        (f" ({prefix})" if prefix else "") + f" | {keyword} "
+        (f" ({prefix})" if prefix else "") + \
+        (f" | {keyword}" if keyword else "")
+    print(f"campaign_name: {campaign_name}")
     campaign_names.append(campaign_name)
 
+    if keyword is not None and keyword != '':
+        keyword = "- " + keyword
     for i in range(0, len(category_list), count):
         current_block = category_list[i:i+count]
         iteration_suffix = f" {iteration}" if iteration > 1 else ""
         new_phrase = phrase + \
-            (f" ({prefix})" if prefix else "") + \
-            f" | {keyword} " + iteration_suffix
-        list_total.append([list_name, new_phrase, keyword,
+            (f" | {prefix}" if prefix else "") + \
+            (f"{keyword}" if keyword else "") + iteration_suffix
+        list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + current_block)
-        list_total.append([' ', ' ', 'Custom Bid'])
-        list_total.append([' ', ' ', 'Piacement ToS'])
+        list_total.append([' ', ' ', ' ', 'Custom Bid'])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS'])
         iteration += 1
 
     if len(category_list) == 0:
         iteration_suffix = f" {iteration}" if iteration > 1 else ""
         new_phrase = phrase + \
-            (f" ({prefix})" if prefix else "") + \
-            f" | {keyword} " + iteration_suffix
-        list_total.append([list_name, new_phrase, keyword,
+            (f" | {prefix} " if prefix else "") + \
+            (f"{keyword}" if keyword else "") + iteration_suffix
+        list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + category_list)
-        list_total.append(['', '', 'Custom Bid'])
-        list_total.append(['', '', 'Piacement ToS'])
+        list_total.append([' ', ' ', ' ', 'Custom Bid'])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS'])
 
 
 def get_first_number(x):
@@ -145,20 +149,21 @@ def get_first_number(x):
 
 def get_table_id(table_link):
     return table_link.split('/d/')[1].split('/')[0]
+ # negative_exacts = keywords + seed + str_low + str_top
 
 
 def google_sheets_clusters(table_link, values):
-    # print(f"values: {values}")
+    print(f"google_sheets_clusters start: {values}")
     spreadsheet_id = get_table_id(table_link)
     gc = gspread.service_account(filename='clusters/apikey.json')
     table = gc.open_by_key(spreadsheet_id)
     range_name = table.sheet1.title
-    print(f"table: {table}")
-    print(f"range_name: {range_name}")
+    # print(f"table: {table}")
+    # print(f"range_name: {range_name}")
     remove_duplicates(spreadsheet_id, range_name)
     df_total = get_data_frame(API_KEY, spreadsheet_id, range_name)
     phrase = range_name
-    campaign_count = max(25, int(values['mkpc_key']))
+    campaign_count = max(1, int(values['mkpc_key']))
 
     keywords = []
     seed = []
@@ -225,8 +230,8 @@ def google_sheets_clusters(table_link, values):
     broad.extend(seed)
 
     new_pharases = set()
-    for phrase in broad:
-        new_pharases.update(phrase.split())
+    for phrases in broad:
+        new_pharases.update(phrases.split())
 
     words = process_phrases(new_pharases)
 
@@ -264,21 +269,21 @@ def google_sheets_clusters(table_link, values):
         total_result[v].append(' '.join(k))
 
     # SEED, Exact STR Top, Exact STR Low, Variation
-    split_and_append('SEED', phrase, 'seed',
+    split_and_append('SEED', phrase, '',
                      values["seed"], seed, 10000, "SEED")
-    split_and_append('Exact', phrase, 'STR Top',
+    split_and_append('Exact', phrase, '',
                      values['str_top'], str_top, campaign_count, "STR Top")
-    split_and_append('Exact', phrase, 'STR Low',
+    split_and_append('Exact', phrase, '',
                      values['str_low'], str_low, campaign_count, "STR Low")
-    split_and_append('Variation', phrase, 'variation',
+    split_and_append('Variation', phrase, '',
                      values['variation'], variations, campaign_count, "variation")
-    split_and_append('Broad', phrase, 'broad',
+    split_and_append('Broad', phrase, '',
                      values['broad'], broad, 10000, "Broad")
-    split_and_append('Words', phrase, 'words',
+    split_and_append('Words', phrase, '',
                      values['words'], words, 10000, "Words")
-    split_and_append('Brand Defense', phrase, 'brand defense',
+    split_and_append('Brand Defense', phrase, '',
                      values["brand_def"], brand_def, 10000, "Brand Defense")
-    split_and_append('Advertised ASIN', phrase, 'advertised asin',
+    split_and_append('Advertised ASIN', phrase, '',
                      values["adv_asin"], adv_asin, 10000, "Advertised ASIN")
 
     # Other categories
@@ -301,7 +306,7 @@ def google_sheets_clusters(table_link, values):
                     'Exact', phrase, q[1][0], values['exact_low'], total_result[q], campaign_count, q[0])
 
     split_and_append(
-        'Exact Other', phrase, 'Exact Other', {"bid": " ", "scu": " "}, rest, campaign_count, 'Exact Other')
+        'Exact Other', phrase, '', {"bid": " ", "scu": " "}, rest, campaign_count, 'Exact Other')
 
     for q in other:
         # print(f"q from other: {q}, q[0]:{q[0]}  q[1][0]: {q[1][0]}, values['brands']: {values['brands']}, total_result[q]: {total_result[q]}")
@@ -313,6 +318,7 @@ def google_sheets_clusters(table_link, values):
     for q in other:
         if q in total_result:
             if 'variation' in q[0].lower():
+                print(f"q in var: {q}")
                 split_and_append(
                     q[0], phrase, q[1][0], values['variation'], total_result[q], campaign_count, q[0])
 
@@ -326,31 +332,32 @@ def google_sheets_clusters(table_link, values):
 
     # Category
     for p in category:
-        split_and_append('Category', phrase, p[0].lower(
-        ), values['category'], p[1:], campaign_count, 'category')
+        print(f"q in category: {p}")
+        split_and_append('Category', phrase, "", values['category'], p[1:], campaign_count, 'category')
 
     # Auto Negatives
     for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
-        split_and_append('Auto', phrase, 'auto', values['auto_negatives'], [
+        split_and_append('Auto', phrase, '', values['auto_negatives'], [
         ], campaign_count, f'Auto Negatives {type_}')
 
     # Auto
     for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
-        split_and_append('Auto', phrase, 'auto', values['auto'], [
+        split_and_append('Auto', phrase, '', values['auto'], [
         ], campaign_count, f'Auto {type_}')
 
     # NegativePhrases
-    split_and_append('NegativePhrases', phrase, 'NegativePhrases', {
-                     'scu': '', 'bid': ''}, negative, campaign_count, "NegativePhrases")
+    split_and_append('NegativePhrases', phrase, '', {
+                     'scu': '', 'bid': ''}, negative, 100000, "NegativePhrases")
 
-    # NegativeExacts
-    negative_exacts = keywords + seed + str_low + str_top
-    split_and_append('NegativeExacts', phrase, 'NegativeExacts', {
-                     'scu': '', 'bid': ''}, negative_exacts, campaign_count, "NegativeExacts")
+    # # NegativeExacts
+    # negative_exacts = keywords + seed + str_low + str_top
+
+    # split_and_append('NegativeExacts', phrase, 'NegativeExacts', {
+    #                  'scu': '', 'bid': ''}, negative_exacts, 10000, "NegativeExacts")
 
     # NegativePATs
-    split_and_append('NegativePATs', phrase, 'NegativePATs', {
-                     'scu': '', 'bid': ''}, pat_negatives, campaign_count, "NegativePATs")
+    split_and_append('NegativePATs', phrase, '', {
+                     'scu': '', 'bid': ''}, pat_negatives, 100000, "NegativePATs")
 
     worksheet_objs = table.worksheets()
     worksheets_list = []
@@ -361,7 +368,12 @@ def google_sheets_clusters(table_link, values):
         table.add_worksheet(title=range_name +
                             ' (clusters)', rows="100", cols="20")
 
+    df = pd.DataFrame(list_total).T
+
     clusters = table.worksheet(range_name + ' (clusters)')
+    num_rows, num_cols = df.shape
+    clusters.resize(rows=num_rows, cols=num_cols)
+    clusters.clear()
 
     clusters.update('C1', pd.DataFrame(list_total).T.values.tolist())
 
@@ -378,10 +390,12 @@ def extract_text(input_string):
 
 def upload_campaign_to_db():
     campaigns = list()
-    unique_campaign_names = set(campaign_names)
+    print(f"campaign_names: {campaign_names}")
+    unique_campaign_names = list(dict.fromkeys(campaign_names))
+    print(f"unique_campaign_names: {unique_campaign_names}")
     Campaign.objects.all().delete()
     for campaign_name in unique_campaign_names:
         filter_campaign_name = extract_text(campaign_name)
         campaigns.append(Campaign(name=filter_campaign_name))
-    # print(f"campaigns from upload_campaign_to_db: {campaigns}")
+    print(f"campaigns from upload_campaign_to_db: {campaigns}")
     Campaign.objects.bulk_create(campaigns)

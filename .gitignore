@@ -1,15 +1,16 @@
-# .DS_Store
+.DS_Store
 .idea/
-# env/
-# venv/
+env/
+venv/
 __pycache__/
-# *.pid
-# dbs/
-# text1.txt
-# text2.txt
-# logs/
-# media/
-# static/
-# nohup.out
-# *.log
-# .env
+*.pid
+dbs/
+text1.txt
+text2.txt
+logs/
+media/
+static/
+nohup.out
+*.log
+.env
+apikey.json

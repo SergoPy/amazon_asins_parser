@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 
 from . import views
 
@@ -26,7 +27,8 @@ urlpatterns = [
     path('v2/admin/', admin.site.urls),
     path('v2/', csrf_exempt(views.login_view), name='login_page'),
     path('v2/controlpanel/', csrf_exempt(views.scrape_view), name='scraper_interface'),
-    path('v2/monitoring/', csrf_exempt(views.monitoring_view), name='monitoring')
+    path('v2/monitoring/', csrf_exempt(views.monitoring_view), name='monitoring'),
+    path('', lambda request: redirect('login_page'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

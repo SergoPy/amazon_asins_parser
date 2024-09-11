@@ -11,7 +11,7 @@ echo "Collecting static files..."
 python3 manage.py collectstatic --no-input
 
 echo "Starting scrapyd..."
-rm /web_app/amazon/twistd.pid || true
+rm /web_app_v2/amazon/twistd.pid || true
 scrapyd &
 
 echo "Starting gunicorn"

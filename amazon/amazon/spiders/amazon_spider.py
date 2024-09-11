@@ -129,7 +129,7 @@ class AmazonSpider(scrapy.Spider):
         for asin in set(self.sp_variations_asins):
             if asin in self.sp_def_asins:
                 index = self.sp_def_asins.index(asin)
-                print(f"index: {index}")
+                # print(f"index: {index}")
                 sku = self.sp_def_skus[index]
                 formatted_value = f"{asin}|{sku}"
                 sp_variations_asins_to_write.append([formatted_value])
@@ -235,10 +235,10 @@ class AmazonSpider(scrapy.Spider):
         asins = [base_asin]
         variations_body = response.css('ul.a-button-toggle-group')
         if variations_body:
-            print(f"variations_body: {variations_body}")
+            # print(f"variations_body: {variations_body}")
             variations = variations_body.css(
                 'li::attr(data-defaultasin)').getall()
-            print(f"variation_asins: {variations}")
+            # print(f"variation_asins: {variations}")
             variation_asins = [asin for asin in variations if asin]
             asins += variation_asins
         self.asins_cache += asins
