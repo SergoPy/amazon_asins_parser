@@ -32,6 +32,7 @@ services:
     volumes:
       - ./media:/web_app_v2/amazon/media/
       - ./static:/web_app_v2/amazon/static/
+      - ./amazon:/web_app_v2/amazon
     build:
       context: .
       dockerfile: Dockerfile

@@ -70,11 +70,11 @@ def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple
 
 
 def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsored_status: bool,
-                   sponsored_video_status: bool, sponsored_display_status: bool, data: dict) -> list:
+                   sponsored_video_status: bool, sponsored_display_status: bool, data: dict, bulk_upload_status: bool) -> list:
     filenames = []
     if cluster_status:
         clusters_values = get_company_values(data)
-        google_sheets_clusters(table, clusters_values) # еге
+        google_sheets_clusters(table, clusters_values, bulk_upload_status) # еге
     if bulk_status:
         # print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
@@ -119,7 +119,7 @@ def _write_statistic(table):
             statistic.write(html_body)
 
 
-def create_tables_manager(data: dict) -> list:
+def create_tables_manager(data: dict) -> list: 
     clusters_google_sheet_link = data['clusters_google_sheet_link']
     asins_google_sheet_link = data['asins_google_sheet_link']
     asins_create_bulk = data.get('asins_create_bulk')
@@ -128,14 +128,19 @@ def create_tables_manager(data: dict) -> list:
     sponsored_display_status = data.get('create_sponsored_display')
     clusters_status = data.get('clusters_create_clusters')
     bulk_status = data.get('clusters_create_bulk')
+    bulk_upload_status = data.get("bulk_upload_link")
 
+    if bulk_upload_status and asins_google_sheet_link:
+        filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
+                                       sponsored_status, sponsored_video_status, sponsored_display_status,
+                                       data, bulk_upload_status)
     filenames_asins = None
     if asins_create_bulk and asins_google_sheet_link:
         filenames_asins = _create_tables(
-            asins_google_sheet_link, True, True, True, True, True, data)
+            asins_google_sheet_link, True, True, True, True, True, data, bulk_upload_status)
     filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
                                        sponsored_status, sponsored_video_status, sponsored_display_status,
-                                       data)
+                                       data, bulk_upload_status)
     return filenames_asins or filename_clusters
 
 

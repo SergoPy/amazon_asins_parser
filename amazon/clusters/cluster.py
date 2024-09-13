@@ -61,16 +61,21 @@ def prepare_to_sheet(single_list):
     return plural_list
 
 
-def update_words_col(table_link, write_data):
+def update_words_col(table_link, write_data, index_start=""):
     apikey_file_path = settings.APIKEY_FILEPATH
     table_id = get_table_id(table_link)
     googlesheets_api = GoogleSheetsApi(
         table_id, apikey_file_path)
     row, col = googlesheets_api.get_cord_by_name('Words')
-    num_of_record = len(write_data)
+    if index_start != "":
+        write_data = ', '.join(item[0] for item in write_data)
+        diapason = f'{indexes_to_a1(index_start+2, col)}:' \
+            f'{indexes_to_a1(index_start+3, col)}'
+    else:
+        num_of_record = len(write_data)
 
-    diapason = f'{indexes_to_a1(row, col)}:' \
-        f'{indexes_to_a1(row + num_of_record, col)}'
+        diapason = f'{indexes_to_a1(row, col)}:' \
+            f'{indexes_to_a1(row + num_of_record, col)}'
 
     # print(f"diapason: {diapason}")
     googlesheets_api.update(
@@ -113,16 +118,19 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
 
     if keyword is not None and keyword != '':
         keyword = "- " + keyword
+
     for i in range(0, len(category_list), count):
         current_block = category_list[i:i+count]
         iteration_suffix = f" {iteration}" if iteration > 1 else ""
         new_phrase = phrase + \
             (f" | {prefix}" if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
+        if keyword == '':
+            keyword = list_name.lower()
         list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + current_block)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
-        list_total.append([' ', ' ', ' ', 'Adjustment ToS'])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS', values_dict.get("tos", "")])
         iteration += 1
 
     if len(category_list) == 0:
@@ -130,10 +138,12 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         new_phrase = phrase + \
             (f" | {prefix} " if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
+        if keyword == '':
+            keyword = list_name.lower()
         list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + category_list)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
-        list_total.append([' ', ' ', ' ', 'Adjustment ToS'])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS', values_dict.get("tos", "")])
 
 
 def get_first_number(x):
@@ -152,8 +162,14 @@ def get_table_id(table_link):
  # negative_exacts = keywords + seed + str_low + str_top
 
 
-def google_sheets_clusters(table_link, values):
-    print(f"google_sheets_clusters start: {values}")
+def google_sheets_clusters(table_link, values, bulk_upload_status):
+    global campaign_names
+    global list_total
+    # print(f"before  global campaign_names: {campaign_names}")
+    campaign_names = []
+    list_total = []
+    # print(f"after  global campaign_names: {campaign_names}")
+
     spreadsheet_id = get_table_id(table_link)
     gc = gspread.service_account(filename='clusters/apikey.json')
     table = gc.open_by_key(spreadsheet_id)
@@ -162,202 +178,339 @@ def google_sheets_clusters(table_link, values):
     # print(f"range_name: {range_name}")
     remove_duplicates(spreadsheet_id, range_name)
     df_total = get_data_frame(API_KEY, spreadsheet_id, range_name)
-    phrase = range_name
-    campaign_count = max(1, int(values['mkpc_key']))
-
-    keywords = []
     seed = []
     words = []
-    str_top = []
-    str_low = []
-    broad = []
-    negative = []
     brand_def = []
     adv_asin = []
-    tpas = list()
-    category = list()
+    broad = []
     other = list()
-    variations = []
+    if bulk_upload_status:
+        start_index = 0
+        product_name = []
+        sku = []
+        bid = []
+        tos = []
+        launched= []
+        for k in df_total.T.values:
+            print(f"k: {k}")
+            if k[0].lower() == 'launched':
+                launched = [x for x in k[1:] if x is not None and x != '']
+            if k[0].lower() == 'product name':
+                product_names = [x for x in k[1:] ]
+            elif k[0].lower() == 'advertised asin':
+                adv_asin = [x for x in k[1:] ]
+            elif k[0].lower() == 'sku':
+                sku = [x for x in k[1:] ]
+            elif k[0].lower() == 'seed':
+                seed = [x for x in k[1:] if x not in launched]
+            elif k[0].lower() == 'bid':
+                bid = [x for x in k[1:] ]
+            elif k[0].lower() == 'tos adjustment':
+                tos = [x for x in k[1:] ]
+            elif k[0].lower() == 'brand defense':
+                brand_def = [x for x in k[1:]]
 
-    for k in df_total.T.values:
-        # print(f"k: {k}")
-        if k[0].lower() == 'str top':
-            str_top = [x for x in k[1:] if x is not None and x != '']
-        elif k[0].lower() == 'seed':
-            seed = [x for x in k[1:] if x is not None and x !=
-                    '' and x not in str_top]
-        elif k[0].lower() == 'keywords':
-            keywords = [x for x in k[1:]
-                        if x is not None and x != '' and x not in str_top]
-        elif k[0].lower() == 'str low':
-            str_low = [x for x in k[1:] if x is not None and x !=
-                       '' and x not in str_top]
-        elif k[0].lower() == 'brand defense':
-            brand_def = [x for x in k[1:] if x is not None and x !=
-                         '' and x not in str_top]
-        elif k[0].lower() == 'advertised asin':
-            adv_asin = [x for x in k[1:] if x is not None and x !=
-                        '' and x not in str_top]
-        elif k[0].lower() == 'broad':
-            broad = [x for x in k[1:] if x is not None and x !=
-                     '' and x not in str_top]
-        elif k[0].lower() == 'Words':
-            words = [x for x in k[1:] if x is not None and x !=
-                     '' and x not in str_top]
-        elif k[0].lower() == 'variation':
-            variations = [x for x in k[1:]
-                          if x is not None and x != '' and x not in str_top]
-        elif 'negative' in k[0].lower() and 'phrase' in k[0].lower():
-            negative = [x for x in k[1:] if x is not None and x != '']
-        elif k[0].lower() in ['tpa', 'tca', 'ca', 'ra', 'lsa', 'lpa']:
-            no_length_check_keys = ['tpa', 'tca', 'ca', 'ra', 'lsa', 'lpa']
-            tpas.append([x for x in k
-                         if x is not None and
-                         x != '' and
-                         (x.lower() in no_length_check_keys or len(x) == 10) and
-                         x not in str_top])
-        elif k[0].lower() in ['category']:
-            category.append([k[0]] + [get_first_number(x)
-                            for x in k[1:] if x is not None and x != '' and x not in str_top])
-        elif len(k[0]) != 0:
-            oth = [[q.strip() for q in x.split(',')]
-                   for x in k[1:] if x is not None and x != '' and x not in str_top]
-            oth_new = []
-            for t in oth:
-                qq = [x for x in t if x != '']
-                other.append(tuple([k[0], tuple(qq)]))
-
-    broad.extend(seed)
-
-    new_pharases = set()
-    for phrases in broad:
-        new_pharases.update(phrases.split())
-
-    words = process_phrases(new_pharases)
-
-    separated_words = prepare_to_sheet(words)
-
-    update_words_col(table_link, separated_words)
-
-    broad = process_phrases(broad)
-
-    keywords_filtered = list((set(keywords) - set(seed)))
-    keywords_filtered = list(
-        (set(keywords_filtered) - set(str_low)) - set(broad))
-    keywords_tuples = [
-        tuple(x.split(' '))
-        for x in keywords_filtered
-        if len(x) <= 50
-    ]
-
-    keywords_total_dict = dict()
-
-    for p in keywords_tuples:
-        for r in other:
-            if p in keywords_total_dict.keys():
+        for start_index, product_name in enumerate(product_names):
+            if product_name.lower() == "":
                 continue
-            if len(set(p).intersection(set(r[1]))) > 0:
-                keywords_total_dict[p] = r
+            else:
+                print(f"product_name: {product_name}")
+                finall_index = 0
+                for finish_index, product in enumerate(product_names[start_index+1:]):
+                    if product.lower() != "":
+                        finall_index = finish_index + start_index
+                        print(
+                            f" start_index: {start_index} finish_index: {finall_index};")
+                        break
+                if finall_index == 0:
+                    finall_index = len(seed) - 1
+                new_pharases = set()
+                for phrases in seed[start_index:finall_index+1]:
+                    new_pharases.update(phrases.split())
 
-    rest = []
-    for p in keywords_tuples:
-        if p not in keywords_total_dict.keys():
-            rest.append(' '.join(p))
+                words = process_phrases(new_pharases)
 
-    total_result = defaultdict(list)
-    for k, v in keywords_total_dict.items():
-        total_result[v].append(' '.join(k))
+                separated_words = prepare_to_sheet(words)
 
-    # SEED, Exact STR Top, Exact STR Low, Variation
-    split_and_append('SEED', phrase, '',
-                     values["seed"], seed, 10000, "SEED")
-    split_and_append('Exact', phrase, '',
-                     values['str_top'], str_top, campaign_count, "STR Top")
-    split_and_append('Exact', phrase, '',
-                     values['str_low'], str_low, campaign_count, "STR Low")
-    split_and_append('Variation', phrase, '',
-                     values['variation'], variations, campaign_count, "variation")
-    split_and_append('Broad', phrase, '',
-                     values['broad'], broad, 10000, "Broad")
-    split_and_append('Words', phrase, '',
-                     values['words'], words, 10000, "Words")
-    split_and_append('Brand Defense', phrase, '',
-                     values["brand_def"], brand_def, 10000, "Brand Defense")
-    split_and_append('Advertised ASIN', phrase, '',
-                     values["adv_asin"], adv_asin, 10000, "Advertised ASIN")
+                update_words_col(table_link, separated_words, start_index)
 
-    # Other categories
-    for q in other:
-        if q in total_result:
-            if 'exact top' in q[0].lower():
+                broad = process_phrases(seed[start_index:finall_index])
+                print(f"broad: {broad}")
+                print(f"seed: {seed[start_index:finall_index]}")
+
+                keywords_filtered = list((set(seed[start_index:finall_index])))
+                keywords_tuples = [
+                    tuple(x.split(' '))
+                    for x in keywords_filtered
+                    if len(x) <= 50
+                ]
+
+                keywords_total_dict = dict()
+
+                for p in keywords_tuples:
+                    for r in other:
+                        if p in keywords_total_dict.keys():
+                            continue
+                        if len(set(p).intersection(set(r[1]))) > 0:
+                            keywords_total_dict[p] = r
+
+                rest = []
+                for p in keywords_tuples:
+                    if p not in keywords_total_dict.keys():
+                        rest.append(' '.join(p))
+
+                total_result = defaultdict(list)
+                for k, v in keywords_total_dict.items():
+                    total_result[v].append(' '.join(k))
+
+                print(f"total_result: {total_result}")
+                print(f"rest: {rest}")
+                parametrs = {
+                    'scu': sku[start_index], 'bid': bid[start_index], "tos": tos[start_index]}
+                if len(seed[start_index:finall_index]) >= 1:
+                    split_and_append('SEED', product_name, '',
+                                     parametrs, seed[start_index:finall_index], 10000, "SEED")
+                parametrs = {
+                    'scu': sku[start_index], 'bid': bid[start_index]}
+                if len(brand_def[start_index:finall_index]) >= 1:
+                    split_and_append('Brand Defense', product_name, '',
+                                     parametrs, brand_def[start_index:finall_index], 10000, "Brand Defense")
+                if len(adv_asin[start_index:finall_index]) >= 1:
+                    split_and_append('Advertised ASIN', product_name, '',
+                                     parametrs, adv_asin[start_index:finall_index], 10000, "Self")
+                parametrs = {
+                    'scu': sku[start_index], 'bid': float(bid[start_index])*0.66}
+                if len(broad) >= 1:
+                    split_and_append('Broad', product_name, '',
+                                     parametrs, broad, 10000, "Broad")
+                parametrs = {
+                    'scu': sku[start_index], 'bid': float(bid[start_index])*0.2}
+                if len(words) >= 1:
+                    split_and_append('Words', product_name, '',
+                                     parametrs, words, 10000, "Words")
+                parametrs = {
+                    'scu': sku[start_index], 'bid': float(bid[start_index])*0.55}
+                # Auto Negatives
+                for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
+                    split_and_append('Auto', product_name, '', parametrs, [
+                    ], 1000000, f'Auto Negatives {type_}')
+                parametrs = {
+                    'scu': sku[start_index], 'bid': float(bid[start_index])*0.33}
+                # Auto
+                for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
+                    split_and_append('Auto', product_name, '', parametrs, [
+                    ], 1000000, f'Auto {type_}')
+
+    else:
+        phrase = range_name
+        campaign_count = max(1, int(values['mkpc_key']))
+
+        keywords = []
+        words = []
+        str_top = []
+        str_low = []
+
+        negative = []
+
+        tpas = list()
+        category = list()
+        other = list()
+        variations = []
+
+        for k in df_total.T.values:
+            print(f"k: {k}")
+            if k[0].lower() == 'str top':
+                str_top = [x for x in k[1:] if x is not None and x != '']
+            elif k[0].lower() == 'seed':
+                seed = [x for x in k[1:] if x is not None and x !=
+                        '' and x not in str_top]
+            elif k[0].lower() == 'keywords':
+                keywords = [x for x in k[1:]
+                            if x is not None and x != '' and x not in str_top]
+            elif k[0].lower() == 'str low':
+                str_low = [x for x in k[1:] if x is not None and x !=
+                           '' and x not in str_top]
+            elif k[0].lower() == 'brand defense':
+                brand_def = [x for x in k[1:] if x is not None and x !=
+                             '' and x not in str_top]
+            elif k[0].lower() == 'advertised asin':
+                adv_asin = [x for x in k[1:] if x is not None and x !=
+                            '' and x not in str_top]
+            elif k[0].lower() == 'broad':
+                broad = [x for x in k[1:] if x is not None and x !=
+                         '' and x not in str_top]
+            elif k[0].lower() == 'Words':
+                words = [x for x in k[1:] if x is not None and x !=
+                         '' and x not in str_top]
+            elif k[0].lower() == 'variation':
+                variations = [x for x in k[1:]
+                              if x is not None and x != '' and x not in str_top]
+            elif 'negative' in k[0].lower() and 'phrase' in k[0].lower():
+                negative = [x for x in k[1:] if x is not None and x != '']
+            elif k[0].lower() in ['tpa', 'tca', 'ca', 'ra', 'lsa', 'lpa']:
+                no_length_check_keys = ['tpa', 'tca', 'ca', 'ra', 'lsa', 'lpa']
+                tpas.append([x for x in k
+                            if x is not None and
+                            x != '' and
+                            (x.lower() in no_length_check_keys or len(x) == 10) and
+                            x not in str_top])
+            elif k[0].lower() in ['category']:
+                category.append([k[0]] + [get_first_number(x)
+                                for x in k[1:] if x is not None and x != '' and x not in str_top])
+            elif len(k[0]) != 0:
+                oth = [[q.strip() for q in x.split(',')]
+                       for x in k[1:] if x is not None and x != '' and x not in str_top]
+                oth_new = []
+                for t in oth:
+                    qq = [x for x in t if x != '']
+                    other.append(tuple([k[0], tuple(qq)]))
+
+        broad.extend(seed)
+
+        new_pharases = set()
+        for phrases in broad:
+            new_pharases.update(phrases.split())
+
+        words = process_phrases(new_pharases)
+
+        separated_words = prepare_to_sheet(words)
+
+        update_words_col(table_link, separated_words, ", ")
+
+        broad = process_phrases(broad)
+
+        keywords_filtered = list((set(keywords) - set(seed)))
+        keywords_filtered = list(
+            (set(keywords_filtered) - set(str_low)) - set(broad))
+        keywords_tuples = [
+            tuple(x.split(' '))
+            for x in keywords_filtered
+            if len(x) <= 50
+        ]
+
+        keywords_total_dict = dict()
+
+        for p in keywords_tuples:
+            for r in other:
+                if p in keywords_total_dict.keys():
+                    continue
+                if len(set(p).intersection(set(r[1]))) > 0:
+                    keywords_total_dict[p] = r
+
+        rest = []
+        for p in keywords_tuples:
+            if p not in keywords_total_dict.keys():
+                rest.append(' '.join(p))
+
+        total_result = defaultdict(list)
+        for k, v in keywords_total_dict.items():
+            total_result[v].append(' '.join(k))
+
+        # SEED, Exact STR Top, Exact STR Low, Variation
+        if len(seed) >= 1:
+            split_and_append('SEED', phrase, '',
+                             values["seed"], seed, 10000, "SEED")
+        if len(str_top) >= 1:
+            split_and_append('Exact', phrase, '',
+                             values['str_top'], str_top, campaign_count, "STR Top")
+        if len(str_low) >= 1:
+            split_and_append('Exact', phrase, '',
+                             values['str_low'], str_low, campaign_count, "STR Low")
+        if len(variations) >= 1:
+            split_and_append('Variation', phrase, '',
+                             values['variation'], variations, campaign_count, "variation")
+        if len(broad) >= 1:
+            split_and_append('Broad', phrase, '',
+                             values['broad'], broad, 10000, "Broad")
+        if len(words) >= 1:
+            split_and_append('Words', phrase, '',
+                             values['words'], words, 10000, "Words")
+        if len(brand_def) >= 1:
+            split_and_append('Brand Defense', phrase, '',
+                             values["brand_def"], brand_def, 10000, "Brand Defense")
+        split_and_append('Advertised ASIN', phrase, '',
+                         values["adv_asin"], adv_asin, 10000, "Advertised ASIN")
+
+        # Other categories
+        for q in other:
+            if q in total_result:
+                if len(total_result[q]) >= 1:
+                    if 'exact top' in q[0].lower():
+                        split_and_append(
+                            'Exact', phrase, q[1][0], values['exact_top'], total_result[q], campaign_count, q[0])
+
+        for q in other:
+            if q in total_result:
+                if len(total_result[q]) >= 1:
+                    if 'exact' in q[0].lower() and 'low' not in q[0].lower() and 'top' not in q[0].lower():
+                        split_and_append(
+                            'Exact', phrase, q[1][0], values['exact'], total_result[q], campaign_count, q[0])
+
+        for q in other:
+            if q in total_result:
+                if len(total_result[q]) >= 1:
+                    if 'exact low' in q[0].lower():
+                        split_and_append(
+                            'Exact', phrase, q[1][0], values['exact_low'], total_result[q], campaign_count, q[0])
+        if len(rest) >= 1:
+            split_and_append(
+                'Exact Other', phrase, '', {"bid": " ", "scu": " "}, rest, campaign_count, 'Exact Other')
+
+        for q in other:
+            # print(f"q from other: {q}, q[0]:{q[0]}  q[1][0]: {q[1][0]}, values['brands']: {values['brands']}, total_result[q]: {total_result[q]}")
+            if q in total_result:
+                if 'brands' in q[0].lower():
+                    if len(total_result[q]) >= 1:
+                        split_and_append(
+                            q[0], phrase, q[1][0], values['brands'], total_result[q], campaign_count, q[0])
+
+        for q in other:
+            if q in total_result:
+                if 'variation' in q[0].lower():
+                    if len(total_result[q]) >= 1:
+                        split_and_append(
+                            q[0], phrase, q[1][0], values['variation'], total_result[q], campaign_count, q[0])
+
+        # PAT Negatives
+        pat_negatives = []
+        # print(f"tpas: {tpas}")
+        for p in tpas:
+            pat_negatives.extend(p[1:])
+            if len(p[1:]) >= 1:
                 split_and_append(
-                    'Exact', phrase, q[1][0], values['exact_top'], total_result[q], campaign_count, q[0])
+                    'PAT', phrase, p[0], values[p[0].lower()], p[1:], campaign_count, 'PAT')
 
-    for q in other:
-        if q in total_result:
-            if 'exact' in q[0].lower() and 'low' not in q[0].lower() and 'top' not in q[0].lower():
-                split_and_append(
-                    'Exact', phrase, q[1][0], values['exact'], total_result[q], campaign_count, q[0])
+        # Category
+        for p in category:
+            if len(p[1:]) >= 1:
+                split_and_append('Category', phrase, "",
+                                 values['category'], p[1:], campaign_count, 'category')
 
-    for q in other:
-        if q in total_result:
-            if 'exact low' in q[0].lower():
-                split_and_append(
-                    'Exact', phrase, q[1][0], values['exact_low'], total_result[q], campaign_count, q[0])
+        # Auto Negatives
+        for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
+            split_and_append('Auto', phrase, '', values['auto_negatives'], [
+            ], campaign_count, f'Auto Negatives {type_}')
 
-    split_and_append(
-        'Exact Other', phrase, '', {"bid": " ", "scu": " "}, rest, campaign_count, 'Exact Other')
+        # Auto
+        for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
+            split_and_append('Auto', phrase, '', values['auto'], [
+            ], campaign_count, f'Auto {type_}')
 
-    for q in other:
-        # print(f"q from other: {q}, q[0]:{q[0]}  q[1][0]: {q[1][0]}, values['brands']: {values['brands']}, total_result[q]: {total_result[q]}")
-        if q in total_result:
-            if 'brands' in q[0].lower():
-                split_and_append(
-                    q[0], phrase, q[1][0], values['brands'], total_result[q], campaign_count, q[0])
+        # NegativePhrases
+        # if len(negative) >= 1:
+        split_and_append('NegativePhrases', phrase, '', {
+            'scu': '', 'bid': ''}, negative, 100000, "NegativePhrases")
 
-    for q in other:
-        if q in total_result:
-            if 'variation' in q[0].lower():
-                print(f"q in var: {q}")
-                split_and_append(
-                    q[0], phrase, q[1][0], values['variation'], total_result[q], campaign_count, q[0])
+        # # NegativeExacts
+        # negative_exacts = keywords + seed + str_low + str_top
 
-    # PAT Negatives
-    pat_negatives = []
-    # print(f"tpas: {tpas}")
-    for p in tpas:
-        pat_negatives.extend(p[1:])
-        split_and_append(
-            'PAT', phrase, p[0], values[p[0].lower()], p[1:], campaign_count, 'PAT')
+        # split_and_append('NegativeExacts', phrase, 'NegativeExacts', {
+        #                  'scu': '', 'bid': ''}, negative_exacts, 10000, "NegativeExacts")
 
-    # Category
-    for p in category:
-        print(f"q in category: {p}")
-        split_and_append('Category', phrase, "", values['category'], p[1:], campaign_count, 'category')
-
-    # Auto Negatives
-    for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
-        split_and_append('Auto', phrase, '', values['auto_negatives'], [
-        ], campaign_count, f'Auto Negatives {type_}')
-
-    # Auto
-    for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
-        split_and_append('Auto', phrase, '', values['auto'], [
-        ], campaign_count, f'Auto {type_}')
-
-    # NegativePhrases
-    split_and_append('NegativePhrases', phrase, '', {
-                     'scu': '', 'bid': ''}, negative, 100000, "NegativePhrases")
-
-    # # NegativeExacts
-    # negative_exacts = keywords + seed + str_low + str_top
-
-    # split_and_append('NegativeExacts', phrase, 'NegativeExacts', {
-    #                  'scu': '', 'bid': ''}, negative_exacts, 10000, "NegativeExacts")
-
-    # NegativePATs
-    split_and_append('NegativePATs', phrase, '', {
-                     'scu': '', 'bid': ''}, pat_negatives, 100000, "NegativePATs")
+        # NegativePATs
+        # if len(pat_negatives) >= 1:
+        split_and_append('NegativePATs', phrase, '', {
+            'scu': '', 'bid': ''}, pat_negatives, 100000, "NegativePATs")
 
     worksheet_objs = table.worksheets()
     worksheets_list = []
@@ -390,12 +543,15 @@ def extract_text(input_string):
 
 def upload_campaign_to_db():
     campaigns = list()
+    filter_campaign_names = list()
     print(f"campaign_names: {campaign_names}")
     unique_campaign_names = list(dict.fromkeys(campaign_names))
     print(f"unique_campaign_names: {unique_campaign_names}")
+    for campaign_name in unique_campaign_names:
+        filter_campaign_names.append(extract_text(campaign_name))
+    unique_campaign_names = list(dict.fromkeys(filter_campaign_names))
     Campaign.objects.all().delete()
     for campaign_name in unique_campaign_names:
-        filter_campaign_name = extract_text(campaign_name)
-        campaigns.append(Campaign(name=filter_campaign_name))
+        campaigns.append(Campaign(name=campaign_name))
     print(f"campaigns from upload_campaign_to_db: {campaigns}")
     Campaign.objects.bulk_create(campaigns)
