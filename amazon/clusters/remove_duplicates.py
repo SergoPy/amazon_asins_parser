@@ -127,21 +127,21 @@ def remove_duplicates(spreadsheet_id, range_name):
 
         keywords_no_plurals.append(res)
 
-    ing_dict = dict()
-    ing_df = get_rule_df('Ing')
+    # ing_dict = dict()
+    # ing_df = get_rule_df('Ing')
 
-    for k in ing_df.values:
-        ing_dict[k[1].lower()] = k[0].lower()
-        ing_dict[k[2].lower()] = k[0].lower()
+    # for k in ing_df.values:
+    #     ing_dict[k[1].lower()] = k[0].lower()
+    #     ing_dict[k[2].lower()] = k[0].lower()
 
-    keywords_no_ing = []
+    # keywords_no_ing = []
 
-    for k in keywords_no_plurals:
-        res = []
-        for t in k:
-            res.append(t)
+    # for k in keywords_no_plurals:
+    #     res = []
+    #     for t in k:
+    #         res.append(t)
 
-        keywords_no_ing.append(res)
+    #     keywords_no_ing.append(res)
 
     other_dict = dict()
     other_df = get_rule_df('Other')
@@ -151,7 +151,7 @@ def remove_duplicates(spreadsheet_id, range_name):
 
     keywords_total = []
 
-    for k in keywords_no_ing:
+    for k in keywords_no_plurals:
         res = []
         for t in k:
             res.append(t)
@@ -265,21 +265,21 @@ def remove_duplicates_from_list(data):
 
         keywords_no_plurals.append(res)
 
-    ing_dict = dict()
-    ing_df = get_rule_df('Ing')
+    # ing_dict = dict()
+    # ing_df = get_rule_df('Ing')
 
-    for k in ing_df.values:
-        ing_dict[k[1].lower()] = k[0].lower()
-        ing_dict[k[2].lower()] = k[0].lower()
+    # for k in ing_df.values:
+    #     ing_dict[k[1].lower()] = k[0].lower()
+    #     ing_dict[k[2].lower()] = k[0].lower()
 
-    keywords_no_ing = []
+    # keywords_no_ing = []
 
-    for k in keywords_no_plurals:
-        res = []
-        for t in k:
-            res.append(t)
+    # for k in keywords_no_plurals:
+    #     res = []
+    #     for t in k:
+    #         res.append(t)
 
-        keywords_no_ing.append(res)
+    #     keywords_no_ing.append(res)
 
     other_dict = dict()
     other_df = get_rule_df('Other')
@@ -289,7 +289,7 @@ def remove_duplicates_from_list(data):
 
     keywords_total = []
 
-    for k in keywords_no_ing:
+    for k in keywords_no_plurals:
         res = []
         for t in k:
             res.append(t)
@@ -298,6 +298,8 @@ def remove_duplicates_from_list(data):
 
     dd= [' '.join(kw) for kw in keywords_total]
 
-    print(f"keywords_total: {dd}")
+
+    dd_without_dupl = set(dd)
+
     
-    return dd
+    return list(dd_without_dupl)
