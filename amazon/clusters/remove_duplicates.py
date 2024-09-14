@@ -159,6 +159,7 @@ def remove_duplicates(spreadsheet_id, range_name):
         keywords_total.append(tuple(res[1:]))
 
 
+
     qq = pd.DataFrame([[(' '.join(k), i) for i, k in enumerate(keywords)], [
                       ' '.join(kw) for kw in keywords_total]]).T
     qq.columns = ['initial', 'normalized']
@@ -196,3 +197,107 @@ def remove_duplicates(spreadsheet_id, range_name):
         update_column(worksheet, 'STR Low', str_low)
     if len(str_top) > 1:
         update_column(worksheet, 'STR Top', str_top)
+
+
+def remove_duplicates_from_list(data):
+    inflect_engine = inflect.engine()
+    keywords = []
+
+    k = ['seed'] + [normalize_text(keyword)
+                    for keyword in data if keyword]
+    keywords.extend([tuple(['seed:'] + x.split(' '))
+                    for x in data if x is not None and x != ''])
+
+    prep_df = get_rule_df('Prepositions')
+    preps = list(prep_df[0])
+
+    keywords_ignore_preps = []
+
+    for k in keywords:
+        res = []                 
+        for t in k:
+            if t in preps:
+                continue
+            res.append(t)
+        keywords_ignore_preps.append(tuple(res))
+
+    reg_verbs_dict = dict()
+
+    verbs_df = get_rule_df('Regular Verbs')
+
+    for k in verbs_df.values:
+        reg_verbs_dict[k[1].lower()] = k[0].lower()
+
+    keywords_regular_verbs = []
+
+    for k in keywords_ignore_preps:
+        res = []
+        for t in k:
+            if t in reg_verbs_dict.keys():
+                res.append(reg_verbs_dict[t])
+            else:
+                res.append(t)
+
+        keywords_regular_verbs.append(res)
+
+    plural_nouns_dict = dict()
+    plural_nouns_df = get_rule_df('Plural Nouns')
+
+    for k in plural_nouns_df.values:
+        plural_nouns_dict[k[1].lower()] = k[0].lower()
+
+    keywords_no_plurals = []
+
+    for k in keywords_regular_verbs:
+        res = []
+        for t in k:
+            try:
+                if t in plural_nouns_dict.keys():
+                    res.append(plural_nouns_dict[t])
+                elif t[-3:] in ['ses', 'xes', 'hes']:
+                    res.append(t[:-2])
+                elif t[-1] == 's' and t[-2:] != 'ss':
+                    res.append(t[:-1])
+                else:
+                    res.append(t)
+            except IndexError:
+                res.append(t)
+
+        keywords_no_plurals.append(res)
+
+    ing_dict = dict()
+    ing_df = get_rule_df('Ing')
+
+    for k in ing_df.values:
+        ing_dict[k[1].lower()] = k[0].lower()
+        ing_dict[k[2].lower()] = k[0].lower()
+
+    keywords_no_ing = []
+
+    for k in keywords_no_plurals:
+        res = []
+        for t in k:
+            res.append(t)
+
+        keywords_no_ing.append(res)
+
+    other_dict = dict()
+    other_df = get_rule_df('Other')
+
+    for k in other_df.values:
+        other_dict[k[1].lower()] = k[0].lower()
+
+    keywords_total = []
+
+    for k in keywords_no_ing:
+        res = []
+        for t in k:
+            res.append(t)
+
+        keywords_total.append(tuple(res[1:]))
+
+    dd= [' '.join(kw) for kw in keywords_total]
+
+    print(f"keywords_total: {dd}")
+    
+    return dd

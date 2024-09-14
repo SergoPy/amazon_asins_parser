@@ -5,10 +5,11 @@ import pandas as pd
 import numpy as np
 import httplib2
 import sys
+from googleapiclient.errors import HttpError
 
 
 from googleapiclient import discovery
-from datetime import date
+from datetime import date, datetime
 
 # from amazon.amazon.spiders import asins_monitoring
 from webscraper.settings import MEDIA_ROOT
@@ -808,6 +809,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
         if k[0] == 'SEED':
             seed_total_data.append(k[1:])
             tos.append(df_total.values.T[index+2][4])
+            print("Seed Finished get seed")
         elif k[0] == 'Brand Defense':
             brand_defense_list.append(k[1:])
         elif k[0] == 'Broad':
@@ -846,7 +848,8 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
         elif k[0] == 'Category':
             if any(k[5:]):
                 category_total_data_list.append(k[1:])
-
+        
+    print("Finished get info")
     table_create_params = []
 # d---------------------------------------------------------------------------------------------------------------
     # data: ["Advertised ASIN", "galon clear jojoba oil ", "Brand Defense", "bid(seed)"]
@@ -992,24 +995,113 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
                 category_all = make_category_all_list(
                     category_total_data_item, pat_words, target_asin)
                 table_create_params.append(category_all)
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Finished UPLOAD info to table_create_params{dt}")
 
     table_name = f'{range_name.replace("clusters", "bulk")}'
     worksheets_list = [worksheet.title for worksheet in sht1.worksheets()]
 
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Received worksheets_list:{worksheets_list} - {dt}")
     if f'{range_name.replace("clusters", "bulk")}' not in worksheets_list:
         sht1.add_worksheet(title=table_name, rows=100, cols=20)
+        print(f"Create new list - {dt}")
     output_file_name = f'{range_name.replace("clusters", "bulk")}.xlsx'
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"cREATE output_file_name: {output_file_name} - {dt}")
     pd.concat(table_create_params).reset_index().drop('index', axis=1).to_excel(
         f'{MEDIA_ROOT}{output_file_name}', index=False)
+    
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Finished upload to excel - {dt}")
     read_file = pd.read_excel(f'{MEDIA_ROOT}{output_file_name}')
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Finished read filr from excel - {dt}")
     read_file.to_csv(f'{MEDIA_ROOT}{table_name}.csv', index=False, header=True)
-    # print(f"table_name: {table_name}; ")
-    sht1.values_update(
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Finished upload to csv - {dt}")
+
+    rows, cols = read_file.shape
+
+    sqr_pd = int(rows) * int(cols)
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"sqr_pd 1: {sqr_pd} - {dt}")
+
+    if sqr_pd > 9999999:
+        split_and_upload_large_file(table_name, sht1, ['part_1', 'part_2']) 
+    else:
+        sht1.values_update(
         table_name,
         params={'valueInputOption': 'USER_ENTERED'},
         body={'values': list(csv.reader(open(f'media/{table_name}.csv')))}
     )
+
     return output_file_name
+
+def split_and_upload_large_file(table_name, sht1, endings):
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Start split_and_upload_large_file - {dt}")
+    df = pd.read_csv(f'media/{table_name}.csv')
+
+    sht1.add_worksheet(title=f"{table_name}_{endings[0]}", rows=100, cols=20)
+    sht1.add_worksheet(title=f"{table_name}_{endings[1]}", rows=100, cols=20)
+    
+    df_sorted = df.sort_values(df.columns[3]).reset_index(drop=True)
+    
+    mid_index = len(df_sorted) // 2
+    
+    middle_value = df_sorted.iloc[mid_index, 3]
+    
+    split_index = mid_index
+    for i in range(mid_index, 0, -1):
+        if df_sorted.iloc[i, 3] != middle_value:
+            split_index = i
+            break
+    
+    df_part1 = df_sorted.iloc[:split_index+1]
+    df_part2 = df_sorted.iloc[split_index+1:]
+    
+    df_part1.to_csv(f'media/{table_name}_{endings[0]}.csv', index=False)
+    df_part2.to_csv(f'media/{table_name}_{endings[1]}.csv', index=False)
+
+    rows, cols = df_part1.shape
+    sqr_pd = int(rows) * int(cols)
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"sqr_pd 2: {sqr_pd} - {dt}")
+
+    if sqr_pd > 9999999:
+        split_and_upload_large_file(f"{table_name}_{endings[0]}", sht1, ['part_3', 'part_4']) 
+    else:
+        sht1.values_update(
+        f"{table_name}_{endings[0]}",
+        params={'valueInputOption': 'USER_ENTERED'},
+        body={'values': list(csv.reader(open(f'media/{table_name}_{endings[0]}.csv')))}
+    )
+    
+    rows, cols = df_part2.shape
+    sqr_pd = int(rows) * int(cols)
+
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"sqr_pd 3: {sqr_pd} - {dt}")
+
+    if sqr_pd > 9999999:
+        split_and_upload_large_file(f"{table_name}_{endings[1]}", sht1, ['part_5', 'part_6']) 
+    else:
+        sht1.values_update(
+        f"{table_name}_{endings[1]}",
+        params={'valueInputOption': 'USER_ENTERED'},
+        body={'values': list(csv.reader(open(f'media/{table_name}_{endings[1]}.csv')))}
+    )
+    
+    dt = datetime.now().strftime("%H:%M:%S")
+    print(f"Finish split_and_upload_large_file - {dt}")
+               
 
 
 def extract_text(input_string):

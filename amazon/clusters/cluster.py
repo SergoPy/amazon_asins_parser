@@ -4,7 +4,7 @@ from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from amazon.google_api import GoogleSheetsApi
 from amazon.utils import indexes_to_a1
-from clusters.remove_duplicates import remove_duplicates
+from clusters.remove_duplicates import remove_duplicates, remove_duplicates_from_list
 from webscraper.models import Campaign
 import re
 import pandas as pd
@@ -130,7 +130,8 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + current_block)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
-        list_total.append([' ', ' ', ' ', 'Adjustment ToS', values_dict.get("tos", "")])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS',
+                          values_dict.get("tos", "")])
         iteration += 1
 
     if len(category_list) == 0:
@@ -143,7 +144,8 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
                           values_dict['scu'], values_dict['bid']] + category_list)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
-        list_total.append([' ', ' ', ' ', 'Adjustment ToS', values_dict.get("tos", "")])
+        list_total.append([' ', ' ', ' ', 'Adjustment ToS',
+                          values_dict.get("tos", "")])
 
 
 def get_first_number(x):
@@ -176,7 +178,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
     range_name = table.sheet1.title
     # print(f"table: {table}")
     # print(f"range_name: {range_name}")
-    remove_duplicates(spreadsheet_id, range_name)
+    # remove_duplicates(spreadsheet_id, range_name)
     df_total = get_data_frame(API_KEY, spreadsheet_id, range_name)
     seed = []
     words = []
@@ -190,34 +192,34 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         sku = []
         bid = []
         tos = []
-        launched= []
+        launched = []
         for k in df_total.T.values:
             print(f"k: {k}")
             if k[0].lower() == 'launched':
                 launched = [x for x in k[1:] if x is not None and x != '']
             if k[0].lower() == 'product name':
-                product_names = [x for x in k[1:] ]
+                product_names = [x for x in k[1:]]
             elif k[0].lower() == 'advertised asin':
-                adv_asin = [x for x in k[1:] ]
+                adv_asin = [x for x in k[1:]]
             elif k[0].lower() == 'sku':
-                sku = [x for x in k[1:] ]
+                sku = [x for x in k[1:]]
             elif k[0].lower() == 'seed':
                 seed = [x for x in k[1:] if x not in launched]
             elif k[0].lower() == 'bid':
-                bid = [x for x in k[1:] ]
+                bid = [x for x in k[1:]]
             elif k[0].lower() == 'tos adjustment':
-                tos = [x for x in k[1:] ]
+                tos = [x for x in k[1:]]
             elif k[0].lower() == 'brand defense':
                 brand_def = [x for x in k[1:]]
 
         for start_index, product_name in enumerate(product_names):
-            if product_name.lower() == "":
+            if product_name == None or product_name.lower() == "":
                 continue
             else:
                 print(f"product_name: {product_name}")
                 finall_index = 0
                 for finish_index, product in enumerate(product_names[start_index+1:]):
-                    if product.lower() != "":
+                    if product != None and product.lower() != "":
                         finall_index = finish_index + start_index
                         print(
                             f" start_index: {start_index} finish_index: {finall_index};")
@@ -225,7 +227,11 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 if finall_index == 0:
                     finall_index = len(seed) - 1
                 new_pharases = set()
-                for phrases in seed[start_index:finall_index+1]:
+                seed_for_clear = seed[start_index:finall_index+1]
+                print(f"seed_for_clear: {seed_for_clear}")
+                clear_seed = remove_duplicates_from_list(seed_for_clear)
+                print(f"clear_seed: {clear_seed}")
+                for phrases in clear_seed:
                     new_pharases.update(phrases.split())
 
                 words = process_phrases(new_pharases)
@@ -234,11 +240,11 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
 
                 update_words_col(table_link, separated_words, start_index)
 
-                broad = process_phrases(seed[start_index:finall_index])
+                broad = process_phrases(clear_seed)
                 print(f"broad: {broad}")
-                print(f"seed: {seed[start_index:finall_index]}")
+                print(f"seed: {clear_seed}")
 
-                keywords_filtered = list((set(seed[start_index:finall_index])))
+                keywords_filtered = list((set(clear_seed)))
                 keywords_tuples = [
                     tuple(x.split(' '))
                     for x in keywords_filtered
@@ -267,9 +273,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 print(f"rest: {rest}")
                 parametrs = {
                     'scu': sku[start_index], 'bid': bid[start_index], "tos": tos[start_index]}
-                if len(seed[start_index:finall_index]) >= 1:
+                if len(clear_seed) >= 1:
                     split_and_append('SEED', product_name, '',
-                                     parametrs, seed[start_index:finall_index], 10000, "SEED")
+                                     parametrs, clear_seed, 10000, "SEED")
                 parametrs = {
                     'scu': sku[start_index], 'bid': bid[start_index]}
                 if len(brand_def[start_index:finall_index]) >= 1:
