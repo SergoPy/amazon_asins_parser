@@ -204,10 +204,10 @@ def make_seed_one(seed_data, word, target_asin, tos):
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] +
         ['Product Ad'] * len(seed_items) + ['Keyword'],
         ['Create'] * total_seed_len,
-        [title[0] + target_asin + f' -{cmp_ending}'] * total_seed_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_seed_len,
         [None] * 3 + [seed_data[1]] *
         (total_seed_len - 3), none, none, none, none,
-        [title[0] + target_asin + f' -{cmp_ending}'] +
+        [title[0] + target_asin + f' {cmp_ending}'] +
         [None] * (total_seed_len - 1),
         [None] * 3 + [seed_data[1]] + [None] * (total_seed_len - 4), none,
         [None] * 3 + [seed_data[1]] * (total_seed_len - 3), none,
@@ -269,11 +269,11 @@ def make_broad_all(broad_total_data, keyword_negatives, phrases_negatives, targe
         ['Campaign Negative Keyword'] *
         (len(keyword_negatives) + len(phrases_negatives)),
         ['Create'] * total_broad_len,
-        [title[0] + target_asin + f' -{cmp_ending}'] * total_broad_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_broad_len,
         [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (
                 len(keyword_negatives) + len(phrases_negatives)),
         none, none, none, none,
-        [title[0] + target_asin + f' -{cmp_ending}'] +
+        [title[0] + target_asin + f' {cmp_ending}'] +
         [None] * (total_broad_len - 1),
         [None] * 3 + [broad_data[1]] + [None] * (total_broad_len - 4), none,
         [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (
@@ -332,14 +332,14 @@ def make_auto_neg_all(auto_neg_total_data, keyword_negatives, phrases_negatives,
         (len(keyword_negatives) + len(phrases_negatives)),  # 2 - 70
         ['Create'] * total_auto_neg_len,  # 3 -70
         [title[0] + target_asin + \
-            f' -{cmp_ending}'] * total_auto_neg_len,  # 4 -70
+            f' {cmp_ending}'] * total_auto_neg_len,  # 4 -70
         [None] * 3 + [auto_neg_data[1]] * 2 + [None] * 4 + \
         [auto_neg_data[1]] * (total_auto_neg_len - 9),  # 5 - 70
         none,  # 6
         none,  # 7
         none,  # 8
         none,  # 9
-        [auto_neg_data[0] + f' -{cmp_ending}'] + \
+        [auto_neg_data[0] + f' {cmp_ending}'] + \
         [None] * (total_auto_neg_len - 1),  # 10 - 70
         [None] * 3 + [auto_neg_data[1]] + [None] * \
         (total_auto_neg_len - 4),  # 11 - 70
@@ -401,10 +401,10 @@ def make_auto_all(auto_total_data, target_asin, pte):
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] +
         ['Product Ad'] * len(auto_items) + ['Product Targeting'] * 4,
         ['Create'] * total_auto_len,
-        [title[0] + target_asin + f' -{cmp_ending}'] * total_auto_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_auto_len,
         [None] * 3 + [auto_data[1]] * (total_auto_len - 7) + [None] * 4,
         none, none, none, none,
-        [title[0] + target_asin + f' -{cmp_ending}'] +
+        [title[0] + target_asin + f' {cmp_ending}'] +
         [None] * (total_auto_len - 1),
         [None] * 3 + [auto_data[1]] + [None] * (len(auto_items) + 4),
         none,
@@ -449,10 +449,10 @@ def make_exact_part(exact_data, words_part, number='', remove_campaign=0, target
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] + ['Product Ad'] * len(exact_items) +
         [keyword] * len(words_part),
         ['Create'] * total_exact_len,
-        [title[0] + target_asin + f' -{cmp_ending}'] * total_exact_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_exact_len,
         [None] * 3 + [exact_data[1] + number] *
         (total_exact_len - 3), none, none, none, none,
-        [title[0] + target_asin + f' -{cmp_ending}'] +
+        [title[0] + target_asin + f' {cmp_ending}'] +
         [None] * (total_exact_len - 1),
         [None] * 3 + [exact_data[1] + number] +
         [None] * (total_exact_len - 4), none,
@@ -571,11 +571,11 @@ def make_pat_part(pat_data, part, target_asin, number='', remove_campaign=0):
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] + ['Product Ad'] * len(pat_items) + [
             'Product targeting'] * len(pat_words),
         ['Create'] * total_pat_len,
-        [title[0] + target_asin + f' -{cmp_ending}'] * total_pat_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_pat_len,
         [None] * 3 + [pat_data[1] + number] *
         (total_pat_len - 3), none, none, none, none,
         [title[0] + target_asin +
-            f' -{cmp_ending}'] + [None] * (total_pat_len - 1),
+            f' {cmp_ending}'] + [None] * (total_pat_len - 1),
         [None] * 3 + [pat_data[1] + number] +
         [None] * (total_pat_len - 4), none,
         [None] * 3 + [pat_data[1] + number] * (total_pat_len - 3), none,
@@ -636,10 +636,10 @@ def make_category_all(category_total_data, pat_words, remove_campaign, target_as
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] + ['Product Ad'] * len(category_items) + [
             'Product targeting'] * len(category_words) + ['Negative Product Targeting'] * len(pat_words),
         ['Create'] * total_category_len,
-        [title + target_asin + f' -{cmp_ending}'] * total_category_len,
+        [title + target_asin + f' {cmp_ending}'] * total_category_len,
         [None] * 3 + [category_data[1]] *
         (total_category_len - 3), none, none, none, none,
-        [title + target_asin + f' -{cmp_ending}'] +
+        [title + target_asin + f' {cmp_ending}'] +
         [None] * (total_category_len - 1),
         [None] * 3 + [category_data[1]] + [None] *
         (total_category_len - 4), none,
