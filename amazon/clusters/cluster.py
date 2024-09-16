@@ -45,7 +45,40 @@ def process_phrases(broad):
         phrase_with_plus = "+" + " +".join(singular_words)
         normalized_phrase = " ".join(singular_words)
 
-        # Перевірка на схожість з існуючими фразами
+        # # Перевірка на схожість з існуючими фразами
+        # if not any(is_similar(normalized_phrase, existing) for existing in normalized_phrases):
+        processed_phrases.add(phrase_with_plus)
+        #     normalized_phrases.add(normalized_phrase)
+
+    return list(processed_phrases)
+
+
+def process_words(broad):
+    processed_phrases = set()
+    normalized_phrases = set()
+    stop_words = {
+        "a", "about", "above", "across", "after", "against", "along",
+        "among", "around", "at", "before", "behind", "below", "beside",
+        "between", "by", "during", "for", "from", "in", "inside",
+        "into", "near", "of", "on", "over", "past", "since", "through",
+        "to", "under", "until", "up", "with", "without"
+    }
+    p = inflect.engine()
+
+    for phrase in broad:
+        words = phrase.split()
+        singular_words = []
+        for word in words:
+            word = p.singular_noun(word) or word
+            if word.isdigit() or len(word) <= 3 or word.lower() in stop_words:
+                singular_words.append(word)
+            else:
+                singular_words.append(singularize(word))
+
+        phrase_with_plus = "+" + " +".join(singular_words)
+        normalized_phrase = " ".join(singular_words)
+
+        # # Перевірка на схожість з існуючими фразами
         if not any(is_similar(normalized_phrase, existing) for existing in normalized_phrases):
             processed_phrases.add(phrase_with_plus)
             normalized_phrases.add(normalized_phrase)
@@ -234,7 +267,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 for phrases in clear_seed:
                     new_pharases.update(phrases.split())
 
-                words = process_phrases(new_pharases)
+                words = process_words(new_pharases)
 
                 separated_words = prepare_to_sheet(words)
 
@@ -381,7 +414,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
 
         separated_words = prepare_to_sheet(words)
 
-        update_words_col(table_link, separated_words, ", ")
+        update_words_col(table_link, separated_words)
 
         broad = process_phrases(broad)
 

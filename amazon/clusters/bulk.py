@@ -89,8 +89,9 @@ def create_company_name(data, keyword=''):
 
 
 def make_brand_def_one(asins, sku, data):
+    skus = [x.strip() for x in sku[0].split(',') if x]
     global cmp_ending
-    total_def_len = 4 + len(asins) + 1
+    total_def_len = 4 + len(asins) + len(skus)
     str_asins = ['asin="' + x +
                  '"' for x in asins if x is not None and x != '']
     none = [None] * total_def_len
@@ -99,49 +100,49 @@ def make_brand_def_one(asins, sku, data):
     # broad_words = asins
     return pd.DataFrame(np.array([
         ['Sponsored Products'] * total_def_len,
-        ['Campaign'] + ['Biddin g Adjustment'] * 2 + ['Ad Group'] +
-        ['Product Ad'] * len(sku) + ['Keyword'] * len(asins),
+        ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] +
+        ['Product Ad'] * len(skus) + ['Product targeting'] * len(asins),
         ['Create'] * total_def_len,
         [data[1].split("|")[0] +
-         f'| {data[2]} | {data[0]} -{cmp_ending}'] * total_def_len,
-        [None] * 3 + [data[2]] * (1 + len(asins) + len(sku)),
+         f'| {data[2]} | {data[0]} {cmp_ending}'] * total_def_len,
+        [None] * 3 + [data[2]] * (1 + len(asins) + len(skus)),
         none, none, none, none,
         [data[1].split("|")[
-            0] + f'| {data[2]} | {data[0]} -{cmp_ending}'] + [None] * (total_def_len - 1),
+            0] + f'| {data[2]} | {data[0]} {cmp_ending}'] + [None] * (total_def_len - 1),
         [None] * 3 + [data[2]] + [None] * (total_def_len - 4),
         none,
-        [None] * 3 + [data[2]] * (1 + len(asins) + len(sku)),
+        [None] * 3 + [data[2]] * (1 + len(asins) + len(skus)),
         none,
         [str(date.today()).replace('-', '')] + [None] * (total_def_len - 1),
         none,
         ['MANUAL'] + [None] * (total_def_len - 1),
         ['enabled'] + [None] * 2 + ['enabled'] * (total_def_len - 3),
         ['enabled'] * total_def_len,
-        [None] * 3 + ['enabled'] * (1 + len(asins) + len(sku)),
+        [None] * 3 + ['enabled'] * (1 + len(asins) + len(skus)),
         [300] + [None] * (total_def_len - 1),
-        [None] * 4 + sku + [None] * (total_def_len - 4 - len(sku)),
+        [None] * 4 + skus + [None] * (total_def_len - 4 - len(skus)),
         none,
-        [None] * 4 + ['Eligible'] *
-        len(sku) + [None] * (total_def_len - 4 - len(sku)),
+        [None] * 4 + ['Eligible'] * len(skus) + [None] * (total_def_len - 4 - len(skus)),
         none,
-        [None] * 3 + [data[3]] *
-        len(sku) + [None] * (total_def_len - 3 - len(sku)),
+        [None] * 3 + [data[3]] + [None] * (total_def_len - 4),
         none,
-        [None] * (4 + len(sku)) + [data[3]] * len(asins),
+        [None] * (4 + len(skus)) + [data[3]] * len(asins),
         none,
-        [None] * (4 + len(sku)) + [data[2]] * len(asins),
+        [None] * (4 + len(skus)) + [data[2]] * len(asins),
         ['Dynamic bids - down only'] * 3 + [None] * (total_def_len - 3),
         [None, 'placementProductPage', 'placementTop'] +
         [None] * (total_def_len - 3),
         [None, 0, 0] + [None] * (total_def_len - 3),
-        [None] * (4 + len(sku)) + list(str_asins),
+        [None] * (4 + len(skus)) + list(str_asins),
         none, none, none, none, none, none, none, none, none, none, none, none
     ]).T, columns=COLUMNS)
 
 
 def make_brand_advertised_asins(data):
+    print(f"data[0]: {data}")
     global cmp_ending
-    total_def_len = 4 + len(data[0]) + 1
+    adv_items = [x.strip() for x in data[4][0].split(',') if x]
+    total_def_len = 4 + len(data[0]) + len(adv_items)
     str_asins = ['asin="' + x + '"' for x in data[0]
                  if x is not None and x != '']
     none = [None] * total_def_len
@@ -150,43 +151,41 @@ def make_brand_advertised_asins(data):
     # broad_words = asins
     return pd.DataFrame(np.array([
         ['Sponsored Products'] * total_def_len,
-        ['Campaign'] + ['Biddin g Adjustment'] * 2 + ['Ad Group'] +
-        ['Product Ad'] * len(data[4]) + ['Keyword'] * len(data[0]),
+        ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] +
+        ['Product Ad'] * len(adv_items) + ['Product targeting'] * len(data[0]),
         ['Create'] * total_def_len,
         [data[1].split(
-            "|")[0] + f'| Self | {data[0][0]} -{cmp_ending}'] * total_def_len,
-        [None] * 3 + [data[2]] * (1 + len(data[0]) + len(data[4])),
+            "|")[0] + f'| Self | {data[0][0]} {cmp_ending}'] * total_def_len,
+        [None] * 3 + [data[2]] * (1 + len(data[0]) + len(adv_items)),
         none, none, none, none,
         [data[1].split(
-            "|")[0] + f'| Self | {data[0][0]} -{cmp_ending}'] +
+            "|")[0] + f'| Self | {data[0][0]} {cmp_ending}'] +
         [None] * (total_def_len - 1),
         [None] * 3 + [data[2]] + [None] * (total_def_len - 4),
         none,
-        [None] * 3 + [data[2]] * (1 + len(data[0]) + len(data[4])),
+        [None] * 3 + [data[2]] * (1 + len(data[0]) + len(adv_items)),
         none,
         [str(date.today()).replace('-', '')] + [None] * (total_def_len - 1),
         none,
         ['MANUAL'] + [None] * (total_def_len - 1),
         ['enabled'] + [None] * 2 + ['enabled'] * (total_def_len - 3),
         ['enabled'] * total_def_len,
-        [None] * 3 + ['enabled'] * (1 + len(data[0]) + len(data[4])),
+        [None] * 3 + ['enabled'] * (1 + len(data[0]) + len(adv_items)),
         [300] + [None] * (total_def_len - 1),
-        [None] * 4 + data[4] + [None] * (total_def_len - 4 - len(data[4])),
+        [None] * 4 + adv_items + [None] * (total_def_len - 4 - len(adv_items)), 
         none,
-        [None] * 4 + ['Eligible'] *
-        len(data[4]) + [None] * (total_def_len - 4 - len(data[4])),
+        [None] * 4 + ['Eligible'] * len(adv_items) + [None] * (total_def_len - 4 - len(adv_items)),
         none,
-        [None] * 3 + [data[3]] *
-        len(data[4]) + [None] * (total_def_len - 3 - len(data[4])),
+        [None] * 3 + [data[3]] + [None] * (total_def_len - 4),
         none,
-        [None] * (4 + len(data[4])) + [data[3]] * len(data[0]),
+        [None] * (4 + len(adv_items)) + [data[3]] * len(data[0]),
         none,
-        [None] * (4 + len(data[4])) + [data[2]] * len(data[0]),
+        none,
         ['Dynamic bids - down only'] * 3 + [None] * (total_def_len - 3),
         [None, 'placementProductPage', 'placementTop'] +
         [None] * (total_def_len - 3),
         [None, 0, 0] + [None] * (total_def_len - 3),
-        [None] * (4 + len(data[4])) + list(str_asins),
+        [None] * (4 + len(adv_items)) + list(str_asins),
         none, none, none, none, none, none, none, none, none, none, none, none
     ]).T, columns=COLUMNS)
 
@@ -218,7 +217,8 @@ def make_seed_one(seed_data, word, target_asin, tos):
         ['enabled'] * total_seed_len,
         [None] * 3 + ['enabled'] * (total_seed_len - 3),
         [300] + [None] * (total_seed_len - 1),
-        [None] * 4 + seed_items + [None], none,
+        [None] * 4 + seed_items + [None], 
+        none,
         [None] * 4 + ['Eligible'] * len(seed_items) + [None], none,
         [None] * 3 + [seed_data[-1]] + [None] * (total_seed_len - 4), none,
         [None] * (total_seed_len - 1) + [seed_data[-1]],
@@ -288,27 +288,25 @@ def make_broad_all(broad_total_data, keyword_negatives, phrases_negatives, targe
         [300] + [None] * (total_broad_len - 1),
         [None] * 4 + broad_items + [None] *
         (total_broad_len - 4 - len(broad_items)), none,
-        [None] * 4 + ['Eligible'] *
-        len(broad_items) + [None] *
-        (total_broad_len - 4 - len(broad_items)), none,
-        [None] * 3 + [broad_data[-1]] *
-        len(broad_items) + [None] *
-        (total_broad_len - 3 - len(broad_items)), none,
+        [None] * 4 + ['Eligible'] * len(broad_items) + [None] * (total_broad_len - 4 - len(broad_items)), 
+        none,
+        [None] * 3 + [broad_data[-1]] + [None] *  (total_broad_len - 4), 
+        none,
         [None] * (4 + len(broad_items)) + [broad_data[-1]] * len(broad_words) + [None] * (
                 len(keyword_negatives) + len(phrases_negatives)),
-        [None] * (4 + len(broad_items)) + list(broad_words) +
+        [None] * (4 + len(broad_items)) + list(broad_words) +                          
         list(keyword_negatives) + list(phrases_negatives),
         [None] * (4 + len(broad_items)) + [broad_data[1]] * len(broad_words) + ['negativeExact'] * len(
             keyword_negatives) +
         ['negativePhrase'] * len(phrases_negatives),
         ['Dynamic bids - down only'] * 3 + [None] * (total_broad_len - 3),
         [None, 'placementProductPage', 'placementTop'] +
-        [None] * (total_broad_len - 3),
+        [None] * (total_broad_len - 3),                                                                     
         [None, 0, 0] + [None] * (total_broad_len - 3),
         none, none, none, none, none, none, none, none, none, none, none, none, none
     ]).T, columns=COLUMNS)
 
-
+                                        
 def make_auto_neg_all(auto_neg_total_data, keyword_negatives, phrases_negatives, target_asin, pte):
     global cmp_ending
     auto_neg_data = auto_neg_total_data[:4]
@@ -320,6 +318,11 @@ def make_auto_neg_all(auto_neg_total_data, keyword_negatives, phrases_negatives,
     index_of_enabled = pte.index('enabled')
     bids = ['', '', '', '']
     bids[index_of_enabled] = auto_neg_data[-1]
+    print(f"len(keyword_negatives): {len(keyword_negatives)}")
+    print(f"keyword_negatives: {keyword_negatives}")
+    print(f"len(phrases_negatives): {len(phrases_negatives)}")
+    print(f"phrases_negatives: {phrases_negatives}")
+    print(f"auto_neg_total_data: {auto_neg_total_data}")
 
     title = create_company_name(auto_neg_total_data)
 
@@ -368,10 +371,8 @@ def make_auto_neg_all(auto_neg_total_data, keyword_negatives, phrases_negatives,
         none,  # 27
         [None] * (4 + len(auto_neg_items)) + bids + [None] * \
         (total_auto_neg_len - 8 - len(auto_neg_items)),  # 28 - 70
-        [None] * (4 + len(auto_neg_items) + 4) + \
-        list(keyword_negatives) + list(phrases_negatives),  # 29 - 70
-        [None] * (4 + len(auto_neg_items) + 4) + ['negativeExact'] * len(keyword_negatives) + \
-        ['negativePhrase'] * len(phrases_negatives),  # 30 - 70 tuuuuuuuuuuuuut
+        [None] * (4 + len(auto_neg_items) + 4) + list(keyword_negatives) + list(phrases_negatives),  # 29 - 70
+        [None] * (4 + len(auto_neg_items) + 4) + ['negativeExact'] * len(keyword_negatives) + ['negativePhrase'] * len(phrases_negatives),  # 30 - 70 tuuuuuuuuuuuuut
         ['Dynamic bids - down only'] * 3 + [None] * \
         (total_auto_neg_len - 3),  # 31 - 70 tiuuuuuuuuuuuuuuuuuuuut
         [None, 'placementProductPage', 'placementTop'] + \
@@ -791,15 +792,20 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
     brand_defense_list = []
     advertised_asins_list = []
     for index, k in enumerate(df_total.values.T):
-        k = [x for x in k if x is not None]
+        k = k.tolist()
+        print(f"k:{k}")
+        k_head = k[:4]
+        print(f"k\k_head:{k_head}")
 
+        k_tail = [x for x in k[4:] if x is not None and x != '']
+        print(f"k\k_tail:{k_tail}")
+
+        k = k_head + k_tail
         if not k:
             continue
 
         if k[0] == 'Advertised ASIN':
             advertised_asins_list.append(k[1:])
-            target_asin = advertised_asins_list[0][4] if len(
-                advertised_asins_list[0]) > 4 else "Not found"
         if k[1] and k[1] != ' ':
             filter_campaign_name = extract_text(k[1])
             filter_campaign_name_snake_case = to_snake_case(
@@ -873,9 +879,9 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
                 table_create_params.append(our_adv_asins_all)
 # d---------------------------------------------------------------------------------------------------------------
     if len(variations_total_data_list) > 0:
-        for variations_total_data_list_item in variations_total_data_list:
+        for variations_total_data_list_item, target_asin in zip(variations_total_data_list, advertised_asins_list):
             variations_all = make_exact_all_list(
-                variations_total_data_list_item, target_asin)
+                variations_total_data_list_item, target_asin[4])
             table_create_params.append(variations_all)
 
     # if len(seed_total_data) > 0:
@@ -884,118 +890,120 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
     #             seed_all = make_seed_all(seed_total_data_item, target_asin)
     #             table_create_params.append(seed_all)
     if len(seed_total_data) > 0 and len(tos) > 0:
-        for seed_total_data_item, tos_item in zip(seed_total_data, tos):
+        for seed_total_data_item, tos_item, target_asin in zip(seed_total_data, tos, advertised_asins_list):
             if tos_item == '' or tos_item == ' ':
                 tos_item = 0
             if any(seed_total_data_item[4:]) and seed_total_data_item[2]:
                 seed_all = make_seed_all(
-                    seed_total_data_item, target_asin, tos_item)
+                    seed_total_data_item, target_asin[4], tos_item)
                 table_create_params.append(seed_all)
 
     if len(broad_total_data) > 0:
-        for broad_total_data_item, keyword_negatives in zip(broad_total_data, keyword_negatives_list):
+        i = 1
+        for broad_total_data_item, keyword_negatives, target_asin in zip(broad_total_data, keyword_negatives_list, advertised_asins_list):
             if any(broad_total_data_item[4:]):
                 broad_all = make_broad_all(
-                    broad_total_data_item, keyword_negatives, phrases_negatives, target_asin)
+                    broad_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(broad_all)
+            i+=1
+            print(f"item: {i}")
 
     if len(words_total_data) > 0:
-        for words_total_data_item, keyword_negatives in zip(words_total_data, keyword_negatives_list):
+        for words_total_data_item, keyword_negatives, target_asin in zip(words_total_data, keyword_negatives_list, advertised_asins_list):
             if any(words_total_data_item[4:]):
                 words_all = make_broad_all(
-                    words_total_data_item, keyword_negatives, phrases_negatives, target_asin)
+                    words_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(words_all)
 
     if len(auto_close_neg_total_data) > 0:
-        for auto_close_neg_total_data_item, keyword_negatives in zip(auto_close_neg_total_data, keyword_negatives_list):
+        for auto_close_neg_total_data_item, keyword_negatives, target_asin in zip(auto_close_neg_total_data, keyword_negatives_list, advertised_asins_list):
             if len(auto_close_neg_total_data_item):
                 auto_close_neg_all = make_auto_neg_all(
-                    auto_close_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin, ['enabled', 'paused', 'paused', 'paused'])
+                    auto_close_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin[4], ['enabled', 'paused', 'paused', 'paused'])
                 table_create_params.append(auto_close_neg_all)
 
     if len(auto_close_total_data) > 0:
-        for auto_close_total_data_item in auto_close_total_data:
+        for auto_close_total_data_item, target_asin in zip(auto_close_total_data, advertised_asins_list):
             if len(auto_close_total_data_item):
-                auto_close_all = make_auto_all(auto_close_total_data_item, target_asin, [
-                                               'enabled', 'paused', 'paused', 'paused'])
+                auto_close_all = make_auto_all(auto_close_total_data_item, target_asin[4], [
+                                            'enabled', 'paused', 'paused', 'paused'])
                 table_create_params.append(auto_close_all)
 
     if len(auto_loose_neg_total_data) > 0:
-        for auto_loose_neg_total_data_item, keyword_negatives in zip(auto_loose_neg_total_data, keyword_negatives_list):
+        for auto_loose_neg_total_data_item, keyword_negatives, target_asin in zip(auto_loose_neg_total_data, keyword_negatives_list, advertised_asins_list):
             if len(auto_loose_neg_total_data_item):
                 auto_loose_neg_all = make_auto_neg_all(
-                    auto_loose_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin, ['paused', 'enabled', 'paused', 'paused'])
+                    auto_loose_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin[4], ['paused', 'enabled', 'paused', 'paused'])
                 table_create_params.append(auto_loose_neg_all)
 
     if len(auto_loose_total_data) > 0:
-        for auto_loose_total_data_item in auto_loose_total_data:
+        for auto_loose_total_data_item, target_asin in zip(auto_loose_total_data, advertised_asins_list):
             if len(auto_loose_total_data_item):
-                auto_loose_all = make_auto_all(auto_loose_total_data_item, target_asin, [
-                                               'paused', 'enabled', 'paused', 'paused'])
+                auto_loose_all = make_auto_all(auto_loose_total_data_item, target_asin[4], [
+                                            'paused', 'enabled', 'paused', 'paused'])
                 table_create_params.append(auto_loose_all)
 
     if len(auto_subs_neg_total_data) > 0:
-        for auto_subs_neg_total_data_item, keyword_negatives in zip(auto_subs_neg_total_data, keyword_negatives_list):
+        for auto_subs_neg_total_data_item, keyword_negatives, target_asin in zip(auto_subs_neg_total_data, keyword_negatives_list, advertised_asins_list):
             if len(auto_subs_neg_total_data_item):
                 auto_subs_neg_all = make_auto_neg_all(
-                    auto_subs_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin, ['paused', 'paused', 'enabled', 'paused'])
+                    auto_subs_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin[4], ['paused', 'paused', 'enabled', 'paused'])
                 table_create_params.append(auto_subs_neg_all)
 
     if len(auto_subs_total_data) > 0:
-        for auto_subs_total_data_item in auto_subs_total_data:
+        for auto_subs_total_data_item, target_asin in zip(auto_subs_total_data, advertised_asins_list):
             if len(auto_subs_total_data_item):
-                auto_subs_all = make_auto_all(auto_subs_total_data_item, target_asin, [
-                                              'paused', 'paused', 'enabled', 'paused'])
+                auto_subs_all = make_auto_all(auto_subs_total_data_item, target_asin[4], [
+                                            'paused', 'paused', 'enabled', 'paused'])
                 table_create_params.append(auto_subs_all)
 
     if len(auto_compl_neg_total_data) > 0:
-        for auto_compl_neg_total_data_item, keyword_negatives in zip(auto_compl_neg_total_data, keyword_negatives_list):
+        for auto_compl_neg_total_data_item, keyword_negatives, target_asin in zip(auto_compl_neg_total_data, keyword_negatives_list, advertised_asins_list):
             if len(auto_compl_neg_total_data_item):
                 auto_compl_neg_all = make_auto_neg_all(
-                    auto_compl_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin, ['paused', 'paused', 'paused', 'enabled'])
+                    auto_compl_neg_total_data_item, keyword_negatives, phrases_negatives, target_asin[4], ['paused', 'paused', 'paused', 'enabled'])
                 table_create_params.append(auto_compl_neg_all)
 
     if len(auto_compl_total_data) > 0:
-        for auto_compl_total_data_item in auto_compl_total_data:
+        for auto_compl_total_data_item, target_asin in zip(auto_compl_total_data, advertised_asins_list):
             if len(auto_compl_total_data_item):
-                auto_compl_all = make_auto_all(auto_compl_total_data_item, target_asin, [
-                                               'paused', 'paused', 'paused', 'enabled'])
+                auto_compl_all = make_auto_all(auto_compl_total_data_item, target_asin[4], [
+                                            'paused', 'paused', 'paused', 'enabled'])
                 table_create_params.append(auto_compl_all)
 
     if len(exact_total_data_list) > 0:
-        for exact_total_data_item in exact_total_data_list:
+        for exact_total_data_item, target_asin in zip(exact_total_data_list, advertised_asins_list):
             if len(exact_total_data_item):
                 exact_all = make_exact_all_list(
-                    exact_total_data_item, target_asin)
+                    exact_total_data_item, target_asin[4])
                 table_create_params.append(exact_all)
 
     if len(brands_total_data_list) > 0:
-        for brands_total_data_item in brands_total_data_list:
+        for brands_total_data_item, target_asin in zip(brands_total_data_list, advertised_asins_list):
             if len(brands_total_data_item):
                 brands_all = make_exact_all_list(
-                    brands_total_data_item, target_asin)
+                    brands_total_data_item, target_asin[4])
                 table_create_params.append(brands_all)
 
     if len(pat_total_data_list) > 0:
-        for pat_total_data_item in pat_total_data_list:
+        for pat_total_data_item, target_asin in zip(pat_total_data_list, advertised_asins_list):
             if len(pat_total_data_item):
-                # for pat_stage in sort_pats(pat_total_data_list):
-                #     pat_words, pat_all = make_pat_all_list(pat_stage)
                 pat_all = make_pat_all_list(
-                    pat_total_data_item, target_asin)[1]
+                    pat_total_data_item, target_asin[4])[1]
                 table_create_params.append(pat_all)
 
     if len(category_total_data_list) > 0:
-        for category_total_data_item in category_total_data_list:
+        for category_total_data_item, target_asin in zip(category_total_data_list, advertised_asins_list):
             if len(category_total_data_item):
                 try:
                     pat_words, pat_all = make_pat_all_list(
-                        pat_total_data_list, target_asin)
+                        pat_total_data_list, target_asin[4])
                 except ValueError:
                     pat_words = []
                 category_all = make_category_all_list(
-                    category_total_data_item, pat_words, target_asin)
+                    category_total_data_item, pat_words, target_asin[4])
                 table_create_params.append(category_all)
+
     dt = datetime.now().strftime("%H:%M:%S")
     print(f"Finished UPLOAD info to table_create_params{dt}")
 
