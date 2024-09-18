@@ -22,7 +22,7 @@ from .settings import ACCOUNTS_AUTH_TOKENS, BUDGET, MIN_WAIT, MAX_WAIT, ROTATING
 
 
 class SponsorBrandsUploader:
-    CAMPAIGNS = ['SEED', 'STR Low', 'STR Top', 'Exact', 'Exact TOP', 'Broad', 'Exact LOW', 'Brands', 'Variations']
+    CAMPAIGNS = ['SEED', 'STR Low', 'Launched', 'Exact', 'Exact TOP', 'Broad', 'Exact LOW', 'Brands', 'Variations']
     NAME = 'SB'
     NEGATIVE_CAMPAIGNS = ['NegativeExacts', 'NegativePhrases']
 

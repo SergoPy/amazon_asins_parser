@@ -36,7 +36,7 @@ def get_company_sponsored_values(data: dict) -> dict:
 
 
 def get_company_values(data: dict) -> dict:
-    company_types = ['seed', 'str_low', 'str_top', 'variation', 'exact_top', 'exact', 'exact_low',
+    company_types = ['seed', 'str_low', 'exact_other', 'variation', 'exact_top', 'exact', 'exact_low',
                      'broad', 'brands', 'tpa', 'tca', 'lsa', 'lpa', 'ca', 'ra', 'auto',
                      'auto_negatives', 'category', 'words', 'brand_def', 'adv_asin']
 
@@ -325,7 +325,7 @@ def extract_text(input_string):
 
 
 def get_campaigns() -> list:
-    default_company_types = {'seed', 'str low', 'str top', 'variation', 'exact top', 'exact', 'exact low',
+    default_company_types = {'seed', 'str low', 'exact_other', 'variation', 'exact top', 'exact', 'exact low',
                              'broad', 'brands', 'tpa bid', 'tca bid', 'lsa bid', 'lpa bid', 'ca bid', 'ra bid ', 'auto',
                              'auto_negatives', 'category'}
     current_time = timezone.now()

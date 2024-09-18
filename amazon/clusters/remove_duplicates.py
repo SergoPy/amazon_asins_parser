@@ -178,7 +178,7 @@ def remove_duplicates(spreadsheet_id, range_name):
 
     keywords = list(total_res[total_res.category == 'keyword'].keyword)
     seed = list(total_res[total_res.category == 'seed'].keyword)
-    str_top = list(total_res[total_res.category == 'str top'].keyword)
+    launched = list(total_res[total_res.category == 'launched'].keyword)
     str_low = list(total_res[total_res.category == 'str low'].keyword)
 
     gc = gspread.service_account(filename='clusters/apikey.json')
@@ -188,15 +188,15 @@ def remove_duplicates(spreadsheet_id, range_name):
     print(f"keywords: {keywords}")
     print(f"seed: {seed}")
     print(f"str_low: {str_low}")
-    print(f"str_top: {str_top}")
+    print(f"launched: {launched}")
     if len(keywords) > 1:
         update_column(worksheet, 'KEYWORDS', keywords)
     if len(seed) > 1:
         update_column(worksheet, 'SEED', seed)
     if len(str_low) > 1:
         update_column(worksheet, 'STR Low', str_low)
-    if len(str_top) > 1:
-        update_column(worksheet, 'STR Top', str_top)
+    if len(launched) > 1:
+        update_column(worksheet, 'Launched', launched)
 
 
 def remove_duplicates_from_list(data):

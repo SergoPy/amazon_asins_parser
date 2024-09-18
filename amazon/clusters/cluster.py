@@ -146,11 +146,10 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
     campaign_name = phrase + \
         (f" ({prefix})" if prefix else "") + \
         (f" | {keyword}" if keyword else "")
-    print(f"campaign_name: {campaign_name}")
     campaign_names.append(campaign_name)
 
     if keyword is not None and keyword != '':
-        keyword = "- " + keyword
+        keyword = " - " + keyword
 
     for i in range(0, len(category_list), count):
         current_block = category_list[i:i+count]
@@ -158,9 +157,7 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         new_phrase = phrase + \
             (f" | {prefix}" if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
-        if keyword == '':
-            keyword = list_name.lower()
-        list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
+        list_total.append([list_name, new_phrase, keyword if keyword else list_name.lower(),
                           values_dict['scu'], values_dict['bid']] + current_block)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
         list_total.append([' ', ' ', ' ', 'Adjustment ToS',
@@ -172,9 +169,7 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         new_phrase = phrase + \
             (f" | {prefix} " if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
-        if keyword == '':
-            keyword = list_name.lower()
-        list_total.append([list_name, new_phrase, keyword.replace("- ", ""),
+        list_total.append([list_name, new_phrase, keyword if keyword else list_name.lower(),
                           values_dict['scu'], values_dict['bid']] + category_list)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
         list_total.append([' ', ' ', ' ', 'Adjustment ToS',
@@ -194,7 +189,7 @@ def get_first_number(x):
 
 def get_table_id(table_link):
     return table_link.split('/d/')[1].split('/')[0]
- # negative_exacts = keywords + seed + str_low + str_top
+ # negative_exacts = keywords + seed + str_low + launched
 
 
 def google_sheets_clusters(table_link, values, bulk_upload_status):
@@ -227,7 +222,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         tos = []
         launched = []
         for k in df_total.T.values:
-            print(f"k: {k}")
+            # print(f"k: {k}")
             if k[0].lower() == 'launched':
                 launched = [x for x in k[1:] if x is not None and x != '']
             if k[0].lower() == 'product name':
@@ -236,6 +231,8 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 adv_asin = [x for x in k[1:]]
             elif k[0].lower() == 'sku':
                 sku = [x for x in k[1:]]
+            elif k[0].lower() == 'words':
+                words = [x for x in k[1:] if x not in launched]
             elif k[0].lower() == 'seed':
                 seed = [x for x in k[1:] if x not in launched]
             elif k[0].lower() == 'bid':
@@ -249,33 +246,33 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
             if product_name == None or product_name.lower() == "":
                 continue
             else:
-                print(f"product_name: {product_name}")
+                # print(f"product_name: {product_name}")
                 finall_index = 0
                 for finish_index, product in enumerate(product_names[start_index+1:]):
                     if product != None and product.lower() != "":
                         finall_index = finish_index + start_index
-                        print(
-                            f" start_index: {start_index} finish_index: {finall_index};")
+                        # print(
+                        #     f" start_index: {start_index} finish_index: {finall_index};")
                         break
                 if finall_index == 0:
                     finall_index = len(seed) - 1
+
+
                 new_pharases = set()
                 seed_for_clear = seed[start_index:finall_index+1]
-                print(f"seed_for_clear: {seed_for_clear}")
+
                 clear_seed = remove_duplicates_from_list(seed_for_clear)
-                print(f"clear_seed: {clear_seed}")
+
                 for phrases in clear_seed:
                     new_pharases.update(phrases.split())
 
-                words = process_words(new_pharases)
-
-                separated_words = prepare_to_sheet(words)
-
-                update_words_col(table_link, separated_words, start_index)
+                if len(words) < 1:
+                    words = process_phrases(new_pharases)
+                else:
+                    words = process_phrases(words)
 
                 broad = process_phrases(clear_seed)
-                print(f"broad: {broad}")
-                print(f"seed: {clear_seed}")
+
 
                 keywords_filtered = list((set(clear_seed)))
                 keywords_tuples = [
@@ -302,8 +299,8 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 for k, v in keywords_total_dict.items():
                     total_result[v].append(' '.join(k))
 
-                print(f"total_result: {total_result}")
-                print(f"rest: {rest}")
+                # print(f"total_result: {total_result}")
+                # print(f"rest: {rest}")
                 parametrs = {
                     'scu': sku[start_index], 'bid': bid[start_index], "tos": tos[start_index]}
                 if len(clear_seed) >= 1:
@@ -346,7 +343,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
 
         keywords = []
         words = []
-        str_top = []
+        launched = []
         str_low = []
 
         negative = []
@@ -357,33 +354,33 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         variations = []
 
         for k in df_total.T.values:
-            print(f"k: {k}")
-            if k[0].lower() == 'str top':
-                str_top = [x for x in k[1:] if x is not None and x != '']
+            # print(f"k: {k}")
+            if k[0].lower() == 'launched':
+                launched = [x for x in k[1:] if x is not None and x != '']
             elif k[0].lower() == 'seed':
                 seed = [x for x in k[1:] if x is not None and x !=
-                        '' and x not in str_top]
+                        '' and x not in launched]
             elif k[0].lower() == 'keywords':
                 keywords = [x for x in k[1:]
-                            if x is not None and x != '' and x not in str_top]
+                            if x is not None and x != '' and x not in launched]
             elif k[0].lower() == 'str low':
                 str_low = [x for x in k[1:] if x is not None and x !=
-                           '' and x not in str_top]
+                           '' and x not in launched]
             elif k[0].lower() == 'brand defense':
                 brand_def = [x for x in k[1:] if x is not None and x !=
-                             '' and x not in str_top]
+                             '' and x not in launched]
             elif k[0].lower() == 'advertised asin':
                 adv_asin = [x for x in k[1:] if x is not None and x !=
-                            '' and x not in str_top]
+                            '' and x not in launched]
             elif k[0].lower() == 'broad':
                 broad = [x for x in k[1:] if x is not None and x !=
-                         '' and x not in str_top]
-            elif k[0].lower() == 'Words':
+                         '' and x not in launched]
+            elif k[0].lower() == 'words':
                 words = [x for x in k[1:] if x is not None and x !=
-                         '' and x not in str_top]
+                         '' and x not in launched]
             elif k[0].lower() == 'variation':
                 variations = [x for x in k[1:]
-                              if x is not None and x != '' and x not in str_top]
+                              if x is not None and x != '' and x not in launched]
             elif 'negative' in k[0].lower() and 'phrase' in k[0].lower():
                 negative = [x for x in k[1:] if x is not None and x != '']
             elif k[0].lower() in ['tpa', 'tca', 'ca', 'ra', 'lsa', 'lpa']:
@@ -392,40 +389,48 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                             if x is not None and
                             x != '' and
                             (x.lower() in no_length_check_keys or len(x) == 10) and
-                            x not in str_top])
+                            x not in launched])
             elif k[0].lower() in ['category']:
                 category.append([k[0]] + [get_first_number(x)
-                                for x in k[1:] if x is not None and x != '' and x not in str_top])
+                                for x in k[1:] if x is not None and x != '' and x not in launched])
             elif len(k[0]) != 0:
+                # print(f" elif len(k[0]) != 0: {k}" )
                 oth = [[q.strip() for q in x.split(',')]
-                       for x in k[1:] if x is not None and x != '' and x not in str_top]
+                       for x in k[1:] if x is not None and x != '' and x not in launched]
+                # print(f"oth: {oth}")
                 oth_new = []
                 for t in oth:
                     qq = [x for x in t if x != '']
                     other.append(tuple([k[0], tuple(qq)]))
 
-        broad.extend(seed)
 
+        if len(broad) < 1:
+            broad.extend(seed)
+        
         new_pharases = set()
-        for phrases in broad:
+        for phrases in seed:
             new_pharases.update(phrases.split())
-
-        words = process_phrases(new_pharases)
-
-        separated_words = prepare_to_sheet(words)
-
-        update_words_col(table_link, separated_words)
-
+        
+        if len(words) < 1:
+            words = process_phrases(new_pharases)
+        else:
+            words = process_phrases(words)
         broad = process_phrases(broad)
+
 
         keywords_filtered = list((set(keywords) - set(seed)))
         keywords_filtered = list(
             (set(keywords_filtered) - set(str_low)) - set(broad))
+        print(f"keywords_filtered: {len(keywords_filtered)}")
         keywords_tuples = [
             tuple(x.split(' '))
             for x in keywords_filtered
             if len(x) <= 50
         ]
+        print(f"other): {other}")
+
+        print(f"keywords_tuples: {len(keywords_tuples)}")
+        print(f"len(other): {len(other)}")
 
         keywords_total_dict = dict()
 
@@ -437,21 +442,27 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                     keywords_total_dict[p] = r
 
         rest = []
+        print(f"other keywords_total_dict: {keywords_total_dict}; \n len(keywords_total_dict): {len(keywords_total_dict)}")
+
         for p in keywords_tuples:
             if p not in keywords_total_dict.keys():
                 rest.append(' '.join(p))
+
+        print(f"other rest: {rest}\n other len(rest: {len(rest)}")
 
         total_result = defaultdict(list)
         for k, v in keywords_total_dict.items():
             total_result[v].append(' '.join(k))
 
+        print(f"total_result: {total_result} total_result len: {len(total_result)}")
+
         # SEED, Exact STR Top, Exact STR Low, Variation
         if len(seed) >= 1:
             split_and_append('SEED', phrase, '',
                              values["seed"], seed, 10000, "SEED")
-        if len(str_top) >= 1:
-            split_and_append('Exact', phrase, '',
-                             values['str_top'], str_top, campaign_count, "STR Top")
+        # if len(launched) >= 1:
+        #     split_and_append('Exact', phrase, '',
+        #                      values['launched'], launched, campaign_count, "Launched")
         if len(str_low) >= 1:
             split_and_append('Exact', phrase, '',
                              values['str_low'], str_low, campaign_count, "STR Low")
@@ -476,24 +487,24 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 if len(total_result[q]) >= 1:
                     if 'exact top' in q[0].lower():
                         split_and_append(
-                            'Exact', phrase, q[1][0], values['exact_top'], total_result[q], campaign_count, q[0])
+                            'Exact', phrase, q[1][0], values['exact_top'], total_result[q], campaign_count, 'Exact Top')
 
         for q in other:
             if q in total_result:
                 if len(total_result[q]) >= 1:
                     if 'exact' in q[0].lower() and 'low' not in q[0].lower() and 'top' not in q[0].lower():
                         split_and_append(
-                            'Exact', phrase, q[1][0], values['exact'], total_result[q], campaign_count, q[0])
+                            'Exact', phrase, q[1][0], values['exact'], total_result[q], campaign_count, 'Exact')
 
         for q in other:
             if q in total_result:
                 if len(total_result[q]) >= 1:
                     if 'exact low' in q[0].lower():
                         split_and_append(
-                            'Exact', phrase, q[1][0], values['exact_low'], total_result[q], campaign_count, q[0])
+                            'Exact', phrase, q[1][0], values['exact_low'], total_result[q], campaign_count, 'Exact Low')
         if len(rest) >= 1:
             split_and_append(
-                'Exact Other', phrase, '', {"bid": " ", "scu": " "}, rest, campaign_count, 'Exact Other')
+                'Exact', phrase, '', values['exact_other'], rest, campaign_count, 'Exact Other')
 
         for q in other:
             # print(f"q from other: {q}, q[0]:{q[0]}  q[1][0]: {q[1][0]}, values['brands']: {values['brands']}, total_result[q]: {total_result[q]}")
@@ -517,7 +528,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
             pat_negatives.extend(p[1:])
             if len(p[1:]) >= 1:
                 split_and_append(
-                    'PAT', phrase, p[0], values[p[0].lower()], p[1:], campaign_count, 'PAT')
+                    'PAT', phrase, p[0], values[p[0].lower()], p[1:], 30, 'PAT')
 
         # Category
         for p in category:
@@ -528,12 +539,12 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         # Auto Negatives
         for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
             split_and_append('Auto', phrase, '', values['auto_negatives'], [
-            ], campaign_count, f'Auto Negatives {type_}')
+            ], 10000, f'Auto Negatives {type_}')
 
         # Auto
         for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
             split_and_append('Auto', phrase, '', values['auto'], [
-            ], campaign_count, f'Auto {type_}')
+            ], 10000, f'Auto {type_}')
 
         # NegativePhrases
         # if len(negative) >= 1:
@@ -541,7 +552,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
             'scu': '', 'bid': ''}, negative, 100000, "NegativePhrases")
 
         # # NegativeExacts
-        # negative_exacts = keywords + seed + str_low + str_top
+        # negative_exacts = keywords + seed + str_low + launched
 
         # split_and_append('NegativeExacts', phrase, 'NegativeExacts', {
         #                  'scu': '', 'bid': ''}, negative_exacts, 10000, "NegativeExacts")
@@ -583,14 +594,14 @@ def extract_text(input_string):
 def upload_campaign_to_db():
     campaigns = list()
     filter_campaign_names = list()
-    print(f"campaign_names: {campaign_names}")
+    # print(f"campaign_names: {campaign_names}")
     unique_campaign_names = list(dict.fromkeys(campaign_names))
-    print(f"unique_campaign_names: {unique_campaign_names}")
+    # print(f"unique_campaign_names: {unique_campaign_names}")
     for campaign_name in unique_campaign_names:
         filter_campaign_names.append(extract_text(campaign_name))
     unique_campaign_names = list(dict.fromkeys(filter_campaign_names))
     Campaign.objects.all().delete()
     for campaign_name in unique_campaign_names:
         campaigns.append(Campaign(name=campaign_name))
-    print(f"campaigns from upload_campaign_to_db: {campaigns}")
+    # print(f"campaigns from upload_campaign_to_db: {campaigns}")
     Campaign.objects.bulk_create(campaigns)

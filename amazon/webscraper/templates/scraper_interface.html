@@ -297,21 +297,6 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label class="form-label">STR Top</label>
-                                </div>
-                                <div class="row gy-4">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" id="str_top_scu" name="str_top_scu"
-                                               placeholder="">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" step="0.01" class="form-control" id="str_top_bid"
-                                               name="str_top_bid"
-                                               placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
                                     <label class="form-label">STR Low</label>
                                 </div>
                                 <div class="row gy-4">
@@ -383,6 +368,22 @@
                                     <div class="col-md-4">
                                         <input type="text" step="0.01" class="form-control" id="exact_low_bid"
                                                name="exact_low_bid"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-md-12">
+                                    <label class="form-label">Exact Other</label>
+                                </div>
+                                <div class="row gy-4">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="exact_other_scu" name="exact_other_scu"
+                                               placeholder="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" step="0.01" class="form-control" id="exact_other_bid"
+                                               name="exact_other_bid"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -1073,7 +1074,7 @@
 
 
 <script>
-    const company_names = ['str_top_scu', 'str_low_scu', 'variation_scu', 'exact_top_scu', 'exact_scu', 'exact_low_scu',
+    const company_names = ['str_low_scu', 'variation_scu', 'exact_top_scu', 'exact_scu', 'exact_low_scu', 'exact_other_scu',
         'broad_scu', 'brands_scu', 'pat_scu', 'auto_scu', 'auto_negatives_scu', 'category_scu', 'words_scu', 'adv_asin_scu'];
 
     const base_scu = document.getElementById('seed_scu');
@@ -1106,8 +1107,8 @@
 <script>
     'use strict';
     const bid_values = {
-        'str_top_bid': 1, 'str_low_bid': 0.9, 'variation_bid': 0.8, 'exact_top_bid': 0.9,
-        'exact_bid': 0.8, 'exact_low_bid': 0.7, 'broad_bid': 0.66, 'brands_bid': 0.66,
+        'str_low_bid': 0.9, 'variation_bid': 0.8, 'exact_top_bid': 0.9,
+        'exact_bid': 0.8, 'exact_low_bid': 0.7, 'broad_bid': 0.66, 'exact_other_bid': 0.66, 'brands_bid': 0.66,
         'auto_bid': 0.33, 'auto_negatives_bid': 0.55, 'category_bid': 0.33, 'tca_bid': 0.66,
         'tpa_bid': 0.66, 'lpa_bid': 0.48, 'lsa_bid': 0.66, 'ra_bid': 0.44, 'ca_bid': 0.55,
         'words_bid': 0.2, 'brand_def_bid': 1, 'adv_asin_bid': 1
