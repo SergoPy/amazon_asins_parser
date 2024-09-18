@@ -442,7 +442,7 @@ def make_exact_part(exact_data, words_part, number='', remove_campaign=0, target
     exact_items = [x.strip() for x in exact_data[2].split(',')]
     total_exact_len = 4 + len(exact_items) + len(words_part)
     title = create_company_name(exact_data)
-    print(f"title i nmake_exact_partmake_exact_part: {title}")
+    # print(f"title i nmake_exact_partmake_exact_part: {title}")
 
     none = [None] * total_exact_len
     keyword = 'Product targeting' if 'PAT' in exact_data[0] else 'Keyword'
@@ -771,14 +771,13 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             keyword_neg = k
         elif 'phrase' in k.lower():
             phrase_neg = k
-    # keyword_negatives = [x for x in df_negatives_needed[keyword_neg] if x]
     if phrase_neg is not None:
         phrases_negatives = [x for x in df_negatives_needed[phrase_neg][5:] if x]
     # print(f"keyword_negatives: {keyword_negatives}")
     filter_campaign_name_snake_case = ""
     tos = []
     seed_total_data = []
-    keyword_negatives_list = keyword_negatives
+    keyword_negatives_list = keyword_negatives.copy()
     broad_total_data = []
     words_total_data = []
     auto_close_neg_total_data = []
@@ -799,6 +798,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
 
     # print(f"campaign_data: {campaign_data}")
     for index, k in enumerate(df_total.values.T):
+        # print(f"keyword_negatives: {keyword_negatives}")
         k = k.tolist()
         # print(f"k:{k}")
         k_head = k[:5]
@@ -818,9 +818,9 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             filter_campaign_name = extract_text(k[1])
             filter_campaign_name_snake_case = to_snake_case(
                 filter_campaign_name)
-            print(f"we in cheker: {filter_campaign_name_snake_case}")
-            print(f"filter_campaign_name: {filter_campaign_name}")
-            print(f"campaign_data: {campaign_data}")
+            # print(f"we in cheker: {filter_campaign_name_snake_case}")
+            # print(f"filter_campaign_name: {filter_campaign_name}")
+            # print(f"campaign_data: {campaign_data}")
 
             if filter_campaign_name_snake_case not in campaign_data:
                 print(f"LOSE IT: {filter_campaign_name_snake_case}")
@@ -829,18 +829,21 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             seed_total_data.append(k[1:])
             tos.append(df_total.values.T[index+2][4])
             # keyword_negatives_list.append(k[5:])
-            keyword_negatives_set = set(keyword_negatives_list)
-            for item in k[5:]:
-                if item not in keyword_negatives_set:
-                    keyword_negatives_set.add(item)
-            keyword_negatives_list = [list(keyword_negatives_set)]
+            if len(keyword_negatives) > 0:
+                keyword_negatives_set = set(keyword_negatives_list)
+                for item in k[5:]:
+                    if item not in keyword_negatives_set:
+                        keyword_negatives_set.add(item)
+                keyword_negatives_list = [list(keyword_negatives_set)]
+            else: 
+                keyword_negatives_list.append(k[5:])
             print("Seed Finished get seed")
         if k[0] == 'Brand Defense':
             brand_defense_list.append(k[1:])
         if k[0] == 'Broad':
-            print(f"broad this: {k}")
+            # print(f"broad this: {k}")
             broad_total_data.append(k[1:])
-            print(f"broad_total_data: {broad_total_data}")
+            # print(f"broad_total_data: {broad_total_data}")
         if k[0] == 'Words':
             words_total_data.append(k[1:])
         if 'Variation' in k[0]:
@@ -931,6 +934,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
 
         for broad_total_data_item, keyword_negatives, target_asin in zip(broad_total_data, keyword_negatives_list_prime, advertised_asins_list_prime):
             if any(broad_total_data_item[4:]):
+                broad_total_data_item[1] = 'Broad'
                 broad_all = make_broad_all(
                     broad_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(broad_all)
@@ -941,12 +945,13 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(words_total_data)
         else:
             keyword_negatives_list_prime = keyword_negatives_list
-        print(f"keyword_negatives_list: {keyword_negatives_list}")
-        print(f"keyword_negatives_list_prime: {keyword_negatives_list_prime}")
+        # print(f"keyword_negatives_list: {keyword_negatives_list}")
+        # print(f"keyword_negatives_list_prime: {keyword_negatives_list_prime}")
 
         for words_total_data_item, keyword_negatives, target_asin in zip(words_total_data, keyword_negatives_list_prime, advertised_asins_list):
-            print(f"keyword_negatives: {keyword_negatives}")
+            # print(f"keyword_negatives: {keyword_negatives}")
             if any(words_total_data_item[4:]):
+                print(f"words_total_data_item: {words_total_data_item}")
                 words_all = make_broad_all(
                     words_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(words_all)

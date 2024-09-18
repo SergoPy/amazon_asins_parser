@@ -185,10 +185,10 @@ def remove_duplicates(spreadsheet_id, range_name):
     sht1 = gc.open_by_key(spreadsheet_id)
     worksheet = sht1.worksheet(range_name)
 
-    print(f"keywords: {keywords}")
-    print(f"seed: {seed}")
-    print(f"str_low: {str_low}")
-    print(f"launched: {launched}")
+    # print(f"keywords: {keywords}")
+    # print(f"seed: {seed}")
+    # print(f"str_low: {str_low}")
+    # print(f"launched: {launched}")
     if len(keywords) > 1:
         update_column(worksheet, 'KEYWORDS', keywords)
     if len(seed) > 1:

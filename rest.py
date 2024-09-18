@@ -1,156 +1,92 @@
-from datetime import date
+import pandas as pd
+import httplib2
+import gspread
+from googleapiclient import discovery
 
 
-auto_neg_items = ['FBA-ST-02-11', 'BAL-1-BC']
-keyword_negatives = ['cancer awareness sticker',
-                     'cancer fundraising',
-                     'cancer ribbon sticker',
-                     'cancer sticker',
-                     'child cancer awareness',
-                     'childhood cancer',
-                     'childhood cancer awareness',
-                     'childhood cancer awareness decoration',
-                     'childhood cancer awareness item',
-                     'childhood cancer awareness month',
-                     'childhood cancer awareness ribbon',
-                     'childhood cancer awareness sticker',
-                     'childhood cancer ribbon',
-                     'go gold childhood cancer',
-                     'gold cancer ribbon',
-                     'gold ribbon child cancer awareness',
-                     'gold ribbon sticker',
-                     'gold ribbon sticker childhood cancer',
-                     'gold ribbon childhood cancer',
-                     'pediatric cancer awareness',
-                     'ribbon sticker',
-                     'yellow ribbon sticker',
-                     'anti drug sticker',
-                     'drug awareness item',
-                     'drug awareness ribbon',
-                     'drug free red ribbon week',
-                     'drug sticker',
-                     'drug sticker laptop',
-                     'drug awarness',
-                     'just say no drug sticker',
-                     'no drug sticker',
-                     'red drug awareness',
-                     'red ribbon drug awareness',
-                     'red ribbon week sticker roll',
-                     'red ribbon week swag',
-                     'say no drug',
-                     'say no drug sticker',
-                     'sticker drug',
-                     'apparel pin breast cancer awareness',
-                     'breast cancer awareness brooch',
-                     'breast cancer awareness pink ribbon pin',
-                     'breast cancer awareness pin small',
-                     'breast cancer awareness survivor sash',
-                     'breast cancer badge pin',
-                     'breast cancer brooch',
-                     'breast cancer button',
-                     'breast cancer pin',
-                     'breast cancer pink ribbon pin',
-                     'breast cancer pin man',
-                     'breast cancer ribbon pin',
-                     'breast cancer survivor pin',
-                     'cancer pink pin',
-                     'cancer ribbon pink',
-                     'pink breast cancer accessorie woman',
-                     'pink breast cancer ribbon pin',
-                     'pink pin breast cancer',
-                     'pink ribbon breast cancer awareness lapel pin',
-                     'pink ribbon breast cancer pin',
-                     'pink ribbon pin',
-                     'pink ribbon pin breast cancer']
-phrases_negatives = []
-auto_neg_data = ['Gold Ribbon Stickers | Auto Negatives Close ',
-                 'auto',
-                 'FBA-ST-02-11, BAL-1-BC',
-                 '0.792']
-cmp_ending = 'sp'
-target_asin = 'B010R6FDMG'
-title = ['Gold Ribbon Stickers']
+
+def get_data_frame(key, spreadsheet_id, range_name):
+    discovery_url = ('https://sheets.googleapis.com/$discovery/rest?'
+                     'version=v4')
+    service = discovery.build(
+        'sheets',
+        'v4',
+        http=httplib2.Http(),
+        discoveryServiceUrl=discovery_url,
+        developerKey=key)
+
+    result = service.spreadsheets().values().get(
+        spreadsheetId=spreadsheet_id, range=range_name).execute()
+    values = result.get('values', [])
+
+    return pd.DataFrame(values)
 
 
-total_auto_neg_len = 4 + len(auto_neg_items) + \
-    len(keyword_negatives) + len(phrases_negatives) + 4
+keywords = []
+seed = []
+launched = []
 
-none = [None] * total_auto_neg_len
+gc = gspread.service_account(filename='apikey.json')
+table = gc.open_by_key("12UfK4uiYWEaVas5d2EE4S13yTEeFDV0Z5yeJA2Q02lI")
+range_name = table.sheet1.title
+df_total = get_data_frame('AIzaSyApx1yQj6lKf_szFGXrw9euKcrFPqxR5VY',
+                          "12UfK4uiYWEaVas5d2EE4S13yTEeFDV0Z5yeJA2Q02lI", range_name)
+for k in df_total.T.values:
+    if k[0].lower() == 'launched':
+        launched = [x for x in k[1:] if x is not None and x != '']
+    elif k[0].lower() == 'keywords':
+        keywords = [x for x in k[1:]
+                    if x is not None and x != '' and x not in launched]
+    elif k[0].lower() == 'seed':
+        seed = [x for x in k[1:] if x is not None and x !=
+                '' and x not in launched]
+keywords_filtered = list((set(keywords) - set(seed)))
+# print(f"keywords_filtered: {len(keywords_filtered)}")
+                
 
-data = [
-    ['Sponsored Products'] * total_auto_neg_len,  # 1 - 70
-    ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] + ['Product Ad'] * len(auto_neg_items) +
-    ['Product Targeting'] * 4 + ['Campaign Negative Keyword'] * \
-    (len(keyword_negatives) + len(phrases_negatives)),  # 2 - 70
-    ['Create'] * total_auto_neg_len,  # 3 -70
-    [title[0] + target_asin + \
-     f' -{cmp_ending}'] * total_auto_neg_len,  # 4 -70
-    [None] * 3 + [auto_neg_data[1]] * 2 + [None] * 4 + \
-    [auto_neg_data[1]] * (total_auto_neg_len - 9),  # 5 - 70
-    none,  # 6
-    none,  # 7
-    none,  # 8
-    none,  # 9
-    [auto_neg_data[0] + f' -{cmp_ending}'] + \
-    [None] * (total_auto_neg_len - 1),  # 10 - 70
-    [None] * 3 + [auto_neg_data[1]] + [None] * \
-    (total_auto_neg_len - 4),  # 11 - 70
-    none,  # 12
-    [None] * 3 + [auto_neg_data[1]] * (1 + len(auto_neg_items) + 4) + [None] * (
-        total_auto_neg_len - 8 - len(auto_neg_items)),  # 13 - 70
-    none,  # 14
-    [str(date.today()).replace('-', '')] + [None] * \
-    (total_auto_neg_len - 1),  # 15 - 70
-    none,  # 16
-    ['AUTO'] + [None] * (total_auto_neg_len - 1),  # 17 -70
-    ['enabled'] + [None] * 2 + ['enabled'] * 2 + [1, 1, 1, 1] + ['enabled'] * \
-    (total_auto_neg_len - 9),  # 18 --------------------------------------------72 -------70
-    ['enabled'] * total_auto_neg_len,  # 19 - 70
-    [None] * 3 + ['enabled'] * (1 + len(auto_neg_items)) + [None] * (
-        total_auto_neg_len - 4 - len(auto_neg_items)),  # 20 - 70
-    [300] + [None] * (total_auto_neg_len - 1),  # 21 - 70
-    [None] * 4 + auto_neg_items + [None] * \
-    (total_auto_neg_len - len(auto_neg_items) - 4),  # 22 - 70
-    none,  # 23
-    [None] * 4 + ['Eligible'] * len(auto_neg_items) + [None] * (
-        total_auto_neg_len - 4 - len(auto_neg_items)),  # 24 - 70
-    none,  # 25
-    [None] * 3 + [auto_neg_data[-1]] + [None] * \
-    (total_auto_neg_len - 4),  # 26  -70
-    none,  # 27
-    [None] * (4 + len(auto_neg_items)) + [1, 1, 1, 1] + [None] * \
-    (total_auto_neg_len - 8 - len(auto_neg_items)),  # 28 - 70
-    [None] * (4 + len(auto_neg_items)) + list(keyword_negatives) + \
-    list(phrases_negatives),  # 29 - 70
-    [None] * (4 + len(auto_neg_items)) + ['negativeExact'] * len(keyword_negatives) + \
-    ['negativePhrase'] * len(phrases_negatives),  # 30 - 70
-    ['Dynamic bids - down only'] * 3 + [None] * \
-    (total_auto_neg_len - 3),  # 31 - 70
-    [None, 'placementProductPage', 'placementTop'] + \
-    [None] * (total_auto_neg_len - 3),  # 32 - 70
-    [None, 0, 0] + [None] * (total_auto_neg_len - 3),  # 33 - 70
-    [None] * (4 + len(auto_neg_items)) + ['close-match', 'loose-match', 'substitutes',
-                                          'complements'] + [None] * (total_auto_neg_len - 8 - len(auto_neg_items)),  # 34
-    none, none, none, none, none, none, none, none, none, none, none, none
-]
+# Залишаємо тільки унікальні значення у кожному списку
+A_unique = list(set(keywords_filtered))
+
+print(f"len: {len(A_unique)}")
 
 
-def calculate_array_size(data):
-    # Обчислення довжини кожного вкладеного списку
-    lengths = [len(row) for row in data]
+# def count_sentences_with_word(word, sentence_list):
+#     word_lower = word.lower()
+#     count = sum(1 for sentence in sentence_list if word_lower in sentence.lower())
+#     words = [sentence for sentence in sentence_list if word_lower in sentence.lower()]
+#     return count, words
 
-    # Кількість рядків - це кількість вкладених списків
-    num_rows = len(data)
+# word_to_search = "gift"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
 
-    # Кількість стовпців - максимальна довжина серед вкладених списків
-    num_cols = max(lengths) if lengths else 0
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
 
-    return num_rows, num_cols
+# word_to_search = "halloween"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
 
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
 
-# Виклик функції
-num_rows, num_cols = calculate_array_size(data)
+# word_to_search = "goth"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
 
-print(len(COLUMNS))
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
 
-print(f"Розмір масиву: {num_rows} x {num_cols}")
+# word_to_search = "coffin"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
+
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
+
+# word_to_search = "witch"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
+
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
+
+# word_to_search = "spooky"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
+
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")
+
+# word_to_search = "horror"  
+# count, words = count_sentences_with_word(word_to_search, A_unique)
+
+# print(f"Кількість речень, які містять слово '{word_to_search}': {count}; {words}")

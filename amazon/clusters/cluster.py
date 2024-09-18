@@ -157,7 +157,7 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         new_phrase = phrase + \
             (f" | {prefix}" if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
-        list_total.append([list_name, new_phrase, keyword if keyword else list_name.lower(),
+        list_total.append([list_name, new_phrase, prefix if prefix else list_name.lower(),
                           values_dict['scu'], values_dict['bid']] + current_block)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
         list_total.append([' ', ' ', ' ', 'Adjustment ToS',
@@ -169,7 +169,7 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
         new_phrase = phrase + \
             (f" | {prefix} " if prefix else "") + \
             (f"{keyword}" if keyword else "") + iteration_suffix
-        list_total.append([list_name, new_phrase, keyword if keyword else list_name.lower(),
+        list_total.append([list_name, new_phrase, prefix if prefix else list_name.lower(),
                           values_dict['scu'], values_dict['bid']] + category_list)
         list_total.append([' ', ' ', ' ', 'Custom Bid'])
         list_total.append([' ', ' ', ' ', 'Adjustment ToS',
@@ -266,7 +266,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 for phrases in clear_seed:
                     new_pharases.update(phrases.split())
 
-                if len(words) < 1:
+                IS_STH_IN_WORDS = [word for word in words[start_index:finall_index+1] if word != '' and word is not None]
+
+                if len(IS_STH_IN_WORDS) < 1:
                     words = process_phrases(new_pharases)
                 else:
                     words = process_phrases(words)
@@ -421,16 +423,16 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         keywords_filtered = list((set(keywords) - set(seed)))
         keywords_filtered = list(
             (set(keywords_filtered) - set(str_low)) - set(broad))
-        print(f"keywords_filtered: {len(keywords_filtered)}")
+        # print(f"keywords_filtered: {len(keywords_filtered)}")
         keywords_tuples = [
             tuple(x.split(' '))
             for x in keywords_filtered
             if len(x) <= 50
         ]
-        print(f"other): {other}")
+        # print(f"other): {other}")
 
-        print(f"keywords_tuples: {len(keywords_tuples)}")
-        print(f"len(other): {len(other)}")
+        # print(f"keywords_tuples: {len(keywords_tuples)}")
+        # print(f"len(other): {len(other)}")
 
         keywords_total_dict = dict()
 
@@ -442,19 +444,19 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                     keywords_total_dict[p] = r
 
         rest = []
-        print(f"other keywords_total_dict: {keywords_total_dict}; \n len(keywords_total_dict): {len(keywords_total_dict)}")
+        # print(f"other keywords_total_dict: {keywords_total_dict}; \n len(keywords_total_dict): {len(keywords_total_dict)}")
 
         for p in keywords_tuples:
             if p not in keywords_total_dict.keys():
                 rest.append(' '.join(p))
 
-        print(f"other rest: {rest}\n other len(rest: {len(rest)}")
+        # print(f"other rest: {rest}\n other len(rest: {len(rest)}")
 
         total_result = defaultdict(list)
         for k, v in keywords_total_dict.items():
             total_result[v].append(' '.join(k))
 
-        print(f"total_result: {total_result} total_result len: {len(total_result)}")
+        # print(f"total_result: {total_result} total_result len: {len(total_result)}")
 
         # SEED, Exact STR Top, Exact STR Low, Variation
         if len(seed) >= 1:
@@ -534,7 +536,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         for p in category:
             if len(p[1:]) >= 1:
                 split_and_append('Category', phrase, "",
-                                 values['category'], p[1:], campaign_count, 'category')
+                                 values['category'], p[1:], campaign_count, 'Category')
 
         # Auto Negatives
         for type_ in ['Close', 'Loose', 'Subs', 'Compl']:
