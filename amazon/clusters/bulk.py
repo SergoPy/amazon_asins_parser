@@ -1180,9 +1180,9 @@ def extract_text(input_string):
 def to_snake_case(name):
     new_name = name.lower()
     new_name = re.sub(r'\s+', '_', new_name)
-    print(f"new_name 1: {new_name}")
+    # print(f"new_name 1: {new_name}")
     new_name = new_name.replace('-', '|')
-    print(f"new_name 2: {new_name}")
+    # print(f"new_name 2: {new_name}")
     new_name = new_name.strip('_')
     # print(f"name before: {name} <-> name after: {new_name}")
     return new_name
