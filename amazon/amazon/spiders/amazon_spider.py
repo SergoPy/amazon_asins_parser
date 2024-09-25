@@ -60,9 +60,8 @@ class AmazonSpider(scrapy.Spider):
         return f'{self.base_url}{split_url[0]}page={search_number}'
 
     @staticmethod
-    def get_googlesheets_formula_photo(cell: str) -> str:
-        return f'=ArrayFormula(image("https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN="&{cell}&' \
-               f'"&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150"))'
+    def get_googlesheets_formula_photo(link: str) -> str:
+        return f'=IMAGE("{link}")'
 
     @staticmethod
     def get_table_id(table_link) -> str:
@@ -105,25 +104,26 @@ class AmazonSpider(scrapy.Spider):
                     self.googlesheets_api.update_cell(
                         row, col, new_header)
                     # print(f"Updated {category} header to: {new_header}")
-
             data[category.lower()] = []
 
         return cords, data
 
-    def save_product_data(self, asin: str, price: str, reviews: str, rating: str, title: str) -> None:
-        category, asin, value = self.get_product_data(
+    def save_product_data(self, asin: str, price: str, reviews: str, rating: str, title: str, photo_url: str) -> None:
+        category, asin, oriented_value, value_1, value_2, value_3 = self.get_product_data(
             asin, price, reviews, rating, title)
         row, col = self.cords[category]
         # print(
         #     f"save_product_data category: {category}, row: {row}, col: {col}")
-        photo = self.get_googlesheets_formula_photo(indexes_to_a1(row, col))
-        self.write_data[category].append([asin, photo, value])
+        photo = self.get_googlesheets_formula_photo(photo_url)
+        self.write_data[category].append(
+            [asin, photo, oriented_value, value_1, value_2, value_3])
         self.cords[category][0] += 1
 
     def write_product_data(self) -> None:
+        print("in write_product_data")
+
         sp_def_key = self.SP_DEF_COLUMN.lower()
         sp_adv_key = self.SP_ADV_COLUMN.lower()
-
 
         sp_variations_asins_to_write = []
         for asin in set(self.sp_variations_asins):
@@ -138,8 +138,9 @@ class AmazonSpider(scrapy.Spider):
         self.write_data[sp_def_key] = sp_variations_asins_to_write
         self.write_data[sp_adv_key] = [[asin]
                                        for asin in set(self.adv_variations_asins)]
+        # print(f"self.write_data: {self.write_data}")
         for category in self.cords:
-
+            # print(f"in for: {category}")
             if self.write_data[category]:
                 current_row = self.cords[category][0]
                 current_col = self.cords[category][1]
@@ -153,9 +154,9 @@ class AmazonSpider(scrapy.Spider):
                                f'{indexes_to_a1(current_row + num_of_record, current_col)}'
                 else:
                     diapason = f'{indexes_to_a1(current_row - num_of_record, current_col)}:' \
-                               f'{indexes_to_a1(current_row, current_col + 2)}'
+                               f'{indexes_to_a1(current_row, current_col + 5)}'
                 # print(
-                #     f"self.cords: {self.cords},\n category: {category};\n diapason: {diapason};\n elf.write_data: {self.write_data};\n")
+                #     f"self.cords: {self.cords[category]},\n category: {category};\n diapason: {diapason};\n self.write_data: {self.write_data[category]};\n")
                 self.googlesheets_api.update(
                     diapason, self.write_data[category])
 
@@ -171,21 +172,32 @@ class AmazonSpider(scrapy.Spider):
         return round(float(string), 2)
 
     def get_product_data(self, asin: str, price: str, reviews: str, rating: str, title: str) -> tuple:
+        # print(
+        #     f"asin: {asin}, price: {price}, reviews: {reviews}, rating: {rating}")
         if price:
             price_value = self.get_float_price(price)
         else:
-            price_value = None
+            price_value = 'Not mentioned'
 
+        if rating and rating != 'FREE' and "$" not in rating:
+            rating = rating
+        else:
+            rating = '0'
+
+        if reviews and reviews != 'Or' and ',' in reviews and reviews != 'Only':
+            reviews_count = int(reviews.replace(',', '')) if reviews else None
+        else:
+            reviews_count = '0'
         try:
             if self.keywords and title and self.title_contains_keywords(title):
-                return 'ra', asin, title
+                return 'ra', asin, title, reviews_count, self._float(rating), price_value
             if 'price' in self.creterians:
                 from_value, to_value = self.creterians['price']
-                if (from_value is None or (price_value and self._float(price_value) >= self._float(from_value))) and \
-                        (to_value is None or (price_value and self._float(price_value) <= self._float(to_value))):
+                if (from_value is None or (price_value and price_value != 'Not mentioned' and price_value >= self._float(from_value))) and \
+                        (to_value is None or (price_value and price_value != 'Not mentioned' and price_value <= self._float(to_value))):
                     # print(
                     #     f"from_value: {from_value}, to_value: {to_value}, price_value: {price_value}")
-                    return 'lpa', asin, price_value
+                    return 'lpa', asin, price_value, title, reviews_count, self._float(rating)
 
             if 'reviews' in self.creterians:
                 from_value, to_value = self.creterians['reviews']
@@ -196,7 +208,7 @@ class AmazonSpider(scrapy.Spider):
                         (to_value is None or (reviews_count and reviews_count <= self._float(to_value))):
                     # print(
                     #     f"from_value: {from_value}, to_value: {to_value}, reviews_count: {reviews_count}")
-                    return 'tca', asin, reviews_count
+                    return 'tca', asin, reviews_count, title, self._float(rating), price_value
 
             if 'rating' in self.creterians:
                 from_value, to_value = self.creterians['rating']
@@ -204,12 +216,12 @@ class AmazonSpider(scrapy.Spider):
                         (to_value is None or (rating and self._float(rating) <= self._float(to_value))):
                     # print(
                     #     f"from_value: {from_value}, to_value: {to_value}, rating: {rating}")
-                    return 'lsa', asin, self._float(rating)
+                    return 'lsa', asin, self._float(rating), title, reviews_count, price_value
 
         except ValueError:
             pass
 
-        return 'ca', asin, title
+        return 'ca', asin, title, reviews_count, self._float(rating), price_value
 
     def get_product_url(self, asin: str) -> str:
         return f'{self.base_url}{self.AMAZON_PRODUCT_PATH}{asin}'
@@ -269,8 +281,9 @@ class AmazonSpider(scrapy.Spider):
 
     def scrape_item(self, item, search_tag, retry_count=0):
         asin = item.css('::attr(data-asin)').get()
-        # print(f"item_from_scrape_item: {item}")
         if asin and asin not in self.asins_cache and len(asin) >= 10:
+            photo_url = item.css(
+                'div.sg-col-inner').css('div.s-image-square-aspect').css('img::attr(src)').get()
             item_data = item.css('div.sg-col-inner').css(f'div.{search_tag}')
             title = item_data.css('h2.a-size-mini').css('span::text').get()
             price = item_data.css(
@@ -292,9 +305,12 @@ class AmazonSpider(scrapy.Spider):
             else:
                 rating, reviews = None, None
             if not retry_count and not item_data:
+                # print(f"asin: {asin} not in item_data: item_data: {item_data}; retry_count: {retry_count}, title: {title}; price: {price}, rating: {rating}, reviews: {reviews}, item: {item}")
                 self.scrape_item(item, 'a-spacing-small', retry_count=1)
             else:
-                self.save_product_data(asin, price, reviews, rating, title)
+                # print(f"asin: {asin} in item_data: item_data: {item_data}; retry_count: {retry_count}, title: {title}; price: {price}, rating: {rating}, reviews: {reviews}")
+                self.save_product_data(
+                    asin, price, reviews, rating, title, photo_url)
                 self.asins_cache.append(asin)
 
     def scrape_page(self, item_list):
@@ -302,6 +318,7 @@ class AmazonSpider(scrapy.Spider):
             self.scrape_item(item, 'puis-padding-left-small', 0)
 
     def scrape(self, response):
+
         main_items = response.css('div.s-main-slot').css('div.s-asin')
 
         advertising_items = []
@@ -316,4 +333,5 @@ class AmazonSpider(scrapy.Spider):
         self.scrape_page(advertising_items + main_items)
         self.request_count -= 1
         if self.request_count == 0:
+            print("in scrape")
             self.write_product_data()

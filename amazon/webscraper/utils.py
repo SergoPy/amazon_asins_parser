@@ -18,6 +18,8 @@ from .constants import COUNTRY_URLS, SEARCH_PATH, COUNTRY_COOKIES
 from .models import AsinsMonitoring, AdvertisingMonitoring, Campaign
 from .settings import MEDIA_ROOT
 
+DEFAULT_CAMPAIGN_TYPES = {'seed', 'str low', 'exact other', 'variation', 'exact top', 'exact', 'exact low',
+                             'broad', 'brands', 'auto', 'category'}
 
 def get_client_ip(request) -> str:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -62,6 +64,7 @@ def _get_url(keyword: str, country: str) -> str:
 
 
 def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple:
+    
     negative_words = ' '.join(
         [keyword for keyword in negative_words.split('\r\n')])
     links_to_serp = ' '.join([_get_url(keyword, country)
@@ -79,8 +82,10 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
         # print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
         ) if key.startswith('campaign_') and value == 'on']
+        campaign_2_data = [key.replace('inner_camp_', '') for key, value in data.items(
+        ) if key.startswith('inner_camp_') and value == 'on']
         cmp_ending = data.get("cmp_ending", "SP")
-        bulk_file = google_sheets_bulk(table, campaign_data, cmp_ending)
+        bulk_file = google_sheets_bulk(table, campaign_data, cmp_ending, campaign_2_data)
         filenames.append(bulk_file)
     if sponsored_status:
         sponsored_file = create_sponsored(table, data)
@@ -325,9 +330,6 @@ def extract_text(input_string):
 
 
 def get_campaigns() -> list:
-    default_company_types = {'seed', 'str low', 'exact_other', 'variation', 'exact top', 'exact', 'exact low',
-                             'broad', 'brands', 'tpa bid', 'tca bid', 'lsa bid', 'lpa bid', 'ca bid', 'ra bid ', 'auto',
-                             'auto_negatives', 'category'}
     current_time = timezone.now()
     campaigns = Campaign.objects.all()
     if campaigns.exists():
@@ -339,9 +341,9 @@ def get_campaigns() -> list:
             result = {to_snake_case(campaign.name): campaign.name for campaign in campaigns}
         else:
             result = {to_snake_case(
-                default_campaign): default_campaign for default_campaign in default_company_types}
+                default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
     else:
         result = {to_snake_case(
-            default_campaign): default_campaign for default_campaign in default_company_types}
+            default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
 
     return result

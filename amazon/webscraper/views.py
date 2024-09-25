@@ -10,6 +10,9 @@ from .utils import create_tables_manager, asins_scraper_manager, get_campaigns, 
 from .validators import validate_asins_monitoring_request, term_report_validator_request, \
     campaign_upload_validator, validate_advertising_monitoring_requests
 
+DEFAULT_CAMPAIGN_TYPES = {'seed': 'Seed', 'str_low': 'Str Low', 'exact_other': 'Exact Other', 'variation': 'Variation', 'exact_top': 'Exact Top', 'exact': 'Exact', 
+                          'exact_low': 'Ecact Low', 'broad': 'Broad', 'brands': 'Brands', 'auto': 'Auto', 'category': 'Category'}
+
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
@@ -51,7 +54,8 @@ def scrape_view(request):
         context = {
             'MEDIA_URL': settings.MEDIA_URL,
             'MEDIA_ROOT': settings.MEDIA_ROOT,
-            'campaign_names': campaign_name
+            'campaign_names': campaign_name,
+            'def_campaign': DEFAULT_CAMPAIGN_TYPES
         }
     else:
         data = request.POST
@@ -66,7 +70,8 @@ def scrape_view(request):
             'MEDIA_URL': settings.MEDIA_URL,
             'MEDIA_ROOT': settings.MEDIA_ROOT,
             'filenames': filenames,
-            'campaign_names': campaign_name
+            'campaign_names': campaign_name,
+            'def_campaign': DEFAULT_CAMPAIGN_TYPES
         }
     return render(request, 'scraper_interface.html', context=context)
 

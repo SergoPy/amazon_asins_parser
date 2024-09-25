@@ -269,14 +269,13 @@ def make_broad_all(broad_total_data, keyword_negatives, phrases_negatives, targe
         (len(keyword_negatives) + len(phrases_negatives)),
         ['Create'] * total_broad_len,
         [title[0] + target_asin + f' {cmp_ending}'] * total_broad_len,
-        [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (
-                len(keyword_negatives) + len(phrases_negatives)),
+        [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (len(keyword_negatives) + len(phrases_negatives)),#this
         none, none, none, none,
-        [title[0] + target_asin + f' {cmp_ending}'] +
-        [None] * (total_broad_len - 1),
-        [None] * 3 + [broad_data[1]] + [None] * (total_broad_len - 4), none,
-        [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (
-                len(keyword_negatives) + len(phrases_negatives)), none,
+        [title[0] + target_asin + f' {cmp_ending}'] + [None] * (total_broad_len - 1),
+        [None] * 3 + [broad_data[1]] + [None] * (total_broad_len - 4), 
+        none,
+        [None] * 3 + [broad_data[1]] * (1 + len(broad_items) + len(broad_words)) + [None] * (len(keyword_negatives) + len(phrases_negatives)), #this
+        none,
         [str(date.today()).replace('-', '')] +
         [None] * (total_broad_len - 1), none,
         ['MANUAL'] + [None] * (total_broad_len - 1),
@@ -295,7 +294,7 @@ def make_broad_all(broad_total_data, keyword_negatives, phrases_negatives, targe
                 len(keyword_negatives) + len(phrases_negatives)),
         [None] * (4 + len(broad_items)) + list(broad_words) +                          
         list(keyword_negatives) + list(phrases_negatives),
-        [None] * (4 + len(broad_items)) + [broad_data[1]] * len(broad_words) + ['negativeExact'] * len(
+        [None] * (4 + len(broad_items)) + ['Broad'] * len(broad_words) + ['negativeExact'] * len(
             keyword_negatives) +
         ['negativePhrase'] * len(phrases_negatives),
         ['Dynamic bids - down only'] * 3 + [None] * (total_broad_len - 3),
@@ -333,21 +332,17 @@ def make_auto_neg_all(auto_neg_total_data, keyword_negatives, phrases_negatives,
         ['Product Targeting'] * 4 + ['Campaign Negative Keyword'] * \
         (len(keyword_negatives) + len(phrases_negatives)),  # 2 - 70
         ['Create'] * total_auto_neg_len,  # 3 -70
-        [title[0] + target_asin + \
-            f' {cmp_ending}'] * total_auto_neg_len,  # 4 -70
-        [None] * 3 + [auto_neg_data[1]] * 2 + [None] * 4 + \
-        [auto_neg_data[1]] * (total_auto_neg_len - 9),  # 5 - 70
+        [title[0] + target_asin + f' {cmp_ending}'] * total_auto_neg_len,  # 4 -70
+        [None] * 3 + [auto_neg_data[1]] * (total_auto_neg_len - 3),  # 5 - 70  #this
         none,  # 6
         none,  # 7
         none,  # 8
         none,  # 9
-        [auto_neg_data[0] + f' {cmp_ending}'] + \
-        [None] * (total_auto_neg_len - 1),  # 10 - 70
+        [title[0] + target_asin + f' {cmp_ending}'] + [None] * (total_auto_neg_len - 1),  # 10 - 70
         [None] * 3 + [auto_neg_data[1]] + [None] * \
         (total_auto_neg_len - 4),  # 11 - 70
         none,  # 12
-        [None] * 3 + [auto_neg_data[1]] * (1 + len(auto_neg_items) + 4) + [None] * (
-            total_auto_neg_len - 8 - len(auto_neg_items)),  # 13 - 70
+        [None] * 3 + [auto_neg_data[1]] * (1 + len(auto_neg_items) + 4) + [None] * (total_auto_neg_len - 8 - len(auto_neg_items)),  # 13 - 70 #this
         none,  # 14
         [str(date.today()).replace('-', '')] + [None] * \
         (total_auto_neg_len - 1),  # 15 - 70
@@ -402,13 +397,12 @@ def make_auto_all(auto_total_data, target_asin, pte):
         ['Product Ad'] * len(auto_items) + ['Product Targeting'] * 4,
         ['Create'] * total_auto_len,
         [title[0] + target_asin + f' {cmp_ending}'] * total_auto_len,
-        [None] * 3 + [auto_data[1]] * (total_auto_len - 7) + [None] * 4,
+        [None] * 3 + [auto_data[1]] * (total_auto_len - 3),  #this
         none, none, none, none,
-        [title[0] + target_asin + f' {cmp_ending}'] +
-        [None] * (total_auto_len - 1),
+        [title[0] + target_asin + f' {cmp_ending}'] + [None] * (total_auto_len - 1),
         [None] * 3 + [auto_data[1]] + [None] * (len(auto_items) + 4),
         none,
-        [None] * 3 + [auto_data[1]] * (1 + len(auto_items)) + [None] * 4,
+        [None] * 3 + [auto_data[1]] * (total_auto_len - 3), #this
         none,
         [str(date.today()).replace('-', '')] + [None] * (total_auto_len - 1),
         none,
@@ -717,7 +711,7 @@ def sort_pats(pats_array):
     return [np.array(pat, dtype=object) for pat in result_pats if len(pat)]
 
 
-def google_sheets_bulk(table_link, campaign_data, cmp_end):
+def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
     global cmp_ending
     cmp_ending = cmp_end
     if len(sys.argv) < 2:
@@ -812,19 +806,21 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             # print(f"not k in k info: {k}")
             continue
 
-        if k[0] == 'Advertised ASIN':
+        if k[0] == 'Advertised ASIN':                                               
             advertised_asins_list.append(k[1:])
         if k[1] and k[1] != ' ':
             filter_campaign_name = extract_text(k[1])
             filter_campaign_name_snake_case = to_snake_case(
                 filter_campaign_name)
-            # print(f"we in cheker: {filter_campaign_name_snake_case}")
-            # print(f"filter_campaign_name: {filter_campaign_name}")
+            # print(f"we in cheker: {filter_campaign_name_snake_case}")                                      
+            # print(f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
             # print(f"campaign_data: {campaign_data}")
+            # print(f"campaign_2_data: {campaign_2_data}")
 
             if filter_campaign_name_snake_case not in campaign_data:
-                print(f"LOSE IT: {filter_campaign_name_snake_case}")
-                continue
+                if k[0].lower() not in campaign_2_data:
+                    print(f"LOSE IT: {filter_campaign_name_snake_case}; k[0]: {k[0]}")
+                    continue
         if k[0] == 'SEED':
             seed_total_data.append(k[1:])
             tos.append(df_total.values.T[index+2][4])
@@ -857,7 +853,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
                 auto_subs_neg_total_data.append(k[1:])
             else:
                 auto_compl_neg_total_data.append(k[1:])
-        if k[0] == 'Auto':
+        if k[0] == 'Auto' and 'Negative' not in k[1]:
             if 'Close' in k[1]:
                 auto_close_total_data.append(k[1:])
             elif 'Loose' in k[1]:
@@ -881,6 +877,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
         
     print("Finished get info")
     table_create_params = []
+
 # d---------------------------------------------------------------------------------------------------------------
     # data: ["Advertised ASIN", "galon clear jojoba oil ", "Brand Defense", "bid(seed)"]
 
@@ -889,7 +886,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             if len(brand_defense_list_item) > 4 and any(brand_defense_list_item[4]):
                 data = [brand_defense_list_item[2], brand_defense_list_item[0].split(
                     "(")[0], "Brand Defense", brand_defense_list_item[3]]
-                brand_defense_all = make_brand_def_all(
+                brand_defense_all = make_brand_def_all(                                                          
                     brand_defense_list_item[4:], data)
                 table_create_params.append(brand_defense_all)
 
@@ -909,9 +906,9 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
     # if len(seed_total_data) > 0:
     #     for seed_total_data_item in seed_total_data:
     #         if any(seed_total_data_item[4:]) and seed_total_data_item[2]:
-    #             seed_all = make_seed_all(seed_total_data_item, target_asin)
+    #             seed_all = make_seed_all(seed_total_data_item, tar    get_asin)
     #             table_create_params.append(seed_all)
-    if len(seed_total_data) > 0 and len(tos) > 0:
+    if len(seed_total_data) > 0 and len(tos) > 0:                                            
         for seed_total_data_item, tos_item, target_asin in zip(seed_total_data, tos, advertised_asins_list):
             if tos_item == '' or tos_item == ' ':
                 tos_item = 0
@@ -926,15 +923,15 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
             advertised_asins_list_prime = [advertised_asins_list[0]] * len(broad_total_data)
         else:
             advertised_asins_list_prime = advertised_asins_list
-
+        # print(f"keyword_negatives_list: {keyword_negatives_list}")
+        # print(f"len(keyword_negatives_list): {len(keyword_negatives_list)}; len(broad_total_data): {len(broad_total_data)}")
         if len(keyword_negatives_list) < len(broad_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(broad_total_data)
         else:
             keyword_negatives_list_prime = keyword_negatives_list
-
+        # print(f"keyword_negatives_list_prime: {keyword_negatives_list_prime}")
         for broad_total_data_item, keyword_negatives, target_asin in zip(broad_total_data, keyword_negatives_list_prime, advertised_asins_list_prime):
             if any(broad_total_data_item[4:]):
-                broad_total_data_item[1] = 'Broad'
                 broad_all = make_broad_all(
                     broad_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(broad_all)
@@ -951,7 +948,6 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
         for words_total_data_item, keyword_negatives, target_asin in zip(words_total_data, keyword_negatives_list_prime, advertised_asins_list):
             # print(f"keyword_negatives: {keyword_negatives}")
             if any(words_total_data_item[4:]):
-                print(f"words_total_data_item: {words_total_data_item}")
                 words_all = make_broad_all(
                     words_total_data_item, keyword_negatives, phrases_negatives, target_asin[4])
                 table_create_params.append(words_all)
@@ -974,7 +970,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end):
                                             'enabled', 'paused', 'paused', 'paused'])
                 table_create_params.append(auto_close_all)
 
-    if len(auto_loose_neg_total_data) > 0:
+    if len(auto_loose_neg_total_data) > 0:                                                                                                 
         if len(keyword_negatives_list) < len(auto_loose_neg_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(auto_loose_neg_total_data)
         else:

@@ -69,6 +69,12 @@ def remove_duplicates(spreadsheet_id, range_name):
                           for keyword in k[1:] if keyword]
             keywords.extend([tuple(['keyword:'] + x.split(' '))
                             for x in k[1:] if x is not None and x != ''])
+    for k in data.T.values:
+        if k[0].lower() == 'launched':
+            k = [k[0]] + [normalize_text(keyword)
+                          for keyword in k[1:] if keyword]
+            keywords.extend([tuple(['launched:'] + x.split(' '))
+                            for x in k[1:] if x is not None and x != ''])
 
     prep_df = get_rule_df('Prepositions')
     preps = list(prep_df[0])
@@ -188,7 +194,7 @@ def remove_duplicates(spreadsheet_id, range_name):
     # print(f"keywords: {keywords}")
     # print(f"seed: {seed}")
     # print(f"str_low: {str_low}")
-    # print(f"launched: {launched}")
+    print(f"launched: {launched}")
     if len(keywords) > 1:
         update_column(worksheet, 'KEYWORDS', keywords)
     if len(seed) > 1:

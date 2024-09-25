@@ -204,9 +204,6 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
     gc = gspread.service_account(filename='clusters/apikey.json')
     table = gc.open_by_key(spreadsheet_id)
     range_name = table.sheet1.title
-    # print(f"table: {table}")
-    # print(f"range_name: {range_name}")
-    # remove_duplicates(spreadsheet_id, range_name)
     df_total = get_data_frame(API_KEY, spreadsheet_id, range_name)
     seed = []
     words = []
@@ -340,6 +337,8 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                     ], 1000000, f'Auto {type_}')
 
     else:
+        remove_duplicates(spreadsheet_id, range_name)
+        df_total = get_data_frame(API_KEY, spreadsheet_id, range_name)
         phrase = range_name
         campaign_count = max(1, int(values['mkpc_key']))
 
@@ -399,12 +398,17 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 # print(f" elif len(k[0]) != 0: {k}" )
                 oth = [[q.strip() for q in x.split(',')]
                        for x in k[1:] if x is not None and x != '' and x not in launched]
-                # print(f"oth: {oth}")
                 oth_new = []
                 for t in oth:
                     qq = [x for x in t if x != '']
                     other.append(tuple([k[0], tuple(qq)]))
+        
+        # print(f"other: {other}")
 
+        
+        other = list((set(other) - set(launched)))
+
+        # print(f"other: {other}")
 
         if len(broad) < 1:
             broad.extend(seed)
@@ -421,8 +425,10 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
 
 
         keywords_filtered = list((set(keywords) - set(seed)))
+        # print(f"keywords_filtered: {len(keywords_filtered)}")
+
         keywords_filtered = list(
-            (set(keywords_filtered) - set(str_low)) - set(broad))
+            (set(keywords_filtered) - set(str_low)) - set(broad) - set(launched))
         # print(f"keywords_filtered: {len(keywords_filtered)}")
         keywords_tuples = [
             tuple(x.split(' '))
