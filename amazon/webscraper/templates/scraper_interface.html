@@ -28,7 +28,15 @@
                 font-size: 3.5rem;
             }
         }
-
+        .link-effect {
+            text-decoration: none;
+            transition: all 0.3s ease; 
+        }
+        
+        .link-effect:hover {
+            text-decoration: underline; 
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); 
+        }
 
     </style>
     <style>
@@ -79,6 +87,12 @@
                             <a class="nav-link btn btn-outline-primary" href="/monitoring">Term report</a>
                         </li>
                     </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger" href="/v2/logout" id="exitButton">Exit</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -98,6 +112,18 @@
                     </h4>
                     <div class="row g-3">
                         <div class="col-12">
+                            <hr class="my-4">
+                            <h5 class=" mb-3 text-decoration-none text-body link-effect bg-danger text-center">
+                                <a href="https://docs.google.com/spreadsheets/d/13hS5Yj2kzgtYOIQR5vP4za_Phk0e27QxDaUxi2on4LA/template/preview"class="text-decoration-none text-body link-effect">
+                                    Single Product Template
+                                </a>
+                            </h5>
+                            <h5 class=" mb-3 text-decoration-none text-body link-effect bg-danger text-center">
+                                <a href="https://docs.google.com/spreadsheets/d/1OHtURbEdO32E2_z1FCNaY7U6LAOECA1E0ELFY55O4_c/template/preview" class="text-decoration-none text-body link-effect">
+                                    Bulk Upload Template
+                                </a>
+                            </h5>
+                            <hr class="my-4">
                             <label for="clusters_google_sheet_link" class="form-label">Google sheet table source<span
                                     class="text-muted"></span></label>
                             <div class="form-check">
@@ -785,11 +811,20 @@
                         </div>
 
 
+                        {% if user.is_superuser %}
+                            <hr class="my-4">
+                            <a class="btn btn-outline-primary" href="{% url 'serve_statistic' %}" role="button">History</a>
+                            <hr class="my-4">
+                        {% endif %}
+                        {% comment %} <a class="btn btn-outline-primary" href="{{ MEDIA_URL }}statistic.html"
+                           role="button">History</a> {% endcomment %}
                         <hr class="my-4">
-                        <a class="btn btn-outline-primary" href="{{ MEDIA_URL }}statistic.html"
-                           role="button">History</a>
-                        <hr class="my-4">
-                        <hr class="my-4">
+                        <h4 class=" mb-3 text-decoration-none text-body link-effect text-center">
+                            <a href="https://scalingpeak.com/wordsorter/" class="text-decoration-none text-body link-effect">
+                                Word Sorter
+                            </a>
+                        </h4>
+
                         <button type="submit" class="w-100 btn-lg btn-primary">Create tables
                         </button>
 
@@ -972,9 +1007,9 @@
                         <option value="rating" ${param === 'rating' ? 'selected' : ''}>Rating</option>
                     </select>
                     <span class="me-2">From</span>
-                    <input type="number" step="0.1" class="from-input form-control me-2" style="width: 100px;" name="from_range" value="${from}">
+                    <input type="number" step="0.01" class="from-input form-control me-2" style="width: 100px;" name="from_range" value="${from}">
                     <span class="me-2">To</span>
-                    <input type="number" step="0.1" class="to-input form-control me-5" style="width: 100px;" name="to_range" value="${to}">
+                    <input type="number" step="0.01" class="to-input form-control me-5" style="width: 100px;" name="to_range" value="${to}">
                     <button class="btn btn-danger remove-block-btn">🗑</button>
                 </div>
                 </div>`;

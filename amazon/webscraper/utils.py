@@ -73,11 +73,11 @@ def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple
 
 
 def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsored_status: bool,
-                   sponsored_video_status: bool, sponsored_display_status: bool, data: dict, bulk_upload_status: bool) -> list:
+                   sponsored_video_status: bool, sponsored_display_status: bool, data: dict, bulk_upload_status: bool, request) -> list:
     filenames = []
     if cluster_status:
         clusters_values = get_company_values(data)
-        google_sheets_clusters(table, clusters_values, bulk_upload_status) # еге
+        google_sheets_clusters(table, clusters_values, bulk_upload_status, request) # еге
     if bulk_status:
         # print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
@@ -98,7 +98,7 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
         sponsored_display_file = create_display(table, values)
         filenames.append(sponsored_display_file)
     if any([bulk_status, cluster_status, sponsored_status, sponsored_video_status, sponsored_display_status]):
-        _write_statistic(table)
+        _write_statistic(table, request)
     return filenames
 
 
@@ -107,24 +107,36 @@ def _get_current_datetime() -> str:
     return current_datatime
 
 
-def _get_html_tag(table_link: str) -> str:
+def _get_html_tag(table_link: str, request) -> str:
     table_name = get_table_name(table_link)
     link = f'<a href="{table_link}">{table_name}</a>'
     date = _get_current_datetime()
-    return f'<tr><td>{link}</td><td>{date}</td></tr>'
+    username = request.user.username
+    return f'<tr><td>{link}</td><td>{date}</td><td>{username}</td></tr>'
 
 
-def _write_statistic(table):
+def _write_statistic(table, request):
     statistic_file = 'media/statistic.html'
     with open(statistic_file, 'r') as statistic:
         current_statistic = statistic.readlines()
-    with open(statistic_file, 'a+') as statistic:
-        if table not in ''.join(current_statistic):
-            html_body = _get_html_tag(table)
-            statistic.write(html_body)
+    
+    if '</table>' in ''.join(current_statistic):
+        html_body = _get_html_tag(table, request)
+        
+        for index, line in enumerate(current_statistic):
+            if '</table>' in line:
+                current_statistic.insert(index, html_body)  
+                break
+        
+        with open(statistic_file, 'w') as statistic:
+            statistic.writelines(current_statistic)
+    else:
+        html_body = _get_html_tag(table, request)
+        with open(statistic_file, 'a+') as statistic:
+            statistic.write(f'<table>\n{html_body}\n</table>') 
 
 
-def create_tables_manager(data: dict) -> list: 
+def create_tables_manager(data: dict, request) -> list: 
     clusters_google_sheet_link = data['clusters_google_sheet_link']
     asins_google_sheet_link = data['asins_google_sheet_link']
     asins_create_bulk = data.get('asins_create_bulk')
@@ -138,14 +150,14 @@ def create_tables_manager(data: dict) -> list:
     if bulk_upload_status and asins_google_sheet_link:
         filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
                                        sponsored_status, sponsored_video_status, sponsored_display_status,
-                                       data, bulk_upload_status)
+                                       data, bulk_upload_status, request)
     filenames_asins = None
     if asins_create_bulk and asins_google_sheet_link:
         filenames_asins = _create_tables(
             asins_google_sheet_link, True, True, True, True, True, data, bulk_upload_status)
     filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
                                        sponsored_status, sponsored_video_status, sponsored_display_status,
-                                       data, bulk_upload_status)
+                                       data, bulk_upload_status, request)
     return filenames_asins or filename_clusters
 
 
@@ -162,6 +174,7 @@ def asins_scraper_manager(data: dict, scrapyd):
     type_selection = data.getlist('type_selection')
     from_range = data.getlist('from_range')
     to_range = data.getlist('to_range')
+
     our_product_asins = data.getlist('asin_product')
     our_product_skus = data.getlist('sku_product')
 
@@ -199,9 +212,11 @@ def create_range_dict(type_selection, from_range, to_range):
             from_range) and from_range[i] != '' else None
         to_value = to_range[i] if i < len(
             to_range) and to_range[i] != '' else None
-
-        result[key] = [from_value, to_value]
-
+        difficult_key = f"{key}_{from_range[i]}-{to_range[i]}" 
+        result[difficult_key] = [from_value, to_value]
+    # tut ya zroblu щоб повертався список з усыма критериями
+    # result = {'price_1-3': [1, 3],  'price_3-10': [3, 10], 'price_10-': [10, None],}
+    print(f"result: {result}")
     return result
 
 
@@ -329,9 +344,10 @@ def extract_text(input_string):
     return None
 
 
-def get_campaigns() -> list:
+def get_campaigns(request) -> list:
+    user_id = request.user.id
     current_time = timezone.now()
-    campaigns = Campaign.objects.all()
+    campaigns = Campaign.objects.filter(user_id=user_id)
     if campaigns.exists():
         first_campaign = campaigns.first()
 

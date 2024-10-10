@@ -202,7 +202,7 @@ def make_seed_one(seed_data, word, target_asin, tos):
         ['Campaign'] + ['Bidding Adjustment'] * 2 + ['Ad Group'] +
         ['Product Ad'] * len(seed_items) + ['Keyword'],
         ['Create'] * total_seed_len,
-        [title[0] + target_asin + f' {cmp_ending}'] * total_seed_len,
+        [title[0] + target_asin + f' {cmp_ending}'] * total_seed_len,  
         [None] * 3 + [seed_data[1]] *
         (total_seed_len - 3), none, none, none, none,
         [title[0] + target_asin + f' {cmp_ending}'] +
@@ -503,7 +503,7 @@ def make_exact_all(exact_total_data, remove_campaign, target_asin):
         else:
             cur_df = make_exact_part(exact_data, part, str(
                 p + 1), remove_campaign=remove_campaign, target_asin=target_asin)
-        all_exact_dfs.append(cur_df)
+        all_exact_dfs.append(cur_df)       
 
     return pd.concat(all_exact_dfs).reset_index().drop('index', axis=1)
 
@@ -511,11 +511,11 @@ def make_exact_all(exact_total_data, remove_campaign, target_asin):
 def make_exact_all_list(exact_total_data_list, target_asin):
     # print(f"exact_total_data_list: {exact_total_data_list}")
     exact_data_sorted = sorted([tuple(x) for x in exact_total_data_list])
-    all_exact_lists_dfs = []
+    all_exact_lists_dfs = []                    
     # print(f"exact_data_sorted: {exact_data_sorted}")
     for i, k in enumerate(exact_data_sorted):
         if i == 0 or k[0] != exact_data_sorted[i - 1][0]:
-            cur_df = make_exact_all(k, 0, target_asin)
+            cur_df = make_exact_all(k, 0, target_asin)              
         else:
             cur_df = make_exact_all(k, 3, target_asin)
         all_exact_lists_dfs.append(cur_df)

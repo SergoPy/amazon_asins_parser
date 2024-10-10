@@ -16,4 +16,5 @@ def indexes_to_a1(i: int, j: int) -> str:
     column += last_letter_column
     row = str(i + 1)
 
+    print(f"column: {j}, col: {column}")
     return column + row

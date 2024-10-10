@@ -26,9 +26,13 @@ from . import views
 urlpatterns = [
     path('v2/admin/', admin.site.urls),
     path('v2/', csrf_exempt(views.login_view), name='login_page'),
+    path('v2/signup/', csrf_exempt(views.register_view), name='register_page'),
     path('v2/controlpanel/', csrf_exempt(views.scrape_view), name='scraper_interface'),
     path('v2/monitoring/', csrf_exempt(views.monitoring_view), name='monitoring'),
-    path('', lambda request: redirect('login_page'))
+    path('v2/logout/', csrf_exempt(views.logout_view), name='logout'),
+     path('v2/statistic/', csrf_exempt(views.serve_statistic), name='serve_statistic'),
+    path('', lambda request: redirect('login_page')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

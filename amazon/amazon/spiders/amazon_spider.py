@@ -1,5 +1,6 @@
 import json
 import re
+import gspread
 import scrapy
 from random_user_agent.params import HardwareType, SoftwareName, OperatingSystem
 from random_user_agent.user_agent import UserAgent
@@ -33,6 +34,7 @@ class AmazonSpider(scrapy.Spider):
         self.googlesheets_api = GoogleSheetsApi(
             self.table_id, apikey_file_path)
         self.creterians = json.loads(creterians)
+        self.create_column_for_grouping()
         self.cords, self.write_data = self.get_categories_cords()
         self.user_agents = self.get_user_agents()
         self.base_url = self.get_base_url()
@@ -54,6 +56,62 @@ class AmazonSpider(scrapy.Spider):
             limit=100
         )
         return user_agents
+
+    def create_column_for_grouping(self) -> None:
+        category_mapping = {
+            'reviews': 'TCA',
+            'rating': 'LSA',
+            'price': 'LPA'
+        }
+        subcategory_mapping = {
+            'CA' : [["CA", "Photo", "Title", "Reviews", "Rating", "Price"]],
+            'RA' : [["RA", "Photo", "Title", "Reviews", "Rating", "Price"]],
+            'LSA' : ["Photo", "Rating", "Title", "Reviews", "Price"],
+            'LPA' : ["Photo", "Price", "Title", "Reviews", "Rating"],
+            'TCA' : ["Photo", "Reviews", "Title", "Rating", "Price"],
+        }
+        start_row, start_col = self.googlesheets_api.get_cord_by_name(
+            "TPA")
+        start_row = 1
+        self.googlesheets_api.clear_from_column(start_col+1)
+
+        needed_table_column_len = len(self.creterians) * 6 
+        self.googlesheets_api.ensure_columns(start_col, needed_table_column_len)
+
+        current_col = start_col + 1
+        diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col + 5)}"
+        # diapason = f'{indexes_to_a1(start_row, current_col)}:' \
+        #                        f'{indexes_to_a1(start_row, current_col + 5)}'
+        current_col = current_col + 5
+        self.googlesheets_api.update(
+                    diapason, subcategory_mapping['CA'])
+
+        for key in self.creterians:
+            groups_list = []
+            group_by_creterian_name = key.split("_")[0]
+            group_by_creterian = key.split("_")[1]
+            map_criterion_name = category_mapping[group_by_creterian_name]
+            groups_list.append(f"{map_criterion_name} {group_by_creterian}")
+            groups_list.extend(subcategory_mapping[map_criterion_name])
+            print(f"groups_list: {groups_list}")
+            current_col = current_col + 1
+            print(f"current_col: {current_col}")
+            diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col+ 5)}"
+            # print(f"diapason before: {diapason}")
+            # diapason = f'{indexes_to_a1(start_row, current_col)}:' \
+            #                    f'{indexes_to_a1(start_row, current_col + 5)}'
+            print(f"diapason after: {diapason}")
+            current_col = current_col + 5
+            self.googlesheets_api.update(
+                    diapason, [groups_list])
+
+        current_col = current_col + 1
+        # diapason = f'{indexes_to_a1(start_row, current_col)}:' \
+        #                        f'{indexes_to_a1(start_row, current_col + 5)}'
+        diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col + 5)}"
+        current_col = current_col + 5
+        self.googlesheets_api.update(
+                    diapason, subcategory_mapping['RA'])
 
     def format_url(self, url: str, search_number: int) -> str:
         split_url = url.split('page=')
@@ -87,23 +145,16 @@ class AmazonSpider(scrapy.Spider):
 
         for category in ['TCA', 'LSA', 'LPA', 'RA', 'CA', self.SP_DEF_COLUMN, self.SP_ADV_COLUMN]:
             cords[category.lower()] = self.googlesheets_api.get_cord_by_name(category)
-
-            if category in category_mapping:
-                key = category_mapping[category]
-                if key in self.creterians:
-                    from_value, to_value = self.creterians[key]
-                    if from_value is None:
-                        new_header = f"{category} to {to_value}"
-                    elif to_value is None:
-                        new_header = f"{category} from {from_value}"
-                    else:
-                        new_header = f"{category} {from_value} - {to_value}"
-
-                    row, col = cords[category.lower()]
-                    row = 1
-                    self.googlesheets_api.update_cell(
-                        row, col, new_header)
-                    # print(f"Updated {category} header to: {new_header}")
+            if category in category_mapping: #LPA
+                # result = {'price_1-3': [1, 3],  'price_3-10': [3, 10], 'price_10-': [10, None],}
+                key = category_mapping[category] # price
+                for close_key in self.creterians:
+                    category_key = close_key.split("_")[0] # price
+                    if key == category_key:
+                        group_by_creterian = close_key.split("_")[1]
+                        cord_name = f"{category} {group_by_creterian}"
+                        cords[cord_name.lower()] = self.googlesheets_api.get_cord_by_name(cord_name)
+                        data[cord_name.lower()] = []
             data[category.lower()] = []
 
         return cords, data
@@ -174,6 +225,11 @@ class AmazonSpider(scrapy.Spider):
     def get_product_data(self, asin: str, price: str, reviews: str, rating: str, title: str) -> tuple:
         # print(
         #     f"asin: {asin}, price: {price}, reviews: {reviews}, rating: {rating}")
+        category_mapping = {
+            'reviews': 'TCA',
+            'rating': 'LSA',
+            'price': 'LPA'
+        }
         if price:
             price_value = self.get_float_price(price)
         else:
@@ -191,32 +247,53 @@ class AmazonSpider(scrapy.Spider):
         try:
             if self.keywords and title and self.title_contains_keywords(title):
                 return 'ra', asin, title, reviews_count, self._float(rating), price_value
-            if 'price' in self.creterians:
-                from_value, to_value = self.creterians['price']
-                if (from_value is None or (price_value and price_value != 'Not mentioned' and price_value >= self._float(from_value))) and \
-                        (to_value is None or (price_value and price_value != 'Not mentioned' and price_value <= self._float(to_value))):
-                    # print(
-                    #     f"from_value: {from_value}, to_value: {to_value}, price_value: {price_value}")
-                    return 'lpa', asin, price_value, title, reviews_count, self._float(rating)
+            
+            for close_key in self.creterians:
+                category_key = close_key.split("_")[0]
+                if 'price' == category_key:
+                    from_value, to_value = self.creterians[close_key]
 
-            if 'reviews' in self.creterians:
-                from_value, to_value = self.creterians['reviews']
-                reviews_count = int(reviews.replace(
-                    ',', '')) if reviews else None
+                    map_criterion_name = category_mapping[category_key]
+                    group_by_creterian = close_key.split("_")[1]
+                    category_name = f"{map_criterion_name} {group_by_creterian}"
 
-                if (from_value is None or (reviews_count and reviews_count >= self._float(from_value))) and \
-                        (to_value is None or (reviews_count and reviews_count <= self._float(to_value))):
-                    # print(
-                    #     f"from_value: {from_value}, to_value: {to_value}, reviews_count: {reviews_count}")
-                    return 'tca', asin, reviews_count, title, self._float(rating), price_value
+                    if (from_value is None or (price_value and price_value != 'Not mentioned' and price_value >= self._float(from_value))) and \
+                            (to_value is None or (price_value and price_value != 'Not mentioned' and price_value <= self._float(to_value))):
+                        # print(
+                        #     f"from_value: {from_value}, to_value: {to_value}, price_value: {price_value}")
+                        return category_name.lower(), asin, price_value, title, reviews_count, self._float(rating)
+                    
+            for close_key in self.creterians:
+                category_key = close_key.split("_")[0]
+                if 'reviews' == category_key:
+                    from_value, to_value = self.creterians[close_key]
 
-            if 'rating' in self.creterians:
-                from_value, to_value = self.creterians['rating']
-                if (from_value is None or (rating and self._float(rating) >= self._float(from_value))) and \
-                        (to_value is None or (rating and self._float(rating) <= self._float(to_value))):
-                    # print(
-                    #     f"from_value: {from_value}, to_value: {to_value}, rating: {rating}")
-                    return 'lsa', asin, self._float(rating), title, reviews_count, price_value
+                    map_criterion_name = category_mapping[category_key]
+                    group_by_creterian = close_key.split("_")[1]
+                    category_name = f"{map_criterion_name} {group_by_creterian}"
+
+                    reviews_count = int(reviews.replace(
+                        ',', '')) if reviews else None
+
+                    if (from_value is None or (reviews_count and reviews_count >= self._float(from_value))) and \
+                            (to_value is None or (reviews_count and reviews_count <= self._float(to_value))):
+                        # print(
+                        #     f"from_value: {from_value}, to_value: {to_value}, reviews_count: {reviews_count}")
+                        return category_name.lower(), asin, reviews_count, title, self._float(rating), price_value
+            for close_key in self.creterians:
+                category_key = close_key.split("_")[0]
+                if 'rating' == category_key:
+                    from_value, to_value = self.creterians[close_key]
+
+                    map_criterion_name = category_mapping[category_key]
+                    group_by_creterian = close_key.split("_")[1]
+                    category_name = f"{map_criterion_name} {group_by_creterian}"
+
+                    if (from_value is None or (rating and self._float(rating) >= self._float(from_value))) and \
+                            (to_value is None or (rating and self._float(rating) <= self._float(to_value))):
+                        # print(
+                        #     f"from_value: {from_value}, to_value: {to_value}, rating: {rating}")
+                        return category_name.lower(), asin, self._float(rating), title, reviews_count, price_value
 
         except ValueError:
             pass

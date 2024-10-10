@@ -1,6 +1,5 @@
 from difflib import SequenceMatcher
 import inflect
-from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from amazon.google_api import GoogleSheetsApi
 from amazon.utils import indexes_to_a1
@@ -192,7 +191,7 @@ def get_table_id(table_link):
  # negative_exacts = keywords + seed + str_low + launched
 
 
-def google_sheets_clusters(table_link, values, bulk_upload_status):
+def google_sheets_clusters(table_link, values, bulk_upload_status, request):
     global campaign_names
     global list_total
     # print(f"before  global campaign_names: {campaign_names}")
@@ -229,9 +228,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
             elif k[0].lower() == 'sku':
                 sku = [x for x in k[1:]]
             elif k[0].lower() == 'words':
-                words = [x for x in k[1:] if x not in launched]
+                words = [x for x in k[1:] if x not in launched ]
             elif k[0].lower() == 'seed':
-                seed = [x for x in k[1:] if x not in launched]
+                seed = [x for x in k[1:] if x not in launched and len(x) <= 45]
             elif k[0].lower() == 'bid':
                 bid = [x for x in k[1:]]
             elif k[0].lower() == 'tos adjustment':
@@ -277,7 +276,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 keywords_tuples = [
                     tuple(x.split(' '))
                     for x in keywords_filtered
-                    if len(x) <= 50
+                    if len(x) <= 45
                 ]
 
                 keywords_total_dict = dict()
@@ -360,10 +359,10 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                 launched = [x for x in k[1:] if x is not None and x != '']
             elif k[0].lower() == 'seed':
                 seed = [x for x in k[1:] if x is not None and x !=
-                        '' and x not in launched]
+                        '' and x not in launched and len(x) <= 45]
             elif k[0].lower() == 'keywords':
                 keywords = [x for x in k[1:]
-                            if x is not None and x != '' and x not in launched]
+                            if x is not None and x != '' and x not in launched and len(x) <= 45]
             elif k[0].lower() == 'str low':
                 str_low = [x for x in k[1:] if x is not None and x !=
                            '' and x not in launched]
@@ -375,7 +374,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
                             '' and x not in launched]
             elif k[0].lower() == 'broad':
                 broad = [x for x in k[1:] if x is not None and x !=
-                         '' and x not in launched]
+                         '' and x not in launched and len(x) <= 45]
             elif k[0].lower() == 'words':
                 words = [x for x in k[1:] if x is not None and x !=
                          '' and x not in launched]
@@ -433,7 +432,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
         keywords_tuples = [
             tuple(x.split(' '))
             for x in keywords_filtered
-            if len(x) <= 50
+            if len(x) <= 45
         ]
         # print(f"other): {other}")
 
@@ -588,7 +587,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status):
 
     clusters.update('C1', pd.DataFrame(list_total).T.values.tolist())
 
-    upload_campaign_to_db()
+    upload_campaign_to_db(request)
 
 
 def extract_text(input_string):
@@ -599,17 +598,17 @@ def extract_text(input_string):
     return None
 
 
-def upload_campaign_to_db():
+def upload_campaign_to_db(request):
+    user_id = request.user.id
+    print(f"request.user: {request.user}; user_id: {user_id}")
     campaigns = list()
     filter_campaign_names = list()
-    # print(f"campaign_names: {campaign_names}")
     unique_campaign_names = list(dict.fromkeys(campaign_names))
-    # print(f"unique_campaign_names: {unique_campaign_names}")
     for campaign_name in unique_campaign_names:
         filter_campaign_names.append(extract_text(campaign_name))
     unique_campaign_names = list(dict.fromkeys(filter_campaign_names))
-    Campaign.objects.all().delete()
+    Campaign.objects.filter(user_id=user_id).delete()
     for campaign_name in unique_campaign_names:
-        campaigns.append(Campaign(name=campaign_name))
+        campaigns.append(Campaign(name=campaign_name, user_id=user_id))
     # print(f"campaigns from upload_campaign_to_db: {campaigns}")
     Campaign.objects.bulk_create(campaigns)

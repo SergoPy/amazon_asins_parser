@@ -6,13 +6,14 @@ volumes:
 
 networks:
   webscraper-net-v2:
+    driver: bridge
 
 services:
   db:
     image: postgres:15.8
     container_name: webscraper-v2-postgres
     restart: always
-    expose:
+    ports:
       - "5434:5432"
     env_file:
       - .env

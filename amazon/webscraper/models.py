@@ -33,7 +33,8 @@ class AdvertisingMonitoring(Monitoring):
 
 
 class Campaign(Model):
-    name = CharField(max_length=255, unique=True)
+    name = CharField(max_length=255)
+    user_id = IntegerField()
     created_at = DateTimeField(auto_now_add=True)
 
     def __str__(self):

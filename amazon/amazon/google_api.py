@@ -27,6 +27,7 @@ class GoogleSheetsApi:
         self.worksheet.update_cell(row, col, value)
 
     def update(self, diapason, value_list):
+        print(f"diapason: {diapason}; value_list: {value_list}")
         self.worksheet.update(diapason, value_list,
                               value_input_option='USER_ENTERED')
 
@@ -39,3 +40,23 @@ class GoogleSheetsApi:
 
     def get_cord_by_name(self, value):
         return self.get_coords(self.find_cell(value).col)
+
+    def clear_from_column(self, start_col):
+        all_values = self.worksheet.get_all_values()
+        total_cols = max([len(row) for row in all_values])
+        total_rows = len(all_values)
+        range_to_clear = f"{gspread.utils.rowcol_to_a1(1, start_col)}:{gspread.utils.rowcol_to_a1(total_rows, total_cols)}"
+        self.worksheet.batch_clear([range_to_clear])
+
+        print(f"total_rows: {total_rows}; total_cols: {total_cols}; start_col: {start_col}; range_to_clear: {range_to_clear}")
+
+
+    def ensure_columns(self, start_col, need):
+        total_cols = max([len(row) for row in self.worksheet.get_all_values()])
+
+        required_cols = start_col + need
+
+        if total_cols < required_cols:
+            print(f"required_cols: {required_cols}, total_cols: {total_cols}")
+            cols_to_add = required_cols - total_cols
+            self.worksheet.add_cols(cols_to_add)
