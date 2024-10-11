@@ -51,12 +51,9 @@ class GoogleSheetsApi:
         print(f"total_rows: {total_rows}; total_cols: {total_cols}; start_col: {start_col}; range_to_clear: {range_to_clear}")
 
 
-    def ensure_columns(self, start_col, need):
-        total_cols = max([len(row) for row in self.worksheet.get_all_values()])
+    def ensure_columns(self, need):
+        total_cols = self.worksheet.col_count #64
 
-        required_cols = start_col + need
-
-        if total_cols < required_cols:
-            print(f"required_cols: {required_cols}, total_cols: {total_cols}")
-            cols_to_add = required_cols - total_cols
+        if total_cols < need:
+            cols_to_add = need - total_cols
             self.worksheet.add_cols(cols_to_add)

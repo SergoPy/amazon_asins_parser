@@ -44,6 +44,7 @@ class AmazonSpider(scrapy.Spider):
         self.adv_variations_asins = adv_variations_asins.split()
 
     def get_base_url(self) -> str:
+        # print(f"base_url: {self.urls[0].split(self.AMAZON_SEARCH_PATH)[0]}")
         return self.urls[0].split(self.AMAZON_SEARCH_PATH)[0]
 
     @staticmethod
@@ -75,8 +76,8 @@ class AmazonSpider(scrapy.Spider):
         start_row = 1
         self.googlesheets_api.clear_from_column(start_col+1)
 
-        needed_table_column_len = len(self.creterians) * 6 
-        self.googlesheets_api.ensure_columns(start_col, needed_table_column_len)
+        needed_table_column_len = len(self.creterians) * 6 + 18
+        self.googlesheets_api.ensure_columns(needed_table_column_len)
 
         current_col = start_col + 1
         diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col + 5)}"
@@ -93,14 +94,14 @@ class AmazonSpider(scrapy.Spider):
             map_criterion_name = category_mapping[group_by_creterian_name]
             groups_list.append(f"{map_criterion_name} {group_by_creterian}")
             groups_list.extend(subcategory_mapping[map_criterion_name])
-            print(f"groups_list: {groups_list}")
+            # print(f"groups_list: {groups_list}")
             current_col = current_col + 1
-            print(f"current_col: {current_col}")
+            # print(f"current_col: {current_col}")
             diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col+ 5)}"
             # print(f"diapason before: {diapason}")
             # diapason = f'{indexes_to_a1(start_row, current_col)}:' \
             #                    f'{indexes_to_a1(start_row, current_col + 5)}'
-            print(f"diapason after: {diapason}")
+            # print(f"diapason after: {diapason}")
             current_col = current_col + 5
             self.googlesheets_api.update(
                     diapason, [groups_list])
@@ -133,6 +134,7 @@ class AmazonSpider(scrapy.Spider):
         return price
 
     def get_categories_cords(self) -> tuple:
+        print("in get categories_cord")
         cords = {}
         data = {}
         category_mapping = {
@@ -146,17 +148,19 @@ class AmazonSpider(scrapy.Spider):
         for category in ['TCA', 'LSA', 'LPA', 'RA', 'CA', self.SP_DEF_COLUMN, self.SP_ADV_COLUMN]:
             cords[category.lower()] = self.googlesheets_api.get_cord_by_name(category)
             if category in category_mapping: #LPA
+                print(f"category: {category}")
                 # result = {'price_1-3': [1, 3],  'price_3-10': [3, 10], 'price_10-': [10, None],}
                 key = category_mapping[category] # price
                 for close_key in self.creterians:
                     category_key = close_key.split("_")[0] # price
+                    # print(f"key: {key}; category_key: {category_key}")
                     if key == category_key:
                         group_by_creterian = close_key.split("_")[1]
                         cord_name = f"{category} {group_by_creterian}"
                         cords[cord_name.lower()] = self.googlesheets_api.get_cord_by_name(cord_name)
                         data[cord_name.lower()] = []
             data[category.lower()] = []
-
+        print(f"cords: {cords}; data: {data}")
         return cords, data
 
     def save_product_data(self, asin: str, price: str, reviews: str, rating: str, title: str, photo_url: str) -> None:
@@ -191,7 +195,7 @@ class AmazonSpider(scrapy.Spider):
                                        for asin in set(self.adv_variations_asins)]
         # print(f"self.write_data: {self.write_data}")
         for category in self.cords:
-            # print(f"in for: {category}")
+            print(f"in for: {category}")
             if self.write_data[category]:
                 current_row = self.cords[category][0]
                 current_col = self.cords[category][1]
@@ -304,6 +308,7 @@ class AmazonSpider(scrapy.Spider):
         return f'{self.base_url}{self.AMAZON_PRODUCT_PATH}{asin}'
 
     def start_requests(self):
+        print(f"start_requests: {self.sp_def_asins}")
         if len(self.sp_def_asins):
             for asin in self.sp_def_asins:
                 url = self.get_product_url(asin)
@@ -327,7 +332,7 @@ class AmazonSpider(scrapy.Spider):
             # print(f"variations_body: {variations_body}")
             variations = variations_body.css(
                 'li::attr(data-defaultasin)').getall()
-            # print(f"variation_asins: {variations}")
+            print(f"variation_asins: {variations}")
             variation_asins = [asin for asin in variations if asin]
             asins += variation_asins
         self.asins_cache += asins
@@ -355,6 +360,7 @@ class AmazonSpider(scrapy.Spider):
                 'Cookie': self.cookie
             }, meta={'dont_merge_cookies': True})
             self.request_count += 1
+
 
     def scrape_item(self, item, search_tag, retry_count=0):
         asin = item.css('::attr(data-asin)').get()

@@ -23,14 +23,14 @@ DEFAULT_CAMPAIGN_TYPES = {'seed': 'Seed', 'str_low': 'Str Low', 'exact_other': '
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def login_view(request):
-    ip = get_client_ip(request)
-    print(f"ip: {ip}")
+    # ip = get_client_ip(request)
+    # print(f"ip: {ip}")
     print(f"VERIFY: {VERIFY}")
     print(f"request.user.is_authenticated: {request.user.is_authenticated}")
     start_asins_monitoring()
 
     if request.method == 'GET':
-        if request.user.is_authenticated and ip in VERIFY:
+        if request.user.is_authenticated:
             return redirect('scraper_interface')
         else:
             content = {
@@ -53,7 +53,7 @@ def login_view(request):
             else:
                 request.session.set_expiry(0)
 
-            VERIFY.add(ip)
+            # VERIFY.add(ip)
             print(f"VERIFY after: {VERIFY}")
             return redirect('scraper_interface')
         else:
@@ -92,11 +92,11 @@ def register_view(request):
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def scrape_view(request):
-    ip = get_client_ip(request)
-    print(f"ip: {ip}")
+    # ip = get_client_ip(request)
+    # print(f"ip: {ip}")
     print(f"VERIFY: {VERIFY}")
     print(f"request.user.is_authenticated: {request.user.is_authenticated}")
-    if request.user.is_authenticated and ip in VERIFY:
+    if request.user.is_authenticated:
         if request.method == 'GET':
             campaign_name = get_campaigns(request)
             context = {
@@ -129,8 +129,8 @@ def scrape_view(request):
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def monitoring_view(request):
-    ip = get_client_ip(request)
-    if request.user.is_authenticated and ip in VERIFY:
+    # ip = get_client_ip(request)
+    if request.user.is_authenticated :
         if request.method == 'GET':
             context = {}
         else:
