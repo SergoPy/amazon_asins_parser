@@ -76,7 +76,7 @@ class AmazonSpider(scrapy.Spider):
         start_row = 1
         self.googlesheets_api.clear_from_column(start_col+1)
 
-        needed_table_column_len = len(self.creterians) * 6 + 18
+        needed_table_column_len = len(self.creterians) * 6 + 12 + 16
         self.googlesheets_api.ensure_columns(needed_table_column_len)
 
         current_col = start_col + 1

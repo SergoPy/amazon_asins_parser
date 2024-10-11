@@ -76,9 +76,11 @@ def register_view(request):
         if 'password2' in form.errors:
             messages.error(request, form.errors['password2'][0], extra_tags='password2')
         if form.is_valid():
-            user = form.save() 
-            login(request, user)
-            return redirect('scraper_interface')  
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save() 
+            
+            return redirect('login_page')  
         else:
             content = {
                 'data': request.POST
