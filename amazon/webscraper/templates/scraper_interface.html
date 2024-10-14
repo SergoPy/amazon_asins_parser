@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
     <style>
         .bd-placeholder-img {
@@ -114,12 +117,12 @@
                         <div class="col-12">
                             <hr class="my-4">
                             <h5 class=" mb-3 text-decoration-none text-body link-effect bg-danger text-center">
-                                <a href="https://docs.google.com/spreadsheets/d/13hS5Yj2kzgtYOIQR5vP4za_Phk0e27QxDaUxi2on4LA/template/preview"class="text-decoration-none text-body link-effect">
+                                <a href="https://docs.google.com/spreadsheets/d/13hS5Yj2kzgtYOIQR5vP4za_Phk0e27QxDaUxi2on4LA/template/preview"class="text-decoration-none text-body link-effect" target="_blank">
                                     Single Product Template
                                 </a>
                             </h5>
                             <h5 class=" mb-3 text-decoration-none text-body link-effect bg-danger text-center">
-                                <a href="https://docs.google.com/spreadsheets/d/1OHtURbEdO32E2_z1FCNaY7U6LAOECA1E0ELFY55O4_c/template/preview" class="text-decoration-none text-body link-effect">
+                                <a href="https://docs.google.com/spreadsheets/d/1OHtURbEdO32E2_z1FCNaY7U6LAOECA1E0ELFY55O4_c/template/preview" class="text-decoration-none text-body link-effect" target="_blank">
                                     Bulk Upload Template
                                 </a>
                             </h5>
@@ -264,15 +267,15 @@
                                 <hr class="my-4">
                                 <button type="button" id="uncheck-all-btn" class="col-md-5 btn btn-secondary">Uncheck All</button>
                                 <button type="submit" id="update-column-campg" class="col-md-5 btn btn-primary">Update columns</button>
-                                <hr class="my-4">
-                                {% for key, value in campaign_names.items %}
+                                <hr class="down my-4">
+                                {% comment %}  {% for key, value in campaign_names.items %}
                                     <div class="col-md-7">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="campaign_{{ key }}" name="campaign_{{ key }}" checked>
                                             <label class="form-check-label" for="campaign_{{ key }}">{{ value }}</label>
                                         </div>
                                     </div>
-                                {% endfor %}
+                                {% endfor %} {% endcomment %}
                                 {% for key, value in def_campaign.items %}
                                     <div class="col-md-7">
                                         <div class="form-check">
@@ -280,7 +283,7 @@
                                             <label class="form-check-label" for="inner_camp_{{ key }}">{{ value }}</label>
                                         </div>
                                     </div>
-                                {% endfor %}
+                                {% endfor %} 
                             </div>
                         </div>
 
@@ -820,7 +823,7 @@
                            role="button">History</a> {% endcomment %}
                         <hr class="my-4">
                         <h4 class=" mb-3 text-decoration-none text-body link-effect text-center">
-                            <a href="https://scalingpeak.com/wordsorter/" class="text-decoration-none text-body link-effect">
+                            <a href="https://scalingpeak.com/wordsorter/" class="text-decoration-none text-body link-effect" target="_blank">
                                 Word Sorter
                             </a>
                         </h4>
@@ -979,8 +982,6 @@
     </footer>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
         // Функція для збереження блоків в localStorage
@@ -1095,6 +1096,42 @@
 
         $('#dynamic-form').submit(function () {
             saveBlocks();
+        });
+    });
+
+    $(document).ready(function() {
+        $('#update-column-campg').click(function(event) {
+            event.preventDefault(); 
+    
+            var table_id = $('#clusters_google_sheet_link').val();
+            console.log("table_id: ", table_id)
+            $.ajax({
+                url: "{% url 'get_campaign_names' %}",  
+                data: {
+                    'table_id': table_id,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.campaign_names) {
+                        var campaignHTML = '';
+                        $.each(response.campaign_names, function(key, value) {
+                            campaignHTML += `
+                                <div class="col-md-7">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="campaign_${key}" name="campaign_${key}" checked>
+                                        <label class="form-check-label" for="campaign_${key}">${value}</label>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        $('#offcanvasCampType .offcanvas-body hr.down').nextAll().remove();  
+                        $('#offcanvasCampType .offcanvas-body').append(campaignHTML); 
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('Ошибка: ' + error);
+                }
+            });
         });
     });
 </script>

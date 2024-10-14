@@ -30,7 +30,8 @@ urlpatterns = [
     path('v2/controlpanel/', csrf_exempt(views.scrape_view), name='scraper_interface'),
     path('v2/monitoring/', csrf_exempt(views.monitoring_view), name='monitoring'),
     path('v2/logout/', csrf_exempt(views.logout_view), name='logout'),
-     path('v2/statistic/', csrf_exempt(views.serve_statistic), name='serve_statistic'),
+    path('v2/statistic/', csrf_exempt(views.serve_statistic), name='serve_statistic'),
+    path('v2/get_campaign_names/', csrf_exempt(views.get_campaign_names), name='get_campaign_names'),
     path('', lambda request: redirect('login_page')),
 
 ]

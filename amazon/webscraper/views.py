@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib.auth.decorators import user_passes_test
 import os
 
@@ -47,7 +47,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            
+
             if remember_me:
                 request.session.set_expiry(1209600)
             else:
@@ -59,7 +59,7 @@ def login_view(request):
         else:
             messages.error(request, 'Invalid login credentials')
             content = {
-                'username': username,  
+                'username': username,
             }
             return render(request, 'login_page.html', context=content)
 
@@ -70,24 +70,27 @@ def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if 'username' in form.errors:
-            messages.error(request, form.errors['username'][0], extra_tags='username')
+            messages.error(
+                request, form.errors['username'][0], extra_tags='username')
         if 'password1' in form.errors:
-            messages.error(request, form.errors['password1'][0], extra_tags='password1')
+            messages.error(
+                request, form.errors['password1'][0], extra_tags='password1')
         if 'password2' in form.errors:
-            messages.error(request, form.errors['password2'][0], extra_tags='password2')
+            messages.error(
+                request, form.errors['password2'][0], extra_tags='password2')
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
-            user.save() 
-            
-            return redirect('login_page')  
+            user.save()
+
+            return redirect('login_page')
         else:
             content = {
                 'data': request.POST
             }
             return render(request, 'register_page.html', context=content)
     else:
-        form = UserCreationForm()  
+        form = UserCreationForm()
         return render(request, 'register_page.html', {'form': form})
 
 
@@ -132,7 +135,7 @@ def scrape_view(request):
 @require_http_methods(['GET', 'POST'])
 def monitoring_view(request):
     # ip = get_client_ip(request)
-    if request.user.is_authenticated :
+    if request.user.is_authenticated:
         if request.method == 'GET':
             context = {}
         else:
@@ -157,9 +160,21 @@ def monitoring_view(request):
     else:
         return redirect('login_page')
 
+
 def logout_view(request):
     logout(request)
-    return redirect('login_page') 
+    return redirect('login_page')
+
+
+def get_campaign_names(request):
+    table_id = request.GET.get('table_id')
+        # if table_id:
+    if request.user.is_authenticated:
+        campaign_names = ["its_work", "its_godd",
+                          "all_pkey", "good_job", "upg", "okko", table_id]
+        return JsonResponse({'campaign_names': campaign_names})
+    return JsonResponse({'error': 'User not authenticated'}, status=401)
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def serve_statistic(request):
