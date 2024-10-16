@@ -12,3 +12,4 @@ nohup.out
 *.log
 .env
 apikey.json
+my_log.py
