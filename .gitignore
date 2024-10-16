@@ -5,8 +5,6 @@ venv/
 __pycache__/
 *.pid
 dbs/
-text1.txt
-text2.txt
 logs/
 media/
 static/
