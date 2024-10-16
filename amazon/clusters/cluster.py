@@ -144,7 +144,7 @@ def split_and_append(list_name, phrase, keyword, values_dict, category_list, cou
     iteration = 1
     campaign_name = phrase + \
         (f" ({prefix})" if prefix else "") + \
-        (f" | {keyword}" if keyword else "")
+        (f" - {keyword}" if keyword else "")
     campaign_names.append(campaign_name)
 
     if keyword is not None and keyword != '':
@@ -600,15 +600,19 @@ def extract_text(input_string):
 
 def upload_campaign_to_db(request):
     user_id = request.user.id
-    print(f"request.user: {request.user}; user_id: {user_id}")
+
     campaigns = list()
     filter_campaign_names = list()
+    print(f"campaign_names in cluster: {campaign_names}")
     unique_campaign_names = list(dict.fromkeys(campaign_names))
+
     for campaign_name in unique_campaign_names:
         filter_campaign_names.append(extract_text(campaign_name))
+
     unique_campaign_names = list(dict.fromkeys(filter_campaign_names))
     Campaign.objects.filter(user_id=user_id).delete()
+
     for campaign_name in unique_campaign_names:
         campaigns.append(Campaign(name=campaign_name, user_id=user_id))
-    # print(f"campaigns from upload_campaign_to_db: {campaigns}")
+
     Campaign.objects.bulk_create(campaigns)

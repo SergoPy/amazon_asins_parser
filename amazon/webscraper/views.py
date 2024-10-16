@@ -12,7 +12,7 @@ import os
 from .tasks import start_asins_monitoring
 from .settings import FE_PASSWORD, scrapyd, VERIFY
 from .utils import create_tables_manager, asins_scraper_manager, get_campaigns, \
-    get_client_ip, search_term_report_manager, run_asins_monitoring, run_campaign_upload, run_advertising_monitoring
+    get_client_ip, search_term_report_manager, run_asins_monitoring, run_campaign_upload, run_advertising_monitoring, upload_info_from_table
 from .validators import validate_asins_monitoring_request, term_report_validator_request, \
     campaign_upload_validator, validate_advertising_monitoring_requests
 
@@ -104,6 +104,8 @@ def scrape_view(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
             campaign_name = get_campaigns(request)
+            print(f"campaign_name in view: {campaign_name}")
+
             context = {
                 'MEDIA_URL': settings.MEDIA_URL,
                 'MEDIA_ROOT': settings.MEDIA_ROOT,
@@ -117,8 +119,8 @@ def scrape_view(request):
                 run_campaign_upload(data, files)
             asins_scraper_manager(data, scrapyd)
             filenames = create_tables_manager(data, request)
-
             campaign_name = get_campaigns(request)
+            print(f"campaign_name in view: {campaign_name}")
             context = {
                 'MEDIA_URL': settings.MEDIA_URL,
                 'MEDIA_ROOT': settings.MEDIA_ROOT,
@@ -168,12 +170,17 @@ def logout_view(request):
 
 def get_campaign_names(request):
     table_id = request.GET.get('table_id')
-        # if table_id:
     if request.user.is_authenticated:
-        campaign_names = ["its_work", "its_godd",
-                          "all_pkey", "good_job", "upg", "okko", table_id]
-        return JsonResponse({'campaign_names': campaign_names})
+        if table_id:
+            campaign_names = upload_info_from_table(table_id, request)
+            return JsonResponse({'campaign_names': campaign_names})
+        else:
+            campaign_name = get_campaigns(request)
+            campaign_names = campaign_name
+            return JsonResponse({'campaign_names': campaign_names})
     return JsonResponse({'error': 'User not authenticated'}, status=401)
+    
+
 
 
 @user_passes_test(lambda u: u.is_superuser)

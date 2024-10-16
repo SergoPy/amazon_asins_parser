@@ -5,6 +5,9 @@ import re
 from django.utils import timezone
 from uuid import uuid4
 
+import gspread
+
+from amazon.google_api import GoogleSheetsApi
 from clusters.bulk import google_sheets_bulk
 from clusters.cluster import google_sheets_clusters
 from clusters.sponsored import create_sponsored, create_display
@@ -16,10 +19,11 @@ from uploaders.sponsor_products import run_amazon_media_uploader
 from .celery import app
 from .constants import COUNTRY_URLS, SEARCH_PATH, COUNTRY_COOKIES
 from .models import AsinsMonitoring, AdvertisingMonitoring, Campaign
-from .settings import MEDIA_ROOT
+from .settings import APIKEY_FILEPATH, MEDIA_ROOT
 
 DEFAULT_CAMPAIGN_TYPES = {'seed', 'str low', 'exact other', 'variation', 'exact top', 'exact', 'exact low',
-                             'broad', 'brands', 'auto', 'category'}
+                          'broad', 'brands', 'auto', 'category'}
+
 
 def get_client_ip(request) -> str:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -64,7 +68,7 @@ def _get_url(keyword: str, country: str) -> str:
 
 
 def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple:
-    
+
     negative_words = ' '.join(
         [keyword for keyword in negative_words.split('\r\n')])
     links_to_serp = ' '.join([_get_url(keyword, country)
@@ -77,15 +81,17 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
     filenames = []
     if cluster_status:
         clusters_values = get_company_values(data)
-        google_sheets_clusters(table, clusters_values, bulk_upload_status, request) # еге
+        google_sheets_clusters(table, clusters_values,
+                               bulk_upload_status, request)  # еге
     if bulk_status:
-        # print(f"data in _create_tables: {data}")
+        print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
         ) if key.startswith('campaign_') and value == 'on']
         campaign_2_data = [key.replace('inner_camp_', '') for key, value in data.items(
         ) if key.startswith('inner_camp_') and value == 'on']
         cmp_ending = data.get("cmp_ending", "SP")
-        bulk_file = google_sheets_bulk(table, campaign_data, cmp_ending, campaign_2_data)
+        bulk_file = google_sheets_bulk(
+            table, campaign_data, cmp_ending, campaign_2_data)
         filenames.append(bulk_file)
     if sponsored_status:
         sponsored_file = create_sponsored(table, data)
@@ -119,24 +125,24 @@ def _write_statistic(table, request):
     statistic_file = 'media/statistic.html'
     with open(statistic_file, 'r') as statistic:
         current_statistic = statistic.readlines()
-    
+
     if '</table>' in ''.join(current_statistic):
         html_body = _get_html_tag(table, request)
-        
+
         for index, line in enumerate(current_statistic):
             if '</table>' in line:
-                current_statistic.insert(index, html_body)  
+                current_statistic.insert(index, html_body)
                 break
-        
+
         with open(statistic_file, 'w') as statistic:
             statistic.writelines(current_statistic)
     else:
         html_body = _get_html_tag(table, request)
         with open(statistic_file, 'a+') as statistic:
-            statistic.write(f'<table>\n{html_body}\n</table>') 
+            statistic.write(f'<table>\n{html_body}\n</table>')
 
 
-def create_tables_manager(data: dict, request) -> list: 
+def create_tables_manager(data: dict, request) -> list:
     clusters_google_sheet_link = data['clusters_google_sheet_link']
     asins_google_sheet_link = data['asins_google_sheet_link']
     asins_create_bulk = data.get('asins_create_bulk')
@@ -149,8 +155,8 @@ def create_tables_manager(data: dict, request) -> list:
 
     if bulk_upload_status and asins_google_sheet_link:
         filename_clusters = _create_tables(clusters_google_sheet_link, clusters_status, bulk_status,
-                                       sponsored_status, sponsored_video_status, sponsored_display_status,
-                                       data, bulk_upload_status, request)
+                                           sponsored_status, sponsored_video_status, sponsored_display_status,
+                                           data, bulk_upload_status, request)
     filenames_asins = None
     if asins_create_bulk and asins_google_sheet_link:
         filenames_asins = _create_tables(
@@ -196,8 +202,8 @@ def asins_scraper_manager(data: dict, scrapyd):
         sp_skus = ' '.join(our_product_skus)
         adv_asins = ' '.join(dv_asins.split('\r\n'))
         task = scrapyd.schedule('default', 'amazon', settings=scrapyd_settings,
-                                keywords=negative_words, sp_def_skus = sp_skus, 
-                                table_link=asins_google_sheet_link, limit=quality_search, 
+                                keywords=negative_words, sp_def_skus=sp_skus,
+                                table_link=asins_google_sheet_link, limit=quality_search,
                                 urls=links_to_serp, sp_def_asins=sp_asins,
                                 adv_variations_asins=adv_asins, creterians=json.dumps(
                                     read_creterians),
@@ -212,7 +218,7 @@ def create_range_dict(type_selection, from_range, to_range):
             from_range) and from_range[i] != '' else None
         to_value = to_range[i] if i < len(
             to_range) and to_range[i] != '' else None
-        difficult_key = f"{key}_{from_range[i]}-{to_range[i]}" 
+        difficult_key = f"{key}_{from_range[i]}-{to_range[i]}"
         result[difficult_key] = [from_value, to_value]
     # tut ya zroblu щоб повертався список з усыма критериями
     # result = {'price_1-3': [1, 3],  'price_3-10': [3, 10], 'price_10-': [10, None],}
@@ -349,12 +355,14 @@ def get_campaigns(request) -> list:
     current_time = timezone.now()
     campaigns = Campaign.objects.filter(user_id=user_id)
     if campaigns.exists():
+        print(f"campaigns in get_campaigns from db: {campaigns}")
         first_campaign = campaigns.first()
 
         time_difference = current_time - first_campaign.created_at
 
         if time_difference < timedelta(days=3):
-            result = {to_snake_case(campaign.name): campaign.name for campaign in campaigns}
+            result = {to_snake_case(campaign.name)
+                                    : campaign.name for campaign in campaigns}
         else:
             result = {to_snake_case(
                 default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
@@ -363,3 +371,86 @@ def get_campaigns(request) -> list:
             default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
 
     return result
+
+
+def get_table_id(table_link) -> str:
+    return table_link.split('/d/')[1].split('/')[0]
+
+
+def extract_text_from_name(input_string):
+    # Перший випадок: "Team Cards | SEED" - повертаємо "SEED"
+    match = re.search(r'\|\s*([A-Z]+)$', input_string)
+    if match:
+        return match.group(1)
+
+    # Другий випадок: "Team Cards | PAT - RA" - повертаємо "PAT | RA"
+    match = re.search(r'\|\s*([A-Z]+)\s*-\s*([A-Z]+)', input_string)
+    if match:
+        return f"{match.group(1)} | {match.group(2)}"
+
+    # Третій випадок: Витягнути все після "|"
+    match = re.search(r'\|\s*(.+?)\s*\d*$', input_string)
+    if match:
+        return match.group(1).strip()
+
+    return None
+
+def to_snake_case_for_name(name):
+    new_name = name.lower()
+    new_name = re.sub(r'\s+', '_', new_name)
+    new_name = new_name.replace('-', '|')
+    new_name = new_name.strip('_')
+    # print(f"name before: {name} <-> name after: {new_name}")
+    return new_name
+
+def upload_info_from_table(table_link, request):
+    table_id = get_table_id(table_link)
+    googlesheets_api = GoogleSheetsApi(
+        table_id, APIKEY_FILEPATH)
+
+    gc = gspread.service_account(filename='amazon/apikey.json')
+    sht1 = gc.open_by_key(table_id)
+
+    worksheet_objs = sht1.worksheets()
+    for worksheet in worksheet_objs:
+        if 'clusters' in worksheet.title.lower():
+            tab_name = worksheet.title
+
+    worksheet = sht1.worksheet(tab_name)
+    camaign_names = worksheet.row_values(2)
+
+    filtered_campaign_name = dict()
+    for camaign_name in camaign_names:
+        if camaign_name != "" and camaign_name != " ":
+            filter_campaign_name = extract_text_from_name(camaign_name)
+            filter_campaign_name_snake_case = to_snake_case_for_name(filter_campaign_name)
+
+            if filter_campaign_name_snake_case not in filtered_campaign_name.keys():
+                filtered_campaign_name[filter_campaign_name_snake_case] = camaign_name
+    print(f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
+    upload_campaign_to_db(request, filtered_campaign_name.values())
+    for key, value  in filtered_campaign_name.items():
+        filtered_campaign_name[key] = value.split(" | ")[1]
+    return filtered_campaign_name
+
+
+def upload_campaign_to_db(request, campaign_names):
+    user_id = request.user.id
+
+    campaigns = list()
+    filter_campaign_names = list()
+    # print(f"campaign_names: {campaign_names}")
+    unique_campaign_names = list(dict.fromkeys(campaign_names))
+
+    for campaign_name in unique_campaign_names:
+        filter_campaign_names.append(extract_text_from_name(campaign_name))
+    
+
+    unique_campaign_names = list(dict.fromkeys(filter_campaign_names))
+    Campaign.objects.filter(user_id=user_id).delete()
+    for campaign_name in unique_campaign_names:
+        # print(f"campaign_name_to_save: {campaign_name}")
+
+        campaigns.append(Campaign(name=campaign_name, user_id=user_id))
+        
+    Campaign.objects.bulk_create(campaigns)

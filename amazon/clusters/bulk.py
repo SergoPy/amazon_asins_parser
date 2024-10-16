@@ -813,8 +813,9 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
             filter_campaign_name_snake_case = to_snake_case(
                 filter_campaign_name)
             # print(f"we in cheker: {filter_campaign_name_snake_case}")                                      
-            # print(f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
-            # print(f"campaign_data: {campaign_data}")
+            print(
+                f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
+            print(f"campaign_data: {campaign_data}")
             # print(f"campaign_2_data: {campaign_2_data}")
 
             if filter_campaign_name_snake_case not in campaign_data:
@@ -1181,7 +1182,7 @@ def to_snake_case(name):
     new_name = name.lower()
     new_name = re.sub(r'\s+', '_', new_name)
     # print(f"new_name 1: {new_name}")
-    new_name = new_name.replace('-', '|')
+    # new_name = new_name.replace('-', '|')
     # print(f"new_name 2: {new_name}")
     new_name = new_name.strip('_')
     # print(f"name before: {name} <-> name after: {new_name}")
