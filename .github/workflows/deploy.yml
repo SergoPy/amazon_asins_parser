@@ -37,7 +37,8 @@ jobs:
       #   with:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      - name: List files in the repository
+        run: ls -la
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.4
         with:
