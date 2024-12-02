@@ -1,8 +1,8 @@
 FROM python:3.9
 
 # Встановлення змінних середовища
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 # Створення робочого каталогу
 RUN mkdir /web_app_v2
