@@ -239,7 +239,7 @@ class AmazonSpider(scrapy.Spider):
         else:
             price_value = 'Not mentioned'
 
-        if rating and rating != 'FREE' and "$" not in rating:
+        if rating and rating != 'FREE' and "$" not in rating and rating != 'Currently':
             rating = rating
         else:
             rating = '0'

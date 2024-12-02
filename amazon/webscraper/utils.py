@@ -79,17 +79,29 @@ def format_parse_args(keywords: str, negative_words: str, country: str) -> tuple
 def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsored_status: bool,
                    sponsored_video_status: bool, sponsored_display_status: bool, data: dict, bulk_upload_status: bool, request) -> list:
     filenames = []
-    if cluster_status:
+    if cluster_status and bulk_status:
+        clusters_values = get_company_values(data)
+        google_sheets_clusters(table, clusters_values,
+                               bulk_upload_status, request) 
+        campaign_name = get_campaigns(request)
+        campaign_names = list(campaign_name.keys())
+        cmp_ending = data.get("cmp_ending", "SP")
+        bulk_file = google_sheets_bulk(
+            table, campaign_names, cmp_ending, [""])
+        filenames.append(bulk_file)
+        
+    elif cluster_status:
         clusters_values = get_company_values(data)
         google_sheets_clusters(table, clusters_values,
                                bulk_upload_status, request)  # еге
-    if bulk_status:
+    elif bulk_status:
         print(f"data in _create_tables: {data}")
         campaign_data = [key.replace('campaign_', '') for key, value in data.items(
         ) if key.startswith('campaign_') and value == 'on']
         campaign_2_data = [key.replace('inner_camp_', '') for key, value in data.items(
         ) if key.startswith('inner_camp_') and value == 'on']
         cmp_ending = data.get("cmp_ending", "SP")
+        print(f"campaign_name when upload hear from site: {campaign_data}")
         bulk_file = google_sheets_bulk(
             table, campaign_data, cmp_ending, campaign_2_data)
         filenames.append(bulk_file)
@@ -398,7 +410,7 @@ def extract_text_from_name(input_string):
 def to_snake_case_for_name(name):
     new_name = name.lower()
     new_name = re.sub(r'\s+', '_', new_name)
-    new_name = new_name.replace('-', '|')
+    # new_name = new_name.replace('-', '|')
     new_name = new_name.strip('_')
     # print(f"name before: {name} <-> name after: {new_name}")
     return new_name
