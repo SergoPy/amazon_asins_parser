@@ -1,4 +1,4 @@
-celery[redis]==5.2.7
+celery[redis]==5.3.0
 Django==4.1.2
 environs==9.5.0
 google-api-python-client==2.63.0

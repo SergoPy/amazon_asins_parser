@@ -118,10 +118,8 @@ def create_company_name(data, keyword=""):
             keyword = "- " + company_type_tmp.split("-")[1]
     else:
         company_type = company_type_tmp
-
     if keyword and not keyword.startswith("-"):
         keyword = "- " + keyword
-
     new_name = f"{global_company_name}|{company_type} {keyword} | "
     new_name = re.sub(r"\s{2,}", " ", new_name)
     return [new_name]
@@ -676,14 +674,12 @@ def make_exact_part(
     # print(f"exact_items:{exact_items}")
     total_exact_len = 4 + len(exact_items) + len(words_part)
     title = create_company_name(exact_data)
-    print(f"title: {title}; exact_data: {exact_data};")
+    # print(f"title: {title}; exact_data: {exact_data};")
     match = re.search(r'\b(\d+)$', exact_data[0])
     if match:
         ad_group = f"Organic {match.group(1)}"
     else:
         ad_group = "Organic"
-
-    print(f"ad_group: {ad_group}")
 
 
     # print(f"len(bid): {len(bid)}\n len(tos): {len(tos)}\n len(words_part): {len(words_part)}\n ")
@@ -834,7 +830,7 @@ def make_exact_all_list(
             if i == 0 or k[0] != exact_data_sorted[i - 1][0]:
                 cur_df = make_exact_all(k, 0, target_asin, exact_tos, exact_bid)
             else:
-                cur_df = make_exact_all(k, 3, target_asin, exact_tos, exact_bid)
+                cur_df = make_exact_all(k, 0, target_asin, exact_tos, exact_bid)
             all_exact_lists_dfs.append(cur_df)
             i += 1
     else:
@@ -851,7 +847,7 @@ def make_exact_all_list(
                 )
             else:
                 cur_df = make_exact_all(
-                    k, 3, target_asin, exact_tos_list, exact_bid_list
+                    k, 0, target_asin, exact_tos_list, exact_bid_list
                 )
             all_exact_lists_dfs.append(cur_df)
 
@@ -862,35 +858,26 @@ def make_pat_all(exact_total_data, remove_campaign, target_asin):
     exact_data = exact_total_data[:4]
     exact_words = [x for x in exact_total_data[4:] if x is not None and x != ""]
 
-    exact_words_parts = []
-    while True:
-        # print(f"tut exact_words_parts {exact_words}")
-        exact_words_parts.append(exact_words[:300])
-        exact_words = exact_words[300:]
-        if len(exact_words) == 0:
-            break
+    # print(f"{type(exact_words)}, {len(exact_words)}, exact_words: {exact_words}")
+    # exact_words_parts = []
+    # while True:
+    #     # print(f"tut exact_words_parts {exact_words}")
+    #     exact_words_parts.append(exact_words[:300])
+    #     exact_words = exact_words[300:]
+    #     if len(exact_words) == 0:
+    #         break
 
     all_exact_dfs = []
     pat_words = []
-    for p, part in enumerate(exact_words_parts):
-        if len(exact_words_parts) == 1:
-            w, cur_df = make_pat_part(
-                exact_data, part, target_asin, remove_campaign=remove_campaign
-            )
-        elif p > 0:
-            w, cur_df = make_pat_part(
-                exact_data, part, target_asin, str(p + 1), remove_campaign=3
-            )
-        else:
-            w, cur_df = make_pat_part(
-                exact_data,
-                part,
-                target_asin,
-                str(p + 1),
-                remove_campaign=remove_campaign,
-            )
-        all_exact_dfs.append(cur_df)
-        pat_words += pat_words
+
+    w, cur_df = make_pat_part(
+        exact_data,
+        exact_words,
+        target_asin,
+        remove_campaign=remove_campaign,
+    )
+    all_exact_dfs.append(cur_df)
+    pat_words += pat_words
 
     return pat_words, pd.concat(all_exact_dfs).reset_index().drop("index", axis=1)
 
@@ -900,8 +887,13 @@ def make_pat_part(pat_data, part, target_asin, number="", remove_campaign=0):
     pat_items = [x.strip() for x in pat_data[2].split(",")]
     pat_words = ['asin="' + x + '"' for x in part if x is not None and x != ""]
     total_pat_len = 4 + len(pat_items) + len(pat_words)
+    
+    match = re.search(r'\s(\d+)$', pat_data[0])
+    if match:
+        ad_group = f"PAT {match.group(1)}"
+    else:
+        ad_group = "PAT"
 
-    # print(f"pat_data: {pat_data}")
     title = create_company_name(pat_data)
     # print(f"title: {title}")
 
@@ -920,16 +912,16 @@ def make_pat_part(pat_data, part, target_asin, number="", remove_campaign=0):
                     + ["Product targeting"] * len(pat_words),
                     ["Create"] * total_pat_len,
                     [title[0] + target_asin + f" {cmp_ending}"] * total_pat_len,
-                    [None] * 3 + [pat_data[1] + number] * (total_pat_len - 3),
+                    [None] * 3 + [ad_group] * (total_pat_len - 3),
                     none,
                     none,
                     none,
                     none,
                     [title[0] + target_asin + f" {cmp_ending}"]
                     + [None] * (total_pat_len - 1),
-                    [None] * 3 + [pat_data[1] + number] + [None] * (total_pat_len - 4),
+                    [None] * 3 + [ad_group] + [None] * (total_pat_len - 4),
                     none,
-                    [None] * 3 + [pat_data[1] + number] * (total_pat_len - 3),
+                    [None] * 3 + [ad_group] * (total_pat_len - 3),
                     none,
                     [str(date.today()).replace("-", "")] + [None] * (total_pat_len - 1),
                     none,
@@ -984,7 +976,7 @@ def make_pat_all_list(pat_total_data, target_asin, first_group=True):
             if i == 0 or k[0] != pat_data_sorted[i - 1][0]:
                 cur_pat, cur_df = make_pat_all(k, 0, target_asin)
             else:
-                cur_pat, cur_df = make_pat_all(k, 3, target_asin)
+                cur_pat, cur_df = make_pat_all(k, 0, target_asin)
             all_pat_words.extend(cur_pat)
             all_pat_lists_dfs.append(cur_df)
 
@@ -1221,14 +1213,11 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
         if k[1] and k[1] != " ":
             filter_campaign_name = extract_text(k[1])
             filter_campaign_name_snake_case = to_snake_case(filter_campaign_name)
-            # print(f"we in cheker: {filter_campaign_name_snake_case}")
-            # print(
-            #     f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
-            # print(f"campaign_data: {campaign_data}")
-            # print(f"campaign_2_data: {campaign_2_data}")
-
             if filter_campaign_name_snake_case not in campaign_data:
                 if k[0].lower() not in campaign_2_data:
+                    print(f"k[1]: {k[1]}")
+                    print(f"we in cheker: {filter_campaign_name_snake_case}")
+                    print(f"filter_campaign_name: {filter_campaign_name}")
                     print(f"LOSE IT: {filter_campaign_name_snake_case}; k[0]: {k[0]}")
                     continue
         if k[0] == "SEED":
@@ -1709,6 +1698,11 @@ def extract_text(input_string):
     match = re.search(r"\|\s*([A-Z]+)\s*-\s*([A-Z]+)", input_string)
     if match:
         return f"{match.group(1)} | {match.group(2)}"
+    
+    # Новий випадок з трьома крапками: "Z Blast | PAT - lpa 10...100 2" -> "PAT - lpa 10...100"
+    match = re.search(r"\|\s*([A-Z]+ - .*\.{3}.*?)(?:\s+\d+)?$", input_string)
+    if match:
+        return match.group(1).strip()
 
     # Третій випадок: Витягнути все після "|"
     match = re.search(r"\|\s*(.+?)\s*\d*$", input_string)

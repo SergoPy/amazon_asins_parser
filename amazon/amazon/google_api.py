@@ -48,7 +48,7 @@ class GoogleSheetsApi:
         range_to_clear = f"{gspread.utils.rowcol_to_a1(1, start_col)}:{gspread.utils.rowcol_to_a1(total_rows, total_cols)}"
         self.worksheet.batch_clear([range_to_clear])
 
-        print(f"total_rows: {total_rows}; total_cols: {total_cols}; start_col: {start_col}; range_to_clear: {range_to_clear}")
+        # print(f"total_rows: {total_rows}; total_cols: {total_cols}; start_col: {start_col}; range_to_clear: {range_to_clear}")
 
 
     def ensure_columns(self, need):

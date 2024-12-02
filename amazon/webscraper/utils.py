@@ -101,7 +101,7 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
         campaign_2_data = [key.replace('inner_camp_', '') for key, value in data.items(
         ) if key.startswith('inner_camp_') and value == 'on']
         cmp_ending = data.get("cmp_ending", "SP")
-        print(f"campaign_name when upload hear from site: {campaign_data}")
+        # print(f"campaign_name when upload hear from site: {campaign_data}")
         bulk_file = google_sheets_bulk(
             table, campaign_data, cmp_ending, campaign_2_data)
         filenames.append(bulk_file)
@@ -367,7 +367,7 @@ def get_campaigns(request) -> list:
     current_time = timezone.now()
     campaigns = Campaign.objects.filter(user_id=user_id)
     if campaigns.exists():
-        print(f"campaigns in get_campaigns from db: {campaigns}")
+        # print(f"campaigns in get_campaigns from db: {campaigns}")
         first_campaign = campaigns.first()
 
         time_difference = current_time - first_campaign.created_at
@@ -399,6 +399,11 @@ def extract_text_from_name(input_string):
     match = re.search(r'\|\s*([A-Z]+)\s*-\s*([A-Z]+)', input_string)
     if match:
         return f"{match.group(1)} | {match.group(2)}"
+    
+    # Новий випадок з трьома крапками: "Z Blast | PAT - lpa 10...100 2" -> "PAT - lpa 10...100"
+    match = re.search(r"\|\s*([A-Z]+ - .*\.{3}.*?)(?:\s+\d+)?$", input_string)
+    if match:
+        return match.group(1).strip()
 
     # Третій випадок: Витягнути все після "|"
     match = re.search(r'\|\s*(.+?)\s*\d*$', input_string)
@@ -406,6 +411,7 @@ def extract_text_from_name(input_string):
         return match.group(1).strip()
 
     return None
+
 
 def to_snake_case_for_name(name):
     new_name = name.lower()

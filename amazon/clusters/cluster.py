@@ -180,7 +180,7 @@ def get_data_frame(key, spreadsheet_id, range_name):
 
 
 def split_and_append(
-    list_name, phrase, keyword, values_dict, category_list, count, prefix=None
+    list_name, phrase, keyword, values_dict, category_list, count, prefix=None, pat_prefix=None
 ):
     iteration = 1
     tos_bid_cat_list = ["seed", "exact top"]
@@ -207,7 +207,7 @@ def split_and_append(
             [
                 list_name,
                 new_phrase,
-                prefix if prefix else list_name.lower(),
+                pat_prefix or prefix or list_name.lower(),
                 values_dict["scu"],
                 values_dict["bid"],
             ]
@@ -234,7 +234,7 @@ def split_and_append(
             [
                 list_name,
                 new_phrase,
-                prefix if prefix else list_name.lower(),
+                pat_prefix or prefix or list_name.lower(),
                 values_dict["scu"],
                 values_dict["bid"],
             ]
@@ -532,7 +532,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 "lpa",
             ]:
                 no_length_check_keys = ["tpa", "tca", "ca", "ra", "lsa", "lpa"]
-                tmp_arr = [k[0].lower().split()[0]]
+                tmp_arr = [k[0].lower()]
                 tmp_arr.extend(
                     [
                         x
@@ -673,7 +673,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
             if q in total_result:
                 if len(total_result[q]) >= 1:
                     if "exact top" in q[0].lower():
-                        print(f"values['exact_top']: {total_result[q]}")
+                        # print(f"values['exact_top']: {total_result[q]}")
                         split_and_append(
                             "Exact",
                             phrase,
@@ -762,7 +762,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
             pat_negatives.extend(p[1:])
             if len(p[1:]) >= 1:
                 split_and_append(
-                    "PAT", phrase, p[0], values[p[0].lower()], p[1:], 1000, "PAT"
+                    "PAT", phrase, p[0], values[p[0].lower().split()[0]], p[1:], 500, f"PAT", p[0].lower()
                 )
 
         # Category
