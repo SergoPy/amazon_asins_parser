@@ -567,11 +567,6 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                     qq = [x for x in t if x != ""]
                     other.append(tuple([k[0], tuple(qq)]))
 
-        other = list((set(other) - set(launched)))
-
-        # print(f"other: {len(other)}")
-        # print(f"other: {other}")
-
         if len(broad) < 1:
             broad.extend(seed)
 
@@ -673,6 +668,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
         )
 
         # Other categories
+        print(f"other: {other}")
+        print(f"total_result: {total_result}")
+
         for q in other:
             if q in total_result:
                 if len(total_result[q]) >= 1:

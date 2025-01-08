@@ -351,8 +351,10 @@ def make_seed_all(seed_total_data, target_asin, seed_tos_items, seed_bid_items):
     seed_data = seed_total_data[:4]
 
     seed_words = [x for x in seed_total_data[4:] if x]
-    tos_items = [x for x in seed_tos_items[4:]]
+    tos_items = [seed_tos_items[3] if x == '' and seed_tos_items[3] != '' else x for x in seed_tos_items[4:]]
     bid_items = [x for x in seed_bid_items[4:]]
+    
+    print(f"seed_words: {seed_words}, tos_items: {tos_items}, bid_items: {bid_items}")
 
     all_seed_dfs = []
     for word, tos, bid in zip(seed_words, tos_items, bid_items):
