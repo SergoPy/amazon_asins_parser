@@ -90,11 +90,11 @@ class AmazonSpider(scrapy.Spider):
         for key in self.creterians:
             groups_list = []
             group_by_creterian_name = key.split("_")[0]
-            group_by_creterian = key.split("_")[1]
+            group_by_creterian = key.split("_")[1].replace("-", "...")
             map_criterion_name = category_mapping[group_by_creterian_name]
-            groups_list.append(f"{map_criterion_name} {group_by_creterian}")
+            groups_list.append(f"{map_criterion_name} [{group_by_creterian}]")
             groups_list.extend(subcategory_mapping[map_criterion_name])
-            # print(f"groups_list: {groups_list}")
+            print(f"groups_list: {groups_list}")
             current_col = current_col + 1
             # print(f"current_col: {current_col}")
             diapason = f"{gspread.utils.rowcol_to_a1(start_row, current_col)}:{gspread.utils.rowcol_to_a1(start_row, current_col+ 5)}"
@@ -155,8 +155,8 @@ class AmazonSpider(scrapy.Spider):
                     category_key = close_key.split("_")[0] # price
                     # print(f"key: {key}; category_key: {category_key}")
                     if key == category_key:
-                        group_by_creterian = close_key.split("_")[1]
-                        cord_name = f"{category} {group_by_creterian}"
+                        group_by_creterian = close_key.split("_")[1].replace("-", "...")
+                        cord_name = f"{category} [{group_by_creterian}]"
                         cords[cord_name.lower()] = self.googlesheets_api.get_cord_by_name(cord_name)
                         data[cord_name.lower()] = []
             data[category.lower()] = []
@@ -258,8 +258,8 @@ class AmazonSpider(scrapy.Spider):
                     from_value, to_value = self.creterians[close_key]
 
                     map_criterion_name = category_mapping[category_key]
-                    group_by_creterian = close_key.split("_")[1]
-                    category_name = f"{map_criterion_name} {group_by_creterian}"
+                    group_by_creterian = close_key.split("_")[1].replace("-", "...")
+                    category_name = f"{map_criterion_name} [{group_by_creterian}]"
 
                     if (from_value is None or (price_value and price_value != 'Not mentioned' and price_value >= self._float(from_value))) and \
                             (to_value is None or (price_value and price_value != 'Not mentioned' and price_value <= self._float(to_value))):
@@ -273,8 +273,8 @@ class AmazonSpider(scrapy.Spider):
                     from_value, to_value = self.creterians[close_key]
 
                     map_criterion_name = category_mapping[category_key]
-                    group_by_creterian = close_key.split("_")[1]
-                    category_name = f"{map_criterion_name} {group_by_creterian}"
+                    group_by_creterian = close_key.split("_")[1].replace("-", "...")
+                    category_name = f"{map_criterion_name} [{group_by_creterian}]"
 
                     reviews_count = int(reviews.replace(
                         ',', '')) if reviews else None
@@ -290,8 +290,8 @@ class AmazonSpider(scrapy.Spider):
                     from_value, to_value = self.creterians[close_key]
 
                     map_criterion_name = category_mapping[category_key]
-                    group_by_creterian = close_key.split("_")[1]
-                    category_name = f"{map_criterion_name} {group_by_creterian}"
+                    group_by_creterian = close_key.split("_")[1].replace("-", "...")
+                    category_name = f"{map_criterion_name} [{group_by_creterian}]"
 
                     if (from_value is None or (rating and self._float(rating) >= self._float(from_value))) and \
                             (to_value is None or (rating and self._float(rating) <= self._float(to_value))):

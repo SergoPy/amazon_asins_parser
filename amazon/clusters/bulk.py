@@ -881,6 +881,17 @@ def make_pat_all(exact_total_data, remove_campaign, target_asin):
 
     return pat_words, pd.concat(all_exact_dfs).reset_index().drop("index", axis=1)
 
+def extract_pattern(pat_data):
+    # Витягуємо текст після "| PAT -", включаючи все до кінця рядка
+    match = re.search(r'\| PAT -\s*(.+?)(?:\s#\s*(\d+))?$', pat_data)
+    if match:
+        # Основний текст
+        base_text = match.group(1)
+        # Додаємо номер після #, якщо він є
+        if match.group(2):
+            return f"{base_text} {match.group(2)}"
+        return base_text
+    return None
 
 def make_pat_part(pat_data, part, target_asin, number="", remove_campaign=0):
     global cmp_ending
@@ -888,11 +899,11 @@ def make_pat_part(pat_data, part, target_asin, number="", remove_campaign=0):
     pat_words = ['asin="' + x + '"' for x in part if x is not None and x != ""]
     total_pat_len = 4 + len(pat_items) + len(pat_words)
     
-    match = re.search(r'\s(\d+)$', pat_data[0])
-    if match:
-        ad_group = f"PAT {match.group(1)}"
-    else:
-        ad_group = "PAT"
+    # match = re.search(r'\s(\d+)$', pat_data[0])
+    # if match:
+    #     ad_group = f"PAT {match.group(1)}"
+    # else:
+    ad_group = extract_pattern(pat_data[0])
 
     title = create_company_name(pat_data)
     # print(f"title: {title}")
@@ -1700,7 +1711,7 @@ def extract_text(input_string):
         return f"{match.group(1)} | {match.group(2)}"
     
     # Новий випадок з трьома крапками: "Z Blast | PAT - lpa 10...100 2" -> "PAT - lpa 10...100"
-    match = re.search(r"\|\s*([A-Z]+ - .*\.{3}.*?)(?:\s+\d+)?$", input_string)
+    match = re.search(r"\|\s*([A-Z]+ - .*?\.{3}.*?)(?:\s+#.*)?$", input_string)
     if match:
         return match.group(1).strip()
 

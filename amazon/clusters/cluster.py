@@ -196,7 +196,11 @@ def split_and_append(
 
     for i in range(0, len(category_list), count):
         current_block = category_list[i : i + count]
-        iteration_suffix = f" {iteration}" if iteration > 1 else ""
+        if pat_prefix:
+            iteration_suffix = f" # {iteration}" if iteration > 1 else ""
+        else:
+            iteration_suffix = f" {iteration}" if iteration > 1 else ""
+
         new_phrase = (
             phrase
             + (f" | {prefix}" if prefix else "")
