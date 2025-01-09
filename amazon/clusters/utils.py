@@ -21,7 +21,7 @@ def indexes_to_a1(i: int, j: int) -> str:
 
 
 def _validate_char(i: int, char: str, text: str) -> str:
-    replaceable_chars = ".,+:;'-"
+    replaceable_chars = ".,+:;'"
     removable_chars = replaceable_chars + '_%"/&'
     has_no_spaces_around = i != 0 and i != len(text) - 1 and text[i - 1] != ' ' and text[i + 1] != ' '
 
@@ -33,7 +33,7 @@ def _validate_char(i: int, char: str, text: str) -> str:
 
 
 def article_filter(text: list) -> list:
-    articles = ['a', 'are', 'the']
+    articles = [] # remove it
     words = ''.join(text).split()
     return [word for word in words if word.strip() not in articles]
 

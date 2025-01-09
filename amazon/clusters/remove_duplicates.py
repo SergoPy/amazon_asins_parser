@@ -1,6 +1,5 @@
 
 import httplib2
-import inflect
 import pandas as pd
 import gspread
 
@@ -46,7 +45,6 @@ def update_column(worksheet, column_name, data):
 
 def remove_duplicates(spreadsheet_id, range_name):
     data = get_data_frame(API_KEY, spreadsheet_id, range_name)
-    inflect_engine = inflect.engine()
     keywords = []
 
     for k in data.T.values:
@@ -76,8 +74,12 @@ def remove_duplicates(spreadsheet_id, range_name):
             keywords.extend([tuple(['launched:'] + x.split(' '))
                             for x in k[1:] if x is not None and x != ''])
 
+    # print(f"keywords: {keywords}")
+    
     prep_df = get_rule_df('Prepositions')
     preps = list(prep_df[0])
+    preps.extend(['a', 'are', 'the'])
+    
 
     keywords_ignore_preps = []
 
@@ -88,6 +90,7 @@ def remove_duplicates(spreadsheet_id, range_name):
                 continue
             res.append(t)
         keywords_ignore_preps.append(tuple(res))
+    
 
     reg_verbs_dict = dict()
 
@@ -107,6 +110,7 @@ def remove_duplicates(spreadsheet_id, range_name):
                 res.append(t)
 
         keywords_regular_verbs.append(res)
+    
 
     plural_nouns_dict = dict()
     plural_nouns_df = get_rule_df('Plural Nouns')
@@ -132,22 +136,23 @@ def remove_duplicates(spreadsheet_id, range_name):
                 res.append(t)
 
         keywords_no_plurals.append(res)
+    
 
-    # ing_dict = dict()
-    # ing_df = get_rule_df('Ing')
+    ing_dict = dict()
+    ing_df = get_rule_df('Ing')
 
-    # for k in ing_df.values:
-    #     ing_dict[k[1].lower()] = k[0].lower()
-    #     ing_dict[k[2].lower()] = k[0].lower()
+    for k in ing_df.values:
+        ing_dict[k[1].lower()] = k[0].lower()
+        ing_dict[k[2].lower()] = k[0].lower()
 
-    # keywords_no_ing = []
+    keywords_no_ing = []
 
-    # for k in keywords_no_plurals:
-    #     res = []
-    #     for t in k:
-    #         res.append(t)
+    for k in keywords_no_plurals:
+        res = []
+        for t in k:
+            res.append(t)
 
-    #     keywords_no_ing.append(res)
+        keywords_no_ing.append(res)
 
     other_dict = dict()
     other_df = get_rule_df('Other')
@@ -157,30 +162,37 @@ def remove_duplicates(spreadsheet_id, range_name):
 
     keywords_total = []
 
-    for k in keywords_no_plurals:
+    for k in keywords_no_ing:
         res = []
         for t in k:
             res.append(t)
 
         keywords_total.append(tuple(res[1:]))
+    
+    print(f"keywords_total: {keywords_total}")
 
-
-
+    pd.set_option('display.max_columns', None)  # Відображати всі стовпці
+    pd.set_option('display.width', 1000) 
     qq = pd.DataFrame([[(' '.join(k), i) for i, k in enumerate(keywords)], [
                       ' '.join(kw) for kw in keywords_total]]).T
     qq.columns = ['initial', 'normalized']
+    print(f"qq: {qq.head(100)}")
 
     qq_grouped = qq.groupby('normalized')['initial'].apply(list).reset_index()
+    print(f"qq_grouped: {qq_grouped.head(100)}")
     qq_grouped['initial'] = qq_grouped.initial.apply(lambda x: x[0])
-    qq_grouped['normalized'] = qq_grouped.normalized.apply(lambda x: x)
 
-    qq_grouped['index'] = qq_grouped['initial'].apply(lambda x: x[1])
-    qq_grouped['keyword'] = qq_grouped['normalized'].apply(
-        lambda x: x)
-    qq_grouped['category'] = qq_grouped['initial'].apply(
+    qq_grouped['index'] = qq_grouped.initial.apply(lambda x: x[1])
+    qq_grouped['keyword'] = qq_grouped.initial.apply(
+        lambda x: x[0].split(': ')[1])
+    qq_grouped['category'] = qq_grouped.initial.apply(
         lambda x: x[0].split(': ')[0])
 
+    print(f"qq_grouped after: {qq_grouped.head(100)}")
+    
     total_res = qq_grouped.sort_values('index')[['category', 'keyword']]
+    
+    print(f"total_res: {total_res.head(100)}")
 
     keywords = list(total_res[total_res.category == 'keyword'].keyword)
     seed = list(total_res[total_res.category == 'seed'].keyword)
@@ -206,7 +218,6 @@ def remove_duplicates(spreadsheet_id, range_name):
 
 
 def remove_duplicates_from_list(data):
-    inflect_engine = inflect.engine()
     keywords = []
 
     k = ['seed'] + [normalize_text(keyword)
@@ -305,7 +316,10 @@ def remove_duplicates_from_list(data):
     dd= [' '.join(kw) for kw in keywords_total]
 
 
-    dd_without_dupl = set(dd)
+    dd_without_dupl = []
+    for item in dd:
+        if item not in dd_without_dupl:
+            dd_without_dupl.append(item)
 
     
     return list(dd_without_dupl)
