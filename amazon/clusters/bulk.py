@@ -677,11 +677,11 @@ def make_exact_part(
     total_exact_len = 4 + len(exact_items) + len(words_part)
     title = create_company_name(exact_data)
     # print(f"title: {title}; exact_data: {exact_data};")
-    match = re.search(r'\b(\d+)$', exact_data[0])
+    match = re.search(r'-\s*(.+)$', exact_data[0]) # get ad group name from Campaign Name
     if match:
-        ad_group = f"Organic {match.group(1)}"
+        ad_group = match.group(1).capitalize()   
     else:
-        ad_group = "Organic"
+        ad_group = exact_data[1]
 
 
     # print(f"len(bid): {len(bid)}\n len(tos): {len(tos)}\n len(words_part): {len(words_part)}\n ")
