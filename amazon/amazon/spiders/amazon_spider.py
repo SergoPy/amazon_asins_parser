@@ -17,7 +17,7 @@ class AmazonSpider(scrapy.Spider):
     AMAZON_PRODUCT_PATH = '/dp/'
     INVALID_ITEM_URL = 'https://aax-us-iad.amazon.com'
     SP_DEF_COLUMN = 'Brand Defense'
-    SP_ADV_COLUMN = 'Advertised ASIN'
+    SP_ADV_COLUMN = 'Self Targeting'
 
     def __init__(self, urls, limit=1,
                  keywords=None, sp_def_asins='', sp_def_skus='', adv_variations_asins='', creterians="", table_link=None, apikey_file_path=None, cookie=None, **kwargs):

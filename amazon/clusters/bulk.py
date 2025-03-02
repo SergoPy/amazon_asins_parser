@@ -131,9 +131,7 @@ def make_brand_def_one(asins, sku, data):
     total_def_len = 4 + len(asins) + len(skus)
     str_asins = ['asin="' + x + '"' for x in asins if x is not None and x != ""]
     none = [None] * total_def_len
-    # data: ["Advertised ASIN", "galon clear jojoba oil ", "Brand Defense", "bid(seed)"]
-    # broad items = sku
-    # broad_words = asins
+    
     return pd.DataFrame(
         np.array(
             [
@@ -199,15 +197,11 @@ def make_brand_def_one(asins, sku, data):
 
 
 def make_brand_advertised_asins(data):
-    # print(f"data[0]: {data}")
     global cmp_ending
     adv_items = [x.strip() for x in data[4][0].split(",") if x]
     total_def_len = 4 + len(data[0]) + len(adv_items)
     str_asins = ['asin="' + x + '"' for x in data[0] if x is not None and x != ""]
     none = [None] * total_def_len
-    # data: ["Advertised ASIN", "galon clear jojoba oil ", "Brand Defense", "bid(seed)", sku]
-    # broad items = sku
-    # broad_words = asins
     return pd.DataFrame(
         np.array(
             [
@@ -1221,7 +1215,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
             # print(f"not k in k info: {k}")
             continue
 
-        if k[0] == "Advertised ASIN":
+        if k[0] == "Self Targeting":
             advertised_asins_list.append(k[1:])
         if k[1] and k[1] != " ":
             filter_campaign_name = extract_text(k[1])
@@ -1296,9 +1290,9 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
     table_create_params = []
 
     # d---------------------------------------------------------------------------------------------------------------
-    # data: ["Advertised ASIN", "galon clear jojoba oil ", "Brand Defense", "bid(seed)"]
+    # data: ["Self Targeting", "galon clear jojoba oil ", "Brand Defense", "bid(seed)"]
 
-    if len(brand_defense_list) > 0 and len(brand_defense_list) > 0:
+    if len(brand_defense_list) > 0:
         for brand_defense_list_item in brand_defense_list:
             if len(brand_defense_list_item) > 4 and any(brand_defense_list_item[4]):
                 data = [
@@ -1312,18 +1306,16 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 )
                 table_create_params.append(brand_defense_all)
 
-    if len(advertised_asins_list) > 0 and len(brand_defense_list) > 0:
+    if len(advertised_asins_list) > 0:
         for advertised_asins_list_item in advertised_asins_list:
             if (
                 len(advertised_asins_list_item) > 0
-                and len(brand_defense_list) > 0
-                and any(brand_defense_list[0][3])
             ):
                 data = [
                     [advertised_asins_list_item[4]],
                     advertised_asins_list_item[0].split("(")[0],
-                    "Advertised ASIN",
-                    brand_defense_list[0][3],
+                    "Self Targeting",
+                    advertised_asins_list_item[3],
                     [advertised_asins_list_item[2]],
                 ]
                 our_adv_asins_all = make_brand_advertised_asins(data)
