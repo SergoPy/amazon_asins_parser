@@ -472,7 +472,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
         tpas = list()
         category = list()
         other = list()
-        variations = []
+        # variations = []
         tmp_arr = []
 
         for k in df_total.T.values:
@@ -512,10 +512,10 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 words = [
                     x for x in k[1:] if x is not None and x != "" and x not in launched
                 ]
-            elif k[0].lower() == "variations":
-                variations = [
-                    x for x in k[1:] if x is not None and x != "" and x not in launched
-                ]
+            # elif k[0].lower() == "variation":
+            #     variations = [
+            #         x for x in k[1:] if x is not None and x != "" and x not in launched
+            #     ]
             elif k[0].lower() == "category":
                 category.append(
                     [k[0]]
@@ -556,17 +556,19 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 "reviews",
                 "rating",
                 "price",
-            ]: # тут ми відкидаємо все не потрібне(фото, відгуки, рейтинг і збираємо в oth ['exact low', 'exact', 'exact top', 'brands'])
-                # if k[0].lower() in ['exact low', 'exact', 'exact top', 'brands', '']:
+            ]: # тут ми відкидаємо все не потрібне(фото, відгуки, рейтинг і збираємо в oth ['exact low', 'exact', 'exact top', 'brands', "variation"])
+                # if k[0].lower() in ['exact low', 'exact', 'exact top', 'brands', ]:
                 oth = [
-                    [q.strip() for q in x.split(",")]
+                    [q.strip().lower() for q in x.split(",")]
                     for x in k[1:]
                     if x is not None and x != "" and x not in launched
                 ]
                 for t in oth:
                     qq = [x for x in t if x != ""]
                     other.append(tuple([k[0], tuple(qq)])) # [('Brands', ('muse',)), ('Exact LOW', ('small',)), ('Exact', ('yard', 'garden')),...] тут ми зберігаємо ось в такому форматі
-                
+        
+        print(f"other: {other}")
+        
         if len(broad) < 1:
             broad.extend(seed)
 
@@ -594,6 +596,8 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 if len(set(p).intersection(set(r[1]))) > 0:
                     keywords_total_dict[p] = r # {('gifts', 'for', 'women', 'over', '70'): ('Exact', ('gift', 'gifts')), ('hanging', 'outdoor', 'hummingbird', 'feeder'): ('Exact TOP', ('hanging',)),..} - тут вже зббергіаєсмо комбінації
         rest = []
+        print(f"keywords_total_dict: {keywords_total_dict}")
+        
 
         for p in keywords_tuples:
             if p not in keywords_total_dict.keys():
@@ -602,8 +606,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
         total_result = defaultdict(list)
         for k, v in keywords_total_dict.items():
             total_result[v].append(" ".join(k)) # ('Exact TOP', ('glass',)): ['red glass hummingbird feeder'], ('Exact LOW', ('small',)): ['small hummingbird feeders for outdoors'], ('Exact TOP', ('large',)): ['large hummingbird feeders for outdoors'], - тут збираємо до купи кейвордси
-            
-        # SEED, Exact STR Top, Exact STR Low, Variation
+        
+        print(f"total_result: {total_result}")
+        # SEED, Exact STR Top, Exact STR Low
         if len(seed) >= 1:
             split_and_append("SEED", phrase, "", values["seed"], seed, 10000, "SEED")
 
@@ -617,16 +622,16 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 campaign_count,
                 "STR Low",
             )
-        if len(variations) >= 1:
-            split_and_append(
-                "Variation",
-                phrase,
-                "",
-                values["variation"],
-                variations,
-                campaign_count,
-                "Variation",
-            )
+        # if len(variations) >= 1:
+        #     split_and_append(
+        #         "Variation",
+        #         phrase,
+        #         "",
+        #         values["variation"],
+        #         variations,
+        #         campaign_count,
+        #         "Variation",
+        #     )
         if len(broad) >= 1:
             split_and_append(
                 "Broad", phrase, "", values["broad"], broad, 10000, "Broad"
@@ -741,7 +746,7 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                             campaign_count,
                             q[0],
                         )
-
+        
         # PAT Negatives
         pat_negatives = []
         # print(f"tpas: {tpas}")
