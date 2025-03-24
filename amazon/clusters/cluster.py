@@ -567,7 +567,6 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                     qq = [x for x in t if x != ""]
                     other.append(tuple([k[0], tuple(qq)])) # [('Brands', ('muse',)), ('Exact LOW', ('small',)), ('Exact', ('yard', 'garden')),...] тут ми зберігаємо ось в такому форматі
         
-        print(f"other: {other}")
         
         if len(broad) < 1:
             broad.extend(seed)
@@ -596,7 +595,6 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 if len(set(p).intersection(set(r[1]))) > 0:
                     keywords_total_dict[p] = r # {('gifts', 'for', 'women', 'over', '70'): ('Exact', ('gift', 'gifts')), ('hanging', 'outdoor', 'hummingbird', 'feeder'): ('Exact TOP', ('hanging',)),..} - тут вже зббергіаєсмо комбінації
         rest = []
-        print(f"keywords_total_dict: {keywords_total_dict}")
         
 
         for p in keywords_tuples:
@@ -607,7 +605,6 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
         for k, v in keywords_total_dict.items():
             total_result[v].append(" ".join(k)) # ('Exact TOP', ('glass',)): ['red glass hummingbird feeder'], ('Exact LOW', ('small',)): ['small hummingbird feeders for outdoors'], ('Exact TOP', ('large',)): ['large hummingbird feeders for outdoors'], - тут збираємо до купи кейвордси
         
-        print(f"total_result: {total_result}")
         # SEED, Exact STR Top, Exact STR Low
         if len(seed) >= 1:
             split_and_append("SEED", phrase, "", values["seed"], seed, 10000, "SEED")
@@ -808,15 +805,15 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
 
         # NegativePATs
         # if len(pat_negatives) >= 1:
-        split_and_append(
-            "NegativePATs",
-            phrase,
-            "",
-            {"scu": "", "bid": ""},
-            pat_negatives,
-            100000,
-            "NegativePATs",
-        )
+        # split_and_append(
+        #     "NegativePATs",
+        #     phrase,
+        #     "",
+        #     {"scu": "", "bid": ""},
+        #     pat_negatives,
+        #     100000,
+        #     "NegativePATs",
+        # )
 
     worksheet_objs = table.worksheets()
     worksheets_list = []

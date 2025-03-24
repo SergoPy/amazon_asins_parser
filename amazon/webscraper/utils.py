@@ -21,8 +21,10 @@ from .constants import COUNTRY_URLS, SEARCH_PATH, COUNTRY_COOKIES
 from .models import AsinsMonitoring, AdvertisingMonitoring, Campaign
 from .settings import APIKEY_FILEPATH, MEDIA_ROOT
 
-DEFAULT_CAMPAIGN_TYPES = {'seed', 'str low', 'exact other', 'variation', 'exact top', 'exact', 'exact low',
-                          'broad', 'brands', 'auto', 'category'}
+DEFAULT_CAMPAIGN_TYPES = ['Seed', 'Exact TOP', 'Exact', 'Exact Low', 'Exact Other', 'Brands', 'Variation',
+                          'Broad', 'Words', 'Category', 'Brand Defense', 'Self Targeting', 'Auto Close', 
+                          'Auto Loose', 'Auto Subs', 'Auto Compl', 'negativephrases', 'negativepats']
+# 'Auto Negatives Close', 'Auto Negatives Lose', 'Auto Negatives Subs', 'Auto Negatives Compl' - remove it because 
 
 
 def get_client_ip(request) -> str:
@@ -83,7 +85,7 @@ def _create_tables(table: str, cluster_status: bool, bulk_status: bool, sponsore
         clusters_values = get_company_values(data)
         google_sheets_clusters(table, clusters_values,
                                bulk_upload_status, request) 
-        campaign_name = get_campaigns(request)
+        campaign_name, prefix  = get_campaigns(request)
         campaign_names = list(campaign_name.keys())
         cmp_ending = data.get("cmp_ending", "SP")
         bulk_file = google_sheets_bulk(
@@ -368,21 +370,21 @@ def get_campaigns(request) -> list:
     campaigns = Campaign.objects.filter(user_id=user_id)
     if campaigns.exists():
         # print(f"campaigns in get_campaigns from db: {campaigns}")
-        first_campaign = campaigns.first()
-
-        time_difference = current_time - first_campaign.created_at
-
-        if time_difference < timedelta(days=3):
-            result = {to_snake_case(campaign.name)
-                                    : campaign.name for campaign in campaigns}
-        else:
-            result = {to_snake_case(
+        # first_campaign = campaigns.first()
+        # time_difference = current_time - first_campaign.created_at
+        # if time_difference < timedelta(days=3):
+        #     result = {to_snake_case(campaign.name)
+        #                             : campaign.name for campaign in campaigns}
+        # else:
+        result = {to_snake_case(
                 default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
+        prefix = "inner_camp"
     else:
         result = {to_snake_case(
             default_campaign): default_campaign for default_campaign in DEFAULT_CAMPAIGN_TYPES}
 
-    return result
+    print(f"result: {result}")
+    return result, prefix
 
 
 def get_table_id(table_link) -> str:
@@ -423,8 +425,6 @@ def to_snake_case_for_name(name):
 
 def upload_info_from_table(table_link, request):
     table_id = get_table_id(table_link)
-    googlesheets_api = GoogleSheetsApi(
-        table_id, APIKEY_FILEPATH)
 
     gc = gspread.service_account(filename='amazon/apikey.json')
     sht1 = gc.open_by_key(table_id)
@@ -439,13 +439,15 @@ def upload_info_from_table(table_link, request):
 
     filtered_campaign_name = dict()
     for camaign_name in camaign_names:
+        print(f"camaign_name from table: {camaign_name}")
         if camaign_name != "" and camaign_name != " ":
             filter_campaign_name = extract_text_from_name(camaign_name)
+            print(f"filter_campaign_name: {filter_campaign_name}")
             filter_campaign_name_snake_case = to_snake_case_for_name(filter_campaign_name)
+            print(f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
 
             if filter_campaign_name_snake_case not in filtered_campaign_name.keys():
                 filtered_campaign_name[filter_campaign_name_snake_case] = camaign_name
-    print(f"filter_campaign_name_snake_case: {filter_campaign_name_snake_case}")
     upload_campaign_to_db(request, filtered_campaign_name.values())
     for key, value  in filtered_campaign_name.items():
         filtered_campaign_name[key] = value.split(" | ")[1]
@@ -472,3 +474,22 @@ def upload_campaign_to_db(request, campaign_names):
         campaigns.append(Campaign(name=campaign_name, user_id=user_id))
         
     Campaign.objects.bulk_create(campaigns)
+    
+def filter_negative_topics(campaign_names):
+    negative_pats = []
+    negative_exact_and_phrase = []
+
+    auto_negatives = ["auto_negatives_close", "auto_negatives_loose", "auto_negatives_subs", "auto_negatives_compl"]
+
+    campaign_names_copy = campaign_names.copy()
+    for item, value in campaign_names_copy.items():
+        if item.startswith("pat"):
+            campaign_names["negativepats"] = "Negative PATs"
+            negative_pats.append(item)
+            campaign_names.pop(item, None)
+        elif item in auto_negatives:
+            campaign_names["negativephrases"] = "Negative Phrases"
+            negative_exact_and_phrase.append(item)
+            campaign_names.pop(item, None) 
+    
+    return campaign_names, negative_pats, negative_exact_and_phrase

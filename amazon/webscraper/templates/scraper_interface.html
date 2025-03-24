@@ -268,32 +268,52 @@
                                 <button type="button" id="uncheck-all-btn" class="col-md-5 btn btn-secondary">Uncheck All</button>
                                 <button type="submit" id="update-column-campg" class="col-md-5 btn btn-primary">Update columns</button>
                                 <hr class="down my-4">
+
+                                {% comment %} {% for key, value in campaign_names.items %}
+                                    <div class="col-md-7">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="${{ prefix }}_{{ key }}" name="{{ prefix }}_{{ key }}" checked>
+                                            <label class="form-check-label" for="{{ prefix }}_{{ key }}">{{ value }}</label>
+                                        </div>
+                                    </div>                                    
+                                {% endfor %} {% endcomment %}
+
                                 {% for key, value in campaign_names.items %}
-                                    <div class="col-md-7">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="campaign_{{ key }}" name="campaign_{{ key }}" checked>
-                                            <label class="form-check-label" for="campaign_{{ key }}">{{ value }}</label>
+                                    {% if key != "negativephrases" and key != "negativepats" %}
+                                        <div class="col-md-7">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="{{ prefix }}_{{ key }}" name="{{ prefix }}_{{ key }}" checked>
+                                                <label class="form-check-label" for="{{ prefix }}_{{ key }}">{{ value }}</label>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 {% endfor %}
-                                {% comment %} {% for key, value in def_campaign.items %}
-                                    <div class="col-md-7">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="inner_camp_{{ key }}" name="inner_camp_{{ key }}">
-                                            <label class="form-check-label" for="inner_camp_{{ key }}">{{ value }}</label>
+
+                                {% if has_negative %}
+                                    <hr class="down my-3">
+                                    <h5 class="offcanvas-title mb-1">Use Negative Targets</h5>
+                                {% endif %}
+
+                                {% for key, value in campaign_names.items %}
+                                    {% if key == "negativephrases" %}
+                                        <div class="col-md-7">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="{{ prefix }}_{{ key }}" name="{{ prefix }}_{{ key }}" data="{{ negative_exact_and_phrase }}"  checked>
+                                                <label class="form-check-label" for="{{ prefix }}_{{ key }}">Use negative Exact & Phrase</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}  {% endcomment %}
+                                    {% endif %}
+                                    {% if key == "negativepats" %}
+                                        <div class="col-md-7">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="{{ prefix }}_{{ key }}" name="{{ prefix }}_{{ key }}" data="{{ negative_pats }}" checked>
+                                                <label class="form-check-label" for="{{ prefix }}_{{ key }}">Use negative PATs</label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
-
-
-
-
-
-
-
-
 
                         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
                              aria-labelledby="offcanvasExampleLabel">
@@ -1112,22 +1132,58 @@
                 },
                 dataType: 'json',
                 success: function(response) {
+                    prefix = response.prefix;
                     if (response.campaign_names) {
                         var campaignHTML = '';
+                        var negativeCampaigns = '';
+                        var hasNegative = false;
+                
                         $.each(response.campaign_names, function(key, value) {
-                            campaignHTML += `
+                            if (key === "negativephrases"){
+                                hasNegative = true;
+                                negativeCampaigns += `
                                 <div class="col-md-7">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="campaign_${key}" name="campaign_${key}" checked>
-                                        <label class="form-check-label" for="campaign_${key}">${value}</label>
+                                        <input type="checkbox" class="form-check-input" id="${prefix}_${key}" name="${prefix}_${key}" data="${response.negative_exact_and_phrase}"  checked>
+                                        <label class="form-check-label" for="${prefix}_${key}">Use negative Exact & Phrase</label>
                                     </div>
                                 </div>
                             `;
+                            }
+                            else if (key === "negativepats"){
+                                hasNegative = true;
+                                negativeCampaigns += `
+                                <div class="col-md-7">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="${prefix}_${key}" name="${prefix}_${key}" data="${response.negative_pats}"  checked>
+                                        <label class="form-check-label" for="${prefix}_${key}">Use negative PATs</label>
+                                    </div>
+                                </div>
+                            `;  
+                            } else {
+                                campaignHTML += `
+                                    <div class="col-md-7">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="${prefix}_${key}" name="${prefix}_${key}" checked>
+                                            <label class="form-check-label" for="${prefix}_${key}">${value}</label>
+                                        </div>
+                                    </div>
+                                `;
+                            }
                         });
+                
+                        if (hasNegative) {
+                            campaignHTML += `
+                                <hr class="down my-3">
+                                <h5 class="offcanvas-title mb-2">Use Negative Targets</h5>
+                                ${negativeCampaigns}
+                            `;
+                        }
+                
                         $('#offcanvasCampType .offcanvas-body hr.down').nextAll().remove();  
                         $('#offcanvasCampType .offcanvas-body').append(campaignHTML); 
                     }
-                },
+                },                
                 error: function(xhr, status, error) {
                     console.log('Ошибка: ' + error);
                 }
@@ -1135,6 +1191,7 @@
         });
     });
 </script>
+
 
 <script>
     function get_label_id(file_field_id) {

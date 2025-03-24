@@ -11,17 +11,28 @@ import os
 
 from .tasks import start_asins_monitoring
 from .settings import FE_PASSWORD, scrapyd, VERIFY
-from .utils import create_tables_manager, asins_scraper_manager, get_campaigns, \
-    get_client_ip, search_term_report_manager, run_asins_monitoring, run_campaign_upload, run_advertising_monitoring, upload_info_from_table
-from .validators import validate_asins_monitoring_request, term_report_validator_request, \
-    campaign_upload_validator, validate_advertising_monitoring_requests
-
-DEFAULT_CAMPAIGN_TYPES = {'seed': 'Seed', 'str_low': 'Str Low', 'exact_other': 'Exact Other', 'variation': 'Variation', 'exact_top': 'Exact Top', 'exact': 'Exact',
-                          'exact_low': 'Ecact Low', 'broad': 'Broad', 'brands': 'Brands', 'auto': 'Auto', 'category': 'Category'}
+from .utils import (
+    create_tables_manager,
+    asins_scraper_manager,
+    filter_negative_topics,
+    get_campaigns,
+    get_client_ip,
+    search_term_report_manager,
+    run_asins_monitoring,
+    run_campaign_upload,
+    run_advertising_monitoring,
+    upload_info_from_table,
+)
+from .validators import (
+    validate_asins_monitoring_request,
+    term_report_validator_request,
+    campaign_upload_validator,
+    validate_advertising_monitoring_requests,
+)
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(["GET", "POST"])
 def login_view(request):
     # ip = get_client_ip(request)
     # print(f"ip: {ip}")
@@ -29,19 +40,17 @@ def login_view(request):
     print(f"request.user.is_authenticated: {request.user.is_authenticated}")
     start_asins_monitoring()
 
-    if request.method == 'GET':
+    if request.method == "GET":
         if request.user.is_authenticated:
-            return redirect('scraper_interface')
+            return redirect("scraper_interface")
         else:
-            content = {
-                'password_status': 'No password entered'
-            }
-            return render(request, 'login_page.html', context=content)
+            content = {"password_status": "No password entered"}
+            return render(request, "login_page.html", context=content)
     else:
         data = request.POST
-        username = data.get('username')
-        password = data.get('password')
-        remember_me = request.POST.get('remember_me')
+        username = data.get("username")
+        password = data.get("password")
+        remember_me = request.POST.get("remember_me")
 
         user = authenticate(request, username=username, password=password)
 
@@ -55,62 +64,62 @@ def login_view(request):
 
             # VERIFY.add(ip)
             print(f"VERIFY after: {VERIFY}")
-            return redirect('scraper_interface')
+            return redirect("scraper_interface")
         else:
-            messages.error(request, 'Invalid login credentials')
+            messages.error(request, "Invalid login credentials")
             content = {
-                'username': username,
+                "username": username,
             }
-            return render(request, 'login_page.html', context=content)
+            return render(request, "login_page.html", context=content)
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(["GET", "POST"])
 def register_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
-        if 'username' in form.errors:
-            messages.error(
-                request, form.errors['username'][0], extra_tags='username')
-        if 'password1' in form.errors:
-            messages.error(
-                request, form.errors['password1'][0], extra_tags='password1')
-        if 'password2' in form.errors:
-            messages.error(
-                request, form.errors['password2'][0], extra_tags='password2')
+        if "username" in form.errors:
+            messages.error(request, form.errors["username"][0], extra_tags="username")
+        if "password1" in form.errors:
+            messages.error(request, form.errors["password1"][0], extra_tags="password1")
+        if "password2" in form.errors:
+            messages.error(request, form.errors["password2"][0], extra_tags="password2")
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             user.save()
 
-            return redirect('login_page')
+            return redirect("login_page")
         else:
-            content = {
-                'data': request.POST
-            }
-            return render(request, 'register_page.html', context=content)
+            content = {"data": request.POST}
+            return render(request, "register_page.html", context=content)
     else:
         form = UserCreationForm()
-        return render(request, 'register_page.html', {'form': form})
+        return render(request, "register_page.html", {"form": form})
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(["GET", "POST"])
 def scrape_view(request):
-    # ip = get_client_ip(request)
-    # print(f"ip: {ip}")
     print(f"VERIFY: {VERIFY}")
     print(f"request.user.is_authenticated: {request.user.is_authenticated}")
     if request.user.is_authenticated:
-        if request.method == 'GET':
-            campaign_name = get_campaigns(request)
-            print(f"campaign_name in view: {campaign_name}")
-
+        if request.method == "GET":
+            dirty_campaign_names, prefix = get_campaigns(request)
+            campaign_names, negative_pats, negative_exact_and_phrase = (
+                filter_negative_topics(dirty_campaign_names)
+            )
+            has_negative = any(
+                key in ["negativephrases", "negativepats"] for key in campaign_names
+            )
             context = {
-                'MEDIA_URL': settings.MEDIA_URL,
-                'MEDIA_ROOT': settings.MEDIA_ROOT,
-                'campaign_names': campaign_name,
-                'def_campaign': DEFAULT_CAMPAIGN_TYPES
+                "MEDIA_URL": settings.MEDIA_URL,
+                "MEDIA_ROOT": settings.MEDIA_ROOT,
+                "campaign_names": campaign_names,
+                "has_negative": has_negative,
+                "prefix": prefix,
+                "negative_pats": ",".join(negative_pats),
+                "negative_exact_and_phrase": ",".join(negative_exact_and_phrase),
             }
         else:
             data = request.POST
@@ -119,26 +128,34 @@ def scrape_view(request):
                 run_campaign_upload(data, files)
             asins_scraper_manager(data, scrapyd)
             filenames = create_tables_manager(data, request)
-            campaign_name = get_campaigns(request)
-            print(f"campaign_name in view: {campaign_name}")
+            dirty_campaign_names, prefix = get_campaigns(request)
+            campaign_names, negative_pats, negative_exact_and_phrase = (
+                filter_negative_topics(dirty_campaign_names)
+            )
+            has_negative = any(
+                key in ["negativephrases", "negativepats"] for key in campaign_names
+            )
             context = {
-                'MEDIA_URL': settings.MEDIA_URL,
-                'MEDIA_ROOT': settings.MEDIA_ROOT,
-                'filenames': filenames,
-                'campaign_names': campaign_name,
-                'def_campaign': DEFAULT_CAMPAIGN_TYPES
+                "MEDIA_URL": settings.MEDIA_URL,
+                "MEDIA_ROOT": settings.MEDIA_ROOT,
+                "filenames": filenames,
+                "campaign_names": campaign_names,
+                "has_negative": has_negative,
+                "prefix": prefix,
+                "negative_pats": ",".join(negative_pats),
+                "negative_exact_and_phrase": ",".join(negative_exact_and_phrase),
             }
-        return render(request, 'scraper_interface.html', context=context)
+        return render(request, "scraper_interface.html", context=context)
     else:
-        return redirect('login_page')
+        return redirect("login_page")
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(["GET", "POST"])
 def monitoring_view(request):
     # ip = get_client_ip(request)
     if request.user.is_authenticated:
-        if request.method == 'GET':
+        if request.method == "GET":
             context = {}
         else:
             data = request.POST
@@ -153,41 +170,59 @@ def monitoring_view(request):
                 term_report = search_term_report_manager(data, files)
                 filenames.append(term_report)
             context = {
-                'MEDIA_URL': settings.MEDIA_URL,
-                'MEDIA_ROOT': settings.MEDIA_ROOT,
-                'filenames': filenames,
+                "MEDIA_URL": settings.MEDIA_URL,
+                "MEDIA_ROOT": settings.MEDIA_ROOT,
+                "filenames": filenames,
             }
 
-        return render(request, 'monitoring_page.html', context=context)
+        return render(request, "monitoring_page.html", context=context)
     else:
-        return redirect('login_page')
+        return redirect("login_page")
 
 
 def logout_view(request):
     logout(request)
-    return redirect('login_page')
+    return redirect("login_page")
 
 
 def get_campaign_names(request):
-    table_id = request.GET.get('table_id')
+    table_id = request.GET.get("table_id")
     if request.user.is_authenticated:
         if table_id:
-            campaign_names = upload_info_from_table(table_id, request)
-            return JsonResponse({'campaign_names': campaign_names})
+            dirty_campaign_names = upload_info_from_table(table_id, request)
+            campaign_names, negative_pats, negative_exact_and_phrase = (
+                filter_negative_topics(dirty_campaign_names)
+            )
+            prefix = "campaign"
+            return JsonResponse(
+                {
+                    "campaign_names": campaign_names,
+                    "prefix": prefix,
+                    "negative_pats": ",".join(negative_pats),
+                    "negative_exact_and_phrase": ",".join(negative_exact_and_phrase),
+                }
+            )
         else:
-            campaign_name = get_campaigns(request)
-            campaign_names = campaign_name
-            return JsonResponse({'campaign_names': campaign_names})
-    return JsonResponse({'error': 'User not authenticated'}, status=401)
-    
-
+            dirty_campaign_names, prefix = get_campaigns(request)
+            campaign_names, negative_pats, negative_exact_and_phrase = (
+                filter_negative_topics(dirty_campaign_names)
+            )
+            return JsonResponse(
+                {
+                    "campaign_names": campaign_names,
+                    "prefix": prefix,
+                    "negative_pats": ",".join(negative_pats),
+                    "negative_exact_and_phrase": ",".join(negative_exact_and_phrase),
+                }
+            )
+    return JsonResponse({"error": "User not authenticated"}, status=401)
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def serve_statistic(request):
-    file_path = os.path.join(settings.MEDIA_ROOT, 'statistic.html')
+    file_path = os.path.join(settings.MEDIA_ROOT, "statistic.html")
     try:
-        with open(file_path, 'rb') as f:
-            return HttpResponse(f.read(), content_type='text/html')
+        with open(file_path, "rb") as f:
+            return HttpResponse(f.read(), content_type="text/html")
     except FileNotFoundError:
         raise Http404("Statistic file not found")

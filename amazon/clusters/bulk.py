@@ -348,7 +348,7 @@ def make_seed_all(seed_total_data, target_asin, seed_tos_items, seed_bid_items):
     tos_items = [seed_tos_items[3] if x == '' and seed_tos_items[3] != '' else x for x in seed_tos_items[4:]]
     bid_items = [x for x in seed_bid_items[4:]]
     
-    print(f"seed_words: {seed_words}, tos_items: {tos_items}, bid_items: {bid_items}")
+    # print(f"seed_words: {seed_words}, tos_items: {tos_items}, bid_items: {bid_items}")
 
     all_seed_dfs = []
     for word, tos, bid in zip(seed_words, tos_items, bid_items):
@@ -1140,23 +1140,15 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
     for worksheet in worksheet_objs:
         if "clusters" in worksheet.title.lower():
             range_name = worksheet.title
-            # print(f"range_name: {range_name}")
 
     for k in df_total_general.T.values:
-        # if k[0].lower() == 'launched':
-        #     launched = [x for x in k[1:] if x is not None and x != '']
-        # elif k[0].lower() == 'seed':
-        #     seed = [x for x in k[1:] if x is not None and x !=
-        #             '' and x not in launched]
         if k[0].lower() == "keywords":
             keywords = [
                 x for x in k[1:] if x is not None and x != "" and x not in launched
             ]
-        # elif k[0].lower() == 'str low':
-        #     str_low = [x for x in k[1:] if x is not None and x !=
-        #                '' and x not in launched]
+            break
+    # надо разобрать как формулируеться negative pats и как должна работать Use Negative Exact & Phrase галочка
     keyword_negatives = keywords
-
     df_total = get_data_frame(API_KEY, SPREADSHEET_ID, range_name)
     df_cols_needed = df_total[:1].values[0]
     df_negatives_needed = df_total[1:]
@@ -1198,41 +1190,54 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
     variations_total_data_list = []
     brand_defense_list = []
     advertised_asins_list = []
+    
+    use_negative_pats = "negativepats" in campaign_data or "negativepats" in campaign_2_data
+    use_negative_phrases = "negativephrases" in campaign_data or "negativephrases" in campaign_2_data
+    
+    print(f"use_negative_pats: {use_negative_pats}")
+    print(f"use_negative_phrases: {use_negative_phrases}")
+
 
     print(f"campaign_data: {campaign_data}")
+    print(f"campaign_data_2: {campaign_2_data}")
     for index, k in enumerate(df_total.values.T):
-        # print(f"keyword_negatives: {keyword_negatives}")
         k = k.tolist()
-        # print(f"k:{k}")
         k_head = k[:5]
-        # print(f"k\k_head:{k_head}")
-
         k_tail = [x for x in k[5:] if x is not None and x != ""]
-        # print(f"k\k_tail:{k_tail}")
-
         k = k_head + k_tail
         if not k:
-            # print(f"not k in k info: {k}")
             continue
 
         if k[0] == "Self Targeting":
             advertised_asins_list.append(k[1:])
+        if k[0] == "Auto" and "Negative" in k[1]:
+            if "Close" in k[1]:
+                auto_close_neg_total_data.append(k[1:])
+            elif "Loose" in k[1]:
+                auto_loose_neg_total_data.append(k[1:])
+            elif "Subs" in k[1]:
+                auto_subs_neg_total_data.append(k[1:])
+            else:
+                auto_compl_neg_total_data.append(k[1:])
+        
+        if k[0] == "PAT":
+            if any(k[5:]):
+                pat_total_data_list.append(k[1:])
         if k[1] and k[1] != " ":
             filter_campaign_name = extract_text(k[1])
             filter_campaign_name_snake_case = to_snake_case(filter_campaign_name)
+            
             if filter_campaign_name_snake_case not in campaign_data:
-                if k[0].lower() not in campaign_2_data:
+                if to_snake_case(k[2].lower()) not in campaign_2_data:
                     print(f"k[1]: {k[1]}")
-                    print(f"we in cheker: {filter_campaign_name_snake_case}")
-                    print(f"filter_campaign_name: {filter_campaign_name}")
-                    print(f"LOSE IT: {filter_campaign_name_snake_case}; k[0]: {k[0]}")
+                    print(f"LOSE IT: {filter_campaign_name_snake_case}; k[0]: {k[2]}")
                     continue
         if k[0] == "SEED":
             seed_total_data.append(k[1:])
+            
             seed_tos_list.append(list(df_total.values.T[index + 2][1:]))
             seed_bid_list.append(list(df_total.values.T[index + 1][1:]))
 
-            # keyword_negatives_list.append(k[5:])
             if len(keyword_negatives) > 0:
                 keyword_negatives_set = set(keyword_negatives_list)
                 for item in k[5:]:
@@ -1241,7 +1246,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 keyword_negatives_list = [list(keyword_negatives_set)]
             else:
                 keyword_negatives_list.append(k[5:])
-            print("Seed Finished get seed")
+                
         if k[0] == "Brand Defense":
             brand_defense_list.append(k[1:])
         if k[0] == "Broad":
@@ -1252,15 +1257,6 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
             words_total_data.append(k[1:])
         if "Variation" in k[0]:
             variations_total_data_list.append(k[1:])
-        if k[0] == "Auto" and "Negative" in k[1]:
-            if "Close" in k[1]:
-                auto_close_neg_total_data.append(k[1:])
-            elif "Loose" in k[1]:
-                auto_loose_neg_total_data.append(k[1:])
-            elif "Subs" in k[1]:
-                auto_subs_neg_total_data.append(k[1:])
-            else:
-                auto_compl_neg_total_data.append(k[1:])
         if k[0] == "Auto" and "Negative" not in k[1]:
             if "Close" in k[1]:
                 auto_close_total_data.append(k[1:])
@@ -1279,9 +1275,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 data_len = len(k[1:]) + 1
                 exact_tos_list.append(df_total.values.T[index + 2][4])
                 exact_bid_list.append(list(df_total.values.T[index + 1][1:data_len]))
-        if k[0] == "PAT":
-            if any(k[5:]):
-                pat_total_data_list.append(k[1:])
+
         if k[0] == "Category":
             if any(k[5:]):
                 category_total_data_list.append(k[1:])
@@ -1355,23 +1349,21 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
             )
         else:
             advertised_asins_list_prime = advertised_asins_list
-        # print(f"keyword_negatives_list: {keyword_negatives_list}")
-        # print(f"len(keyword_negatives_list): {len(keyword_negatives_list)}; len(broad_total_data): {len(broad_total_data)}")
+
         if len(keyword_negatives_list) < len(broad_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(
                 broad_total_data
             )
         else:
             keyword_negatives_list_prime = keyword_negatives_list
-        # print(f"keyword_negatives_list_prime: {keyword_negatives_list_prime}")
         for broad_total_data_item, keyword_negatives, target_asin in zip(
             broad_total_data, keyword_negatives_list_prime, advertised_asins_list_prime
         ):
             if any(broad_total_data_item[4:]):
                 broad_all = make_broad_all(
                     broad_total_data_item,
-                    keyword_negatives,
-                    phrases_negatives,
+                    keyword_negatives if use_negative_phrases else [],
+                    phrases_negatives if use_negative_phrases else [],
                     target_asin[4],
                 )
                 table_create_params.append(broad_all)
@@ -1394,13 +1386,13 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
             if any(words_total_data_item[4:]):
                 words_all = make_broad_all(
                     words_total_data_item,
-                    keyword_negatives,
-                    phrases_negatives,
+                    keyword_negatives if use_negative_phrases else [],
+                    phrases_negatives if use_negative_phrases else [],
                     target_asin[4],
                 )
                 table_create_params.append(words_all)
 
-    if len(auto_close_neg_total_data) > 0:
+    if len(auto_close_neg_total_data) > 0 and use_negative_phrases:
         if len(keyword_negatives_list) < len(auto_close_neg_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(
                 auto_close_neg_total_data
@@ -1434,7 +1426,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 )
                 table_create_params.append(auto_close_all)
 
-    if len(auto_loose_neg_total_data) > 0:
+    if len(auto_loose_neg_total_data) > 0 and use_negative_phrases:
         if len(keyword_negatives_list) < len(auto_loose_neg_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(
                 auto_loose_neg_total_data
@@ -1468,7 +1460,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 )
                 table_create_params.append(auto_loose_all)
 
-    if len(auto_subs_neg_total_data) > 0:
+    if len(auto_subs_neg_total_data) > 0 and use_negative_phrases:
         if len(keyword_negatives_list) < len(auto_subs_neg_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(
                 auto_subs_neg_total_data
@@ -1502,7 +1494,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
                 )
                 table_create_params.append(auto_subs_all)
 
-    if len(auto_compl_neg_total_data) > 0:
+    if len(auto_compl_neg_total_data) > 0 and use_negative_phrases:
         if len(keyword_negatives_list) < len(auto_compl_neg_total_data):
             keyword_negatives_list_prime = [keyword_negatives_list[0]] * len(
                 auto_compl_neg_total_data
@@ -1559,7 +1551,7 @@ def google_sheets_bulk(table_link, campaign_data, cmp_end, campaign_2_data):
         )
         table_create_params.append(brands_all)
 
-    if len(pat_total_data_list) > 0:
+    if len(pat_total_data_list) > 0 and use_negative_pats:
         pat_all = make_pat_all_list(pat_total_data_list, advertised_asins_list[0][4])[1]
         table_create_params.append(pat_all)
 
