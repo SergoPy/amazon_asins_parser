@@ -15,7 +15,7 @@ from collections import defaultdict
 from django.conf import settings
 import nltk
 
-nltk.download("wordnet")
+# nltk.download("wordnet")
 
 
 def singularize(word):
@@ -30,25 +30,26 @@ def is_similar(word1, word2, threshold=0.82):
 
 def process_phrases(broad):
     processed_phrases = set()
-    normalized_phrases = set()
     p = inflect.engine()
 
     for phrase in broad:
         words = phrase.split()
         singular_words = []
         for word in words:
-            word = p.singular_noun(word) or word
-            if word.isdigit() or len(word) <= 3:
-                singular_words.append(word)
+            clean_word = word.lstrip("+") 
+            clean_word = p.singular_noun(clean_word) or clean_word
+            if clean_word.isdigit() or len(clean_word) <= 3:
+                singular_words.append(clean_word)
             else:
-                singular_words.append(singularize(word))
+                singular_words.append(singularize(clean_word))
 
         phrase_with_plus = "+" + " +".join(singular_words)
-        normalized_phrase = " ".join(singular_words)
+        processed_phrases.add(phrase_with_plus)
+
+        # normalized_phrase = " ".join(singular_words)
 
         # # Перевірка на схожість з існуючими фразами
         # if not any(is_similar(normalized_phrase, existing) for existing in normalized_phrases):
-        processed_phrases.add(phrase_with_plus)
         #     normalized_phrases.add(normalized_phrase)
 
     return list(processed_phrases)
@@ -148,9 +149,6 @@ def update_words_col(table_link, write_data, index_start=""):
     # print(f"diapason: {diapason}")
     googlesheets_api.update(diapason, write_data)
 
-
-def separate_words(phrases):
-    pass
 
 
 API_KEY = "AIzaSyApx1yQj6lKf_szFGXrw9euKcrFPqxR5VY"
@@ -343,16 +341,20 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                 for phrases in clear_seed:
                     new_pharases.update(phrases.split())
 
-                IS_STH_IN_WORDS = [
+                specific_words = [
                     word
                     for word in words[start_index : finall_index + 1]
                     if word != "" and word is not None
                 ]
-
-                if len(IS_STH_IN_WORDS) < 1:
-                    words = process_phrases(new_pharases)
+                
+                print(f"IS_STH_IN_WORDS:{specific_words}")
+                print(f"words before if:{specific_words}")
+                if len(specific_words) < 1:
+                    specific_words = process_phrases(new_pharases)
+                    print(f"words in if:{specific_words}")
                 else:
-                    words = process_phrases(words)
+                    specific_words = process_phrases(specific_words)
+                    print(f"words in else:{specific_words}")
 
                 broad = process_phrases(clear_seed)
 
@@ -421,9 +423,9 @@ def google_sheets_clusters(table_link, values, bulk_upload_status, request):
                     "scu": sku[start_index],
                     "bid": float(bid[start_index]) * 0.2,
                 }
-                if len(words) >= 1:
+                if len(specific_words) >= 1:
                     split_and_append(
-                        "Words", product_name, "", parametrs, words, 10000, "Words"
+                        "Words", product_name, "", parametrs, specific_words, 10000, "Words"
                     )
                 parametrs = {
                     "scu": sku[start_index],
@@ -861,3 +863,5 @@ def upload_campaign_to_db(request):
         campaigns.append(Campaign(name=campaign_name, user_id=user_id))
 
     Campaign.objects.bulk_create(campaigns)
+
+
