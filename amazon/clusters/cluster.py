@@ -15,7 +15,7 @@ from collections import defaultdict
 from django.conf import settings
 import nltk
 
-# nltk.download("wordnet")
+nltk.download("wordnet")
 
 
 def singularize(word):
