@@ -77,7 +77,7 @@ jobs:
           source: ".env, ./docker-compose.yml, ./"
           target: /home/admin/web/amazon_asins_parser/
           overwrite: true
-          # debug: true
+          debug: true
 
       - name: Deploy on server
         uses: appleboy/ssh-action@master
